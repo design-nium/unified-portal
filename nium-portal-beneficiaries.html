@@ -92,6 +92,10 @@
       width: 100%;
       padding: 0 32px;
       box-sizing: border-box;
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
     }
 
     /* Sidebar — Travel-style: light, wide, collapsible, grouped */
@@ -290,6 +294,8 @@
       flex-direction: column;
       background: #f1f5f9;
       min-width: 0;
+      height: 100vh;
+      overflow: hidden;
     }
     .topbar {
       display: flex;
@@ -1827,45 +1833,129 @@
 
     <div class="content-inner">
 
-      <div class="travel-page-header">
-        <div class="travel-context">
-          <h1 class="travel-title" id="page-h1">Beneficiaries</h1>
-        </div>
-
-      </div>
-
-            <div class="skeleton-grid">
-        <div class="skel-card skel-stat"></div>
-        <div class="skel-card skel-stat"></div>
-        <div class="skel-card skel-stat"></div>
-        <div class="skel-card skel-stat"></div>
-      </div>
-
-      <div class="skeleton-grid skeleton-grid-2col">
-        <div class="skel-card skel-tall">
-          <div class="skel-bar skel-bar-title"></div>
-          <div class="skel-rows">
-            <div class="skel-row"></div>
-            <div class="skel-row"></div>
-            <div class="skel-row"></div>
-            <div class="skel-row"></div>
-            <div class="skel-row"></div>
+      <!-- Page header: H1 + customer fieldset + actions -->
+      <div class="travel-page-header" style="align-items:flex-end;">
+        <div style="display:flex;align-items:flex-end;gap:20px;flex:1;">
+          <h1 class="travel-title" id="page-h1" style="margin:0;line-height:1;">Beneficiaries</h1>
+          <!-- Customer fieldset dropdown -->
+          <div style="position:relative;display:inline-block;">
+            <fieldset style="border:1px solid var(--color-border-secondary);border-radius:var(--radius-sm);padding:2px 10px 6px;background:var(--color-bg-primary);min-width:180px;">
+              <legend style="font-size:11px;color:var(--color-text-tertiary);padding:0 4px;font-weight:500;letter-spacing:0.02em;">Customer</legend>
+              <button id="beneCustomerBtn" style="background:none;border:none;padding:0;font-size:13.5px;font-weight:500;color:var(--color-text-primary);cursor:pointer;display:flex;align-items:center;gap:6px;width:100%;font-family:inherit;">
+                <span id="beneCustomerName">Holly Parker (Holly)</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;color:var(--color-text-tertiary);"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+            </fieldset>
+            <div class="client-menu" id="beneCustomerMenu" style="min-width:200px;">
+              <button data-value="holly" class="selected">Holly Parker (Holly)</button>
+              <button data-value="goldbelly">Goldbelly</button>
+              <button data-value="workera">Workera AI</button>
+              <button data-value="cortex">Cortex Health</button>
+              <button data-value="rocketpower">RocketPower</button>
+              <button data-value="andela">Andela</button>
+            </div>
           </div>
         </div>
-        <div class="skel-card skel-tall">
-          <div class="skel-bar skel-bar-title"></div>
-          <div class="skel-chart"></div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <button class="btn-more-actions" id="exportBeneBtn">
+            Export selected as CSV
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <button class="btn-move-funds">New beneficiary</button>
         </div>
       </div>
 
-      <div class="skeleton-grid">
-        <div class="skel-card skel-wide">
-          <div class="skel-bar skel-bar-title"></div>
-          <div class="skel-rows">
-            <div class="skel-row"></div>
-            <div class="skel-row"></div>
-            <div class="skel-row"></div>
-            <div class="skel-row"></div>
+      <div class="page-content-pad" style="margin-top:20px;flex:1;display:flex;flex-direction:column;min-height:0;padding-bottom:0;">
+        <style>
+          #beneTable thead th { position: sticky; top: 0; z-index: 1; background: var(--color-bg-tertiary); }
+        </style>
+        <div class="data-table-wrap" style="flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden;">
+          <div style="flex:1;overflow-y:auto;min-height:0;">
+          <table class="data-table" id="beneTable">
+            <thead>
+              <tr>
+                <th><input type="checkbox" class="dt-checkbox" id="beneSelectAll"></th>
+                <th>
+                  <span style="display:inline-flex;align-items:center;gap:5px;">
+                    Beneficiary name
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="4" y1="6" x2="11" y2="6"/><line x1="4" y1="12" x2="13" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+                  </span>
+                </th>
+                <th>
+                  <span style="display:inline-flex;align-items:center;gap:5px;">
+                    Payout method
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="4" y1="6" x2="11" y2="6"/><line x1="4" y1="12" x2="13" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+                  </span>
+                </th>
+                <th>
+                  <span style="display:inline-flex;align-items:center;gap:5px;">
+                    Destination currency
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="4" y1="6" x2="11" y2="6"/><line x1="4" y1="12" x2="13" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+                  </span>
+                </th>
+                <th>Created (UTC)</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>United Citizen</td><td class="dt-muted">LOCAL</td><td>USD</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Apr 22, 2024<br><span style="color:var(--color-text-tertiary);font-size:12px;">15:04:29</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>randomName</td><td class="dt-muted">LOCAL</td><td>SGD</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Dec 12, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">11:45:18</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>Bank Teasdsster</td><td class="dt-muted">LOCAL</td><td>USD</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Dec 06, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">15:34:54</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>batchPayouttest123</td><td class="dt-muted">CARD</td><td>PHP</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Dec 04, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">14:59:37</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>Batch Payout test1</td><td class="dt-muted">CARD</td><td>PHP</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Dec 04, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">13:49:47</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>Test123</td><td class="dt-muted">CARD</td><td>PHP</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Dec 04, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">10:05:29</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>RanjithP Singh12</td><td class="dt-muted">CARD</td><td>PHP</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Dec 01, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">23:31:46</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>test 2</td><td class="dt-muted">CARD</td><td>PHP</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Dec 01, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">22:54:56</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>Bank Tester</td><td class="dt-muted">LOCAL</td><td>USD</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Nov 30, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">18:01:30</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>Bank Tester</td><td class="dt-muted">LOCAL</td><td>USD</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Nov 30, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">17:46:30</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>Bank Tester</td><td class="dt-muted">LOCAL</td><td>USD</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Nov 30, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">16:42:07</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>Test Data</td><td class="dt-muted">LOCAL</td><td>USD</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Nov 30, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">16:20:49</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>RanjithP Singh</td><td class="dt-muted">CARD</td><td>PHP</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Nov 30, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">15:52:59</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>Freeda Russel</td><td class="dt-muted">LOCAL</td><td>USD</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Nov 14, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">15:10:18</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>Aidan Indian</td><td class="dt-muted">PROXY</td><td>INR</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Nov 10, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">08:28:05</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>Beryl Bergnaum</td><td class="dt-muted">PROXY</td><td>INR</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Nov 10, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">08:28:04</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>Johnpaul Proxy</td><td class="dt-muted">PROXY</td><td>INR</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Nov 10, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">08:28:03</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>Percival Wallet Trantow</td><td class="dt-muted">WALLET</td><td>PHP</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Nov 10, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">08:28:03</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>Bryana Shields</td><td class="dt-muted">LOCAL</td><td>AUD</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Nov 10, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">08:28:02</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>Mustafa Lesch</td><td class="dt-muted">LOCAL</td><td>USD</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Nov 10, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">08:28:02</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>Koby Indian</td><td class="dt-muted">PROXY</td><td>INR</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Nov 10, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">08:24:22</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>Treva Steuber</td><td class="dt-muted">PROXY</td><td>INR</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Nov 10, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">08:24:21</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>Freddy Proxy</td><td class="dt-muted">PROXY</td><td>INR</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Nov 10, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">08:24:21</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>Tracey Wallet Sporer</td><td class="dt-muted">WALLET</td><td>PHP</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Nov 10, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">08:24:20</span></td><td><button class="dt-kebab">···</button></td></tr>
+              <tr><td><input type="checkbox" class="dt-checkbox bene-row-check"></td><td>Edward Fisher</td><td class="dt-muted">LOCAL</td><td>AUD</td><td style="color:var(--color-text-secondary);white-space:nowrap;">Nov 10, 2023<br><span style="color:var(--color-text-tertiary);font-size:12px;">08:24:19</span></td><td><button class="dt-kebab">···</button></td></tr>
+            </tbody>
+          </table>
+          </div><!-- /scroll wrapper -->
+
+          <!-- Pagination footer -->
+          <div class="dt-footer" style="justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+            <span style="color:var(--color-text-secondary);font-size:13px;">Showing 1–25 of 47 beneficiaries</span>
+            <div style="display:flex;align-items:center;gap:16px;">
+              <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--color-text-secondary);">
+                Beneficiaries per page
+                <select class="dt-show-select" style="padding:4px 8px;">
+                  <option selected>25</option>
+                  <option>50</option>
+                  <option>100</option>
+                </select>
+              </div>
+              <div style="display:flex;align-items:center;gap:4px;">
+                <button class="dt-kebab" title="First page" style="padding:5px 7px;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg>
+                </button>
+                <button class="dt-kebab" title="Previous" style="padding:5px 7px;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button style="width:28px;height:28px;border-radius:var(--radius-sm);border:none;background:var(--color-brand-navy);color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">1</button>
+                <button class="dt-kebab" style="width:28px;height:28px;padding:0;display:flex;align-items:center;justify-content:center;">2</button>
+                <button class="dt-kebab" title="Next" style="padding:5px 7px;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <button class="dt-kebab" title="Last page" style="padding:5px 7px;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -2233,6 +2323,38 @@
       item.classList.add('active');
     });
   });
+
+  // Beneficiaries customer dropdown
+  (function() {
+    var btn  = document.getElementById('beneCustomerBtn');
+    var menu = document.getElementById('beneCustomerMenu');
+    var name = document.getElementById('beneCustomerName');
+    if (!btn || !menu) return;
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      document.querySelectorAll('.client-menu.open').forEach(function(m) { if (m !== menu) m.classList.remove('open'); });
+      menu.classList.toggle('open');
+    });
+    menu.querySelectorAll('button').forEach(function(item) {
+      item.addEventListener('click', function(e) {
+        e.stopPropagation();
+        menu.querySelectorAll('button').forEach(function(b) { b.classList.remove('selected'); });
+        item.classList.add('selected');
+        name.textContent = item.textContent.trim();
+        menu.classList.remove('open');
+      });
+    });
+    document.addEventListener('click', function() { menu.classList.remove('open'); });
+  })();
+
+  // Select-all checkbox
+  (function() {
+    var selectAll = document.getElementById('beneSelectAll');
+    if (!selectAll) return;
+    selectAll.addEventListener('change', function() {
+      document.querySelectorAll('.bene-row-check').forEach(function(cb) { cb.checked = selectAll.checked; });
+    });
+  })();
 </script>
 
 

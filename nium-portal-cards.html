@@ -1039,12 +1039,14 @@
 
     .panel { display: flex; flex-direction: column; }
     .panel-heading {
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 600;
       color: var(--color-text-secondary);
       text-transform: uppercase;
       letter-spacing: 0.6px;
-      margin-bottom: 12px;
+      padding: 14px 16px;
+      background: var(--color-bg-primary);
+      border-bottom: 0.5px solid var(--color-border-tertiary);
     }
 
     .empty-card {
@@ -1099,15 +1101,19 @@
       color: var(--color-text-primary);
     }
     .purchases-table .col-status {
-      width: 40px;
+      width: 36px;
+      padding-left: 16px;
       text-align: center;
       color: var(--color-text-tertiary);
     }
+    .purchases-table .col-status.declined { color: var(--color-danger-dot); }
     .purchases-table .col-date {
-      font-weight: 600;
+      font-weight: 700;
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
+      color: var(--color-text-primary);
     }
+    .purchases-table .col-date.declined { color: var(--color-danger-dot); }
     .purchases-table .col-time {
       color: var(--color-text-tertiary);
       font-variant-numeric: tabular-nums;
@@ -1120,18 +1126,20 @@
       text-underline-offset: 3px;
       cursor: pointer;
       font-variant-numeric: tabular-nums;
+      white-space: nowrap;
     }
     .purchases-table .col-merchant {
-      text-align: center;
       color: var(--color-text-secondary);
-      letter-spacing: 0.3px;
     }
     .purchases-table .col-amount {
       text-align: right;
-      color: var(--color-text-secondary);
+      padding-right: 16px;
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
+      color: var(--color-text-primary);
     }
+    .purchases-table .col-amount.positive { color: var(--color-text-tertiary); }
+    .purchases-table .col-amount.declined { color: var(--color-danger-dot); }
 
     .balances-card {
       background: var(--color-bg-primary);
@@ -1169,17 +1177,19 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 12px;
+      padding: 12px 20px;
+      border-top: 0.5px solid var(--color-border-tertiary);
       font-size: 12px;
       color: var(--color-text-tertiary);
+      background: var(--color-bg-primary);
     }
     .balances-meta a {
-      color: var(--color-brand-navy);
+      color: var(--color-text-primary);
       font-weight: 500;
-      text-decoration: underline;
-      text-underline-offset: 3px;
       cursor: pointer;
+      font-size: 13px;
     }
+    .balances-meta a:hover { text-decoration: underline; }
 
     .travel-footer {
       border-top: 0.5px solid var(--color-border-tertiary);
@@ -1612,73 +1622,73 @@
       <div class="travel-grid">
 
         <div class="panel">
-          <div class="panel-heading">Recent Purchases</div>
           <div class="purchases-card">
+            <div class="panel-heading">Recent Purchases</div>
             <table class="purchases-table">
             <tbody>
               <tr>
-                <td class="col-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></td>
+                <td class="col-status"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></td>
                 <td class="col-date">31/03/2026</td>
                 <td class="col-time">07:27</td>
-                <td class="col-card"><a style="color:var(--color-brand-navy);font-weight:600;">492921xxxxxx3745</a></td>
-                <td class="col-merchant">BRITISH AIRWAYS</td>
+                <td class="col-card">492921xxxxxx3745</td>
+                <td class="col-merchant">British Airways</td>
                 <td class="col-amount">−100.00 EUR</td>
               </tr>
               <tr>
-                <td class="col-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></td>
+                <td class="col-status"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></td>
                 <td class="col-date">20/10/2025</td>
                 <td class="col-time">10:04</td>
-                <td class="col-card"><a style="color:var(--color-brand-navy);font-weight:600;">460901xxxxxx6792</a></td>
-                <td class="col-merchant">JET 2</td>
-                <td class="col-amount">1,800.00 EUR</td>
+                <td class="col-card">460901xxxxxx6792</td>
+                <td class="col-merchant">Emirates</td>
+                <td class="col-amount positive">1,800.00 EUR</td>
               </tr>
               <tr>
-                <td class="col-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></td>
+                <td class="col-status"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></td>
                 <td class="col-date">20/10/2025</td>
                 <td class="col-time">10:04</td>
-                <td class="col-card"><a style="color:var(--color-brand-navy);font-weight:600;">460901xxxxxx3192</a></td>
-                <td class="col-merchant">BRITISH AIRWAYS</td>
+                <td class="col-card">460901xxxxxx3192</td>
+                <td class="col-merchant">British Airways</td>
                 <td class="col-amount">−1,250.00 EUR</td>
               </tr>
               <tr>
-                <td class="col-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></td>
+                <td class="col-status"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></td>
                 <td class="col-date">20/10/2025</td>
                 <td class="col-time">10:04</td>
-                <td class="col-card"><a style="color:var(--color-brand-navy);font-weight:600;">460901xxxxxx6792</a></td>
-                <td class="col-merchant">JET 2</td>
+                <td class="col-card">460901xxxxxx6792</td>
+                <td class="col-merchant">Emirates</td>
                 <td class="col-amount">−1,850.00 EUR</td>
               </tr>
               <tr>
-                <td class="col-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></td>
+                <td class="col-status"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></td>
                 <td class="col-date">20/10/2025</td>
                 <td class="col-time">10:04</td>
-                <td class="col-card"><a style="color:var(--color-brand-navy);font-weight:600;">460901xxxxxx3192</a></td>
-                <td class="col-merchant">BRITISH AIRWAYS</td>
+                <td class="col-card">460901xxxxxx3192</td>
+                <td class="col-merchant">British Airways</td>
                 <td class="col-amount">−1,250.00 EUR</td>
               </tr>
               <tr>
-                <td class="col-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></td>
+                <td class="col-status"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></td>
                 <td class="col-date">03/09/2025</td>
                 <td class="col-time">07:50</td>
-                <td class="col-card"><a style="color:var(--color-brand-navy);font-weight:600;">460901xxxxxx0373</a></td>
-                <td class="col-merchant">BRITISH AIRWAYS</td>
+                <td class="col-card">460901xxxxxx0373</td>
+                <td class="col-merchant">British Airways</td>
                 <td class="col-amount">−900.00 EUR</td>
               </tr>
               <tr>
-                <td class="col-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></td>
+                <td class="col-status"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></td>
                 <td class="col-date">26/06/2024</td>
                 <td class="col-time">11:12</td>
-                <td class="col-card"><a style="color:var(--color-brand-navy);font-weight:600;">460901xxxxxx8628</a></td>
-                <td class="col-merchant">Merch Name</td>
+                <td class="col-card">460901xxxxxx8628</td>
+                <td class="col-merchant">Cathay Pacific Airways</td>
                 <td class="col-amount">−100.00 EUR</td>
               </tr>
               <tr>
-                <td class="col-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></td>
-                <td class="col-date">28/05/2024</td>
+                <td class="col-status declined"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></td>
+                <td class="col-date declined">28/05/2024</td>
                 <td class="col-time">11:12</td>
-                <td class="col-card"><a style="color:var(--color-brand-navy);font-weight:600;">460901xxxxxx7127</a></td>
-                <td class="col-merchant">Merch Name</td>
-                <td class="col-amount">200.00 EUR</td>
+                <td class="col-card">460901xxxxxx7127</td>
+                <td class="col-merchant">Cathay Pacific Airways</td>
+                <td class="col-amount declined">200.00 EUR</td>
               </tr>
             </tbody>
           </table>
@@ -1686,8 +1696,8 @@
         </div>
 
         <div class="panel">
-          <div class="panel-heading">Balances</div>
           <div class="balances-card">
+            <div class="panel-heading">Balances</div>
             <div class="balance-row">
               <div class="balance-currency"><span class="balance-flag">🇭🇰</span><span class="balance-code">HKD</span></div>
               <span class="balance-amount">1,000,000.00</span>
@@ -1716,10 +1726,10 @@
               <div class="balance-currency"><span class="balance-flag">🇨🇦</span><span class="balance-code">CAD</span></div>
               <span class="balance-amount">1,000,000.00</span>
             </div>
-          </div>
-          <div class="balances-meta">
-            <span>Last updated at 13/03/2026 18:33</span>
-            <a>Update</a>
+            <div class="balances-meta">
+              <span>Last updated at 13/03/2026 18:33</span>
+              <a>Update</a>
+            </div>
           </div>
         </div>
 
