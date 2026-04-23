@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NIUM Portal — Reports</title>
+  <title>NIUM Portal — Convert FX</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -1280,6 +1280,234 @@
       0%   { background-position: 200% 0; }
       100% { background-position: -200% 0; }
     }
+
+    /* =============================================================
+       Balances page
+       ============================================================= */
+    .balances-page { padding: 0 0 40px; }
+
+    .balances-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 20px;
+      border-bottom: 1.5px solid var(--color-border-tertiary);
+    }
+    .wallet-tab {
+      padding: 9px 18px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1.5px;
+      font-family: inherit;
+      transition: color 0.15s;
+      white-space: nowrap;
+    }
+    .wallet-tab:hover { color: var(--color-text-primary); }
+    .wallet-tab.active {
+      color: var(--color-brand-navy);
+      border-bottom-color: var(--color-brand-navy);
+      font-weight: 600;
+    }
+
+    /* Table */
+    .balances-table-wrap {
+      background: var(--color-bg-primary);
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .balances-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+    .balances-table thead th {
+      padding: 11px 16px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      border-bottom: 1px solid var(--color-border-tertiary);
+      background: var(--color-bg-tertiary);
+      white-space: nowrap;
+    }
+    .balances-table thead th:not(:first-child) { text-align: center; }
+    .balances-table thead th:last-child { text-align: left; }
+
+    /* Currency rows */
+    .bal-row-main td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--color-border-tertiary);
+      vertical-align: middle;
+    }
+    .bal-row-main:last-child td { border-bottom: none; }
+    .bal-row-main:hover td { background: var(--color-bg-tertiary); }
+
+    .bal-currency-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .bal-expand-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 2px;
+      color: var(--color-text-tertiary);
+      display: flex;
+      align-items: center;
+      transition: transform 0.18s;
+    }
+    .bal-expand-btn.open { transform: rotate(90deg); }
+    .bal-flag {
+      width: 28px;
+      height: 20px;
+      border-radius: 3px;
+      object-fit: cover;
+      font-size: 20px;
+      line-height: 1;
+    }
+    .bal-currency-name {
+      font-weight: 500;
+      color: var(--color-text-primary);
+    }
+    .bal-currency-sub {
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+      margin-left: 4px;
+    }
+    .bal-amount {
+      font-variant-numeric: tabular-nums;
+      font-weight: 500;
+    }
+    .bal-check-cell { text-align: center; }
+    .bal-check {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #2ea44f;
+    }
+    .bal-check svg { color: #fff; }
+    .bal-action { color: var(--color-brand-navy); font-weight: 500; cursor: pointer; font-size: 13px; }
+    .bal-action:hover { text-decoration: underline; }
+
+    /* Virtual account sub-rows */
+    .bal-row-accounts td {
+      padding: 14px 16px 14px 56px;
+      border-bottom: 1px solid var(--color-border-tertiary);
+    }
+    .bal-row-accounts.hidden { display: none; }
+    .bal-accounts-grid {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .bal-va-card {
+      background: var(--color-bg-secondary);
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      min-width: 220px;
+      flex: 1;
+    }
+    .bal-va-bank {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      margin-bottom: 6px;
+    }
+    .bal-va-number {
+      font-size: 13px;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .bal-va-copy {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      color: var(--color-text-tertiary);
+      display: inline-flex;
+    }
+    .bal-va-copy:hover { color: var(--color-text-primary); }
+    .bal-va-view { font-size: 12px; color: var(--color-brand-navy); font-weight: 500; cursor: pointer; margin-top: 8px; display: block; }
+    .bal-va-view:hover { text-decoration: underline; }
+    .bal-no-accounts {
+      background: #fef9e7;
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-size: 12.5px;
+      color: #7a5c00;
+      display: inline-block;
+    }
+
+    /* CTA row */
+    .balances-page-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .btn-more-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border-secondary);
+      border-radius: var(--radius-sm);
+      padding: 8px 14px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      cursor: pointer;
+    }
+    .btn-more-actions:hover { border-color: var(--color-text-tertiary); }
+    .btn-move-funds {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--color-brand-navy);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 8px 16px;
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .btn-move-funds:hover { background: #1a2070; }
+    .balances-customer-label {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .balances-customer-label svg { color: var(--color-text-tertiary); }
+    .bal-customer-select {
+      background: none;
+      border: none;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0;
+    }
+
     /* -------------------------------------------------------------
        Search modal (command palette)
        ------------------------------------------------------------- */
@@ -1469,18 +1697,18 @@
     </a>
 
     <a href="nium-portal-money.html" class="nav-item-link">
-      <div class="nav-item" data-label="Money" data-expandable="true">
+      <div class="nav-item active expanded" data-label="Money" data-expandable="true">
         <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg></span>
         <span class="nav-label">Money</span>
         <span class="nav-chevron-wrap" data-chevron><svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
       </div>
     </a>
     <div class="nav-children">
-      <a href="nium-portal-money.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Balances</div></a>
-      <a href="nium-portal-send.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Send</div></a>
-      <a href="nium-portal-receive.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Receive</div></a>
-      <a href="nium-portal-convert-fx.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Convert FX</div></a>
-      <a href="nium-portal-beneficiaries.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Beneficiaries</div></a>
+      <a href="nium-portal-money.html" style="text-decoration:none;color:inherit;"><a href="nium-portal-money.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Balances</div></a></a>
+      <a href="nium-portal-send.html" style="text-decoration:none;color:inherit;"><a href="nium-portal-send.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Send</div></a></a>
+      <a href="nium-portal-receive.html" style="text-decoration:none;color:inherit;"><a href="nium-portal-receive.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Receive</div></a></a>
+      <a href="nium-portal-convert-fx.html" style="text-decoration:none;color:inherit;"><a href="nium-portal-convert-fx.html" style="text-decoration:none;color:inherit;"><div class="nav-child active">Convert FX</div></a></a>
+      <a href="nium-portal-beneficiaries.html" style="text-decoration:none;color:inherit;"><a href="nium-portal-beneficiaries.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Beneficiaries</div></a></a>
     </div>
 
     <a href="nium-portal-cards.html" class="nav-item-link">
@@ -1528,7 +1756,7 @@
     </a>
 
     <a href="nium-portal-reports.html" class="nav-item-link">
-      <div class="nav-item active" data-label="Reports">
+      <div class="nav-item" data-label="Reports">
         <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
         <span class="nav-label">Reports</span>
       </div>
@@ -1601,15 +1829,12 @@
 
       <div class="travel-page-header">
         <div class="travel-context">
-          <h1 class="travel-title" id="page-h1">Reports</h1>
+          <h1 class="travel-title" id="page-h1">Convert FX</h1>
         </div>
-        <button class="btn-primary travel-cta">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          New report
-        </button>
+
       </div>
 
-      <div class="skeleton-grid">
+            <div class="skeleton-grid">
         <div class="skel-card skel-stat"></div>
         <div class="skel-card skel-stat"></div>
         <div class="skel-card skel-stat"></div>
@@ -1682,6 +1907,61 @@
 
   setupDropdown('[data-period-btn]', '.period-menu');
   setupDropdown('[data-client-btn]', '.client-menu');
+
+  // Balances customer dropdown — opens on click, closes on outside click or selection
+  var balBtn  = document.getElementById('balCustomerBtn');
+  var balMenu = document.getElementById('balCustomerMenu');
+  var balName = document.getElementById('balCustomerName');
+  if (balBtn && balMenu) {
+    balBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      balMenu.classList.toggle('open');
+    });
+    balMenu.querySelectorAll('button').forEach(function(item) {
+      item.addEventListener('click', function(e) {
+        e.stopPropagation();
+        balMenu.querySelectorAll('button').forEach(function(b) { b.classList.remove('selected'); });
+        item.classList.add('selected');
+        balName.textContent = item.textContent.trim();
+        balMenu.classList.remove('open');
+      });
+    });
+    document.addEventListener('click', function() {
+      balMenu.classList.remove('open');
+    });
+  }
+
+  // Wallet tabs
+  document.querySelectorAll('.wallet-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.wallet-tab').forEach(function(t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+    });
+  });
+  // Balances expand/collapse
+  document.querySelectorAll('.bal-expand-btn').forEach(function(btn) {
+    var targetId = btn.getAttribute('data-target');
+    var target = document.getElementById(targetId);
+    // Sync initial state
+    if (btn.classList.contains('open') && target) target.classList.remove('hidden');
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      btn.classList.toggle('open');
+      if (target) target.classList.toggle('hidden');
+    });
+  });
+
+  // Copy to clipboard
+  document.querySelectorAll('.bal-va-copy').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var num = btn.previousSibling.textContent.trim();
+      navigator.clipboard && navigator.clipboard.writeText(num);
+      btn.style.color = 'var(--color-success-dot)';
+      setTimeout(function() { btn.style.color = ''; }, 1200);
+    });
+  });
+
 
   // Click outside to close all
   document.addEventListener('click', function () {
@@ -1971,9 +2251,9 @@
   </div>
 
   <div class="search-filters" id="searchFilters">
-    <button class="search-filter active" data-filter="all">All</button>
+    <button class="search-filter" data-filter="all">All</button>
     <button class="search-filter" data-filter="pages">Pages</button>
-    <button class="search-filter" data-filter="transactions">Transactions</button>
+    <button class="search-filter active" data-filter="transactions">Transactions</button>
     <button class="search-filter" data-filter="cards">Cards</button>
   </div>
 
@@ -2152,7 +2432,7 @@
   }
 
   // Initial render — contextual default for this page
-  var DEFAULT_FILTER = 'all';
+  var DEFAULT_FILTER = 'transactions';
   renderResults(DEFAULT_FILTER);
 })();
 </script>

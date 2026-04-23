@@ -89,9 +89,9 @@
     }
 
     .content-inner {
-      max-width: 1432px;
-      margin: 0 auto;
       width: 100%;
+      padding: 0 32px;
+      box-sizing: border-box;
     }
 
     /* Sidebar — Travel-style: light, wide, collapsible, grouped */
@@ -450,7 +450,7 @@
     .btn-primary:hover { background: #0a0c4b; }
 
     /* Welcome */
-    .welcome { padding: 32px 32px 24px; }
+    .welcome { padding: 32px 0 24px; }
     .welcome h1 {
       font-size: 24px;
       font-weight: 500;
@@ -465,7 +465,7 @@
 
     /* KPI grid */
     .kpi-grid {
-      padding: 0 32px 24px;
+      padding: 0 0 24px;
       display: grid;
       grid-template-columns: 1.3fr repeat(5, 1fr);
       gap: 14px;
@@ -709,7 +709,7 @@
 
     /* FX rates */
     .fx-row {
-      margin: 0 32px 24px;
+      margin: 0 0 24px;
       border: 0.5px solid var(--color-border-tertiary);
       border-radius: var(--radius-md);
       overflow: hidden;
@@ -783,7 +783,7 @@
     }
 
     /* Quick actions */
-    .actions-section { padding: 0 32px 24px; }
+    .actions-section { padding: 0 0 24px; }
     .actions-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
@@ -816,7 +816,7 @@
 
     /* Overview: chart + activity */
     .overview {
-      padding: 0 32px 24px;
+      padding: 0 0 24px;
       display: grid;
       grid-template-columns: 1.6fr 1fr;
       gap: 20px;
@@ -928,7 +928,7 @@
     }
 
     /* Wallets */
-    .wallets-section { padding: 0 32px 32px; }
+    .wallets-section { padding: 0 0 32px; }
     .wallets-wrap {
       border: 0.5px solid var(--color-border-tertiary);
       border-radius: var(--radius-md);
@@ -1188,11 +1188,11 @@
       </div>
     </a>
     <div class="nav-children">
-      <div class="nav-child">Balances</div>
-      <div class="nav-child">Send</div>
-      <div class="nav-child">Receive</div>
-      <div class="nav-child">Convert FX</div>
-      <div class="nav-child">Beneficiaries</div>
+      <a href="nium-portal-money.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Balances</div></a>
+      <a href="nium-portal-send.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Send</div></a>
+      <a href="nium-portal-receive.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Receive</div></a>
+      <a href="nium-portal-convert-fx.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Convert FX</div></a>
+      <a href="nium-portal-beneficiaries.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Beneficiaries</div></a>
     </div>
 
     <a href="nium-portal-cards.html" class="nav-item-link">
@@ -1203,10 +1203,26 @@
       </div>
     </a>
     <div class="nav-children">
-      <div class="nav-child">Manage cards</div>
-      <div class="nav-child">Issue card</div>
-      <div class="nav-child">Card history</div>
-      <div class="nav-child">Authorisations</div>
+      <a href="nium-portal-cards.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Cards overview</div></a>
+      <a href="nium-portal-manage-cards.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Manage cards</div></a>
+      <a href="nium-portal-issue-card.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Issue card</div></a>
+      <a href="nium-portal-card-history.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Card history</div></a>
+      <a href="nium-portal-authorisations.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Authorisations</div></a>
+    </div>
+
+
+    <a href="nium-portal-funds.html" class="nav-item-link">
+      <div class="nav-item" data-label="Funds" data-expandable="true">
+        <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>
+        <span class="nav-label">Funds</span>
+        <span class="nav-chevron-wrap" data-chevron><svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </div>
+    </a>
+    <div class="nav-children">
+      <a href="nium-portal-funds.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Linked bank accounts</div></a>
+      <a href="nium-portal-funding-accounts.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Funding accounts</div></a>
+      <a href="nium-portal-funding-history.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Funding account history</div></a>
+      <a href="nium-portal-funding-settings.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Funding account settings</div></a>
     </div>
 
     <a href="nium-portal-customers.html" class="nav-item-link">

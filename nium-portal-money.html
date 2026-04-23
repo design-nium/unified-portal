@@ -89,9 +89,9 @@
     }
 
     .content-inner {
-      max-width: 1432px;
-      margin: 0 auto;
       width: 100%;
+      padding: 0 32px;
+      box-sizing: border-box;
     }
 
     /* Sidebar — Travel-style: light, wide, collapsible, grouped */
@@ -457,7 +457,7 @@
     .btn-primary:hover { background: #0a0c4b; }
 
     /* Welcome */
-    .welcome { padding: 32px 32px 24px; }
+    .welcome { padding: 32px 0 24px; }
     .welcome h1 {
       font-size: 24px;
       font-weight: 500;
@@ -472,7 +472,7 @@
 
     /* KPI grid */
     .kpi-grid {
-      padding: 0 32px 24px;
+      padding: 0 0 24px;
       display: grid;
       grid-template-columns: 1.3fr repeat(5, 1fr);
       gap: 14px;
@@ -780,7 +780,7 @@
     }
 
     /* Quick actions */
-    .actions-section { padding: 0 32px 24px; }
+    .actions-section { padding: 0 0 24px; }
     .actions-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
@@ -813,7 +813,7 @@
 
     /* Overview: chart + activity */
     .overview {
-      padding: 0 32px 24px;
+      padding: 0 0 24px;
       display: grid;
       grid-template-columns: 1.6fr 1fr;
       gap: 20px;
@@ -925,7 +925,7 @@
     }
 
     /* Wallets */
-    .wallets-section { padding: 0 32px 32px; }
+    .wallets-section { padding: 0 0 32px; }
     .wallets-wrap {
       border: 0.5px solid var(--color-border-tertiary);
       border-radius: var(--radius-md);
@@ -1008,7 +1008,7 @@
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
-      padding: 32px 32px 24px;
+      padding: 32px 0 24px;
     }
     .travel-context { display: flex; flex-direction: column; gap: 4px; }
     .travel-eyebrow {
@@ -1034,7 +1034,7 @@
       display: grid;
       grid-template-columns: 1.6fr 1fr;
       gap: 24px;
-      padding: 0 32px 32px;
+      padding: 0 0 32px;
     }
 
     .panel { display: flex; flex-direction: column; }
@@ -1183,7 +1183,7 @@
 
     .travel-footer {
       border-top: 0.5px solid var(--color-border-tertiary);
-      padding: 24px 32px 32px;
+      padding: 24px 0 32px;
       margin: 0 32px;
       display: flex;
       flex-direction: column;
@@ -1220,7 +1220,7 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 16px;
-      padding: 0 32px 24px;
+      padding: 0 0 24px;
     }
     .skeleton-grid-2col {
       grid-template-columns: 1.6fr 1fr;
@@ -1280,6 +1280,234 @@
       0%   { background-position: 200% 0; }
       100% { background-position: -200% 0; }
     }
+
+    /* =============================================================
+       Balances page
+       ============================================================= */
+    .balances-page { padding: 0 0 40px; }
+
+    .balances-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 20px;
+      border-bottom: 1.5px solid var(--color-border-tertiary);
+    }
+    .wallet-tab {
+      padding: 9px 18px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1.5px;
+      font-family: inherit;
+      transition: color 0.15s;
+      white-space: nowrap;
+    }
+    .wallet-tab:hover { color: var(--color-text-primary); }
+    .wallet-tab.active {
+      color: var(--color-brand-navy);
+      border-bottom-color: var(--color-brand-navy);
+      font-weight: 600;
+    }
+
+    /* Table */
+    .balances-table-wrap {
+      background: var(--color-bg-primary);
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .balances-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+    .balances-table thead th {
+      padding: 11px 16px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      border-bottom: 1px solid var(--color-border-tertiary);
+      background: var(--color-bg-tertiary);
+      white-space: nowrap;
+    }
+    .balances-table thead th:not(:first-child) { text-align: center; }
+    .balances-table thead th:last-child { text-align: left; }
+
+    /* Currency rows */
+    .bal-row-main td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--color-border-tertiary);
+      vertical-align: middle;
+    }
+    .bal-row-main:last-child td { border-bottom: none; }
+    .bal-row-main:hover td { background: var(--color-bg-tertiary); }
+
+    .bal-currency-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .bal-expand-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 2px;
+      color: var(--color-text-tertiary);
+      display: flex;
+      align-items: center;
+      transition: transform 0.18s;
+    }
+    .bal-expand-btn.open { transform: rotate(90deg); }
+    .bal-flag {
+      width: 28px;
+      height: 20px;
+      border-radius: 3px;
+      object-fit: cover;
+      font-size: 20px;
+      line-height: 1;
+    }
+    .bal-currency-name {
+      font-weight: 500;
+      color: var(--color-text-primary);
+    }
+    .bal-currency-sub {
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+      margin-left: 4px;
+    }
+    .bal-amount {
+      font-variant-numeric: tabular-nums;
+      font-weight: 500;
+    }
+    .bal-check-cell { text-align: center; }
+    .bal-check {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #2ea44f;
+    }
+    .bal-check svg { color: #fff; }
+    .bal-action { color: var(--color-brand-navy); font-weight: 500; cursor: pointer; font-size: 13px; }
+    .bal-action:hover { text-decoration: underline; }
+
+    /* Virtual account sub-rows */
+    .bal-row-accounts td {
+      padding: 14px 16px 14px 56px;
+      border-bottom: 1px solid var(--color-border-tertiary);
+    }
+    .bal-row-accounts.hidden { display: none; }
+    .bal-accounts-grid {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .bal-va-card {
+      background: var(--color-bg-secondary);
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      min-width: 220px;
+      flex: 1;
+    }
+    .bal-va-bank {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      margin-bottom: 6px;
+    }
+    .bal-va-number {
+      font-size: 13px;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .bal-va-copy {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      color: var(--color-text-tertiary);
+      display: inline-flex;
+    }
+    .bal-va-copy:hover { color: var(--color-text-primary); }
+    .bal-va-view { font-size: 12px; color: var(--color-brand-navy); font-weight: 500; cursor: pointer; margin-top: 8px; display: block; }
+    .bal-va-view:hover { text-decoration: underline; }
+    .bal-no-accounts {
+      background: #fef9e7;
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-size: 12.5px;
+      color: #7a5c00;
+      display: inline-block;
+    }
+
+    /* CTA row */
+    .balances-page-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .btn-more-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border-secondary);
+      border-radius: var(--radius-sm);
+      padding: 8px 14px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      cursor: pointer;
+    }
+    .btn-more-actions:hover { border-color: var(--color-text-tertiary); }
+    .btn-move-funds {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--color-brand-navy);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 8px 16px;
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .btn-move-funds:hover { background: #1a2070; }
+    .balances-customer-label {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .balances-customer-label svg { color: var(--color-text-tertiary); }
+    .bal-customer-select {
+      background: none;
+      border: none;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0;
+    }
+
     /* -------------------------------------------------------------
        Search modal (command palette)
        ------------------------------------------------------------- */
@@ -1476,11 +1704,11 @@
       </div>
     </a>
     <div class="nav-children">
-      <div class="nav-child active">Balances</div>
-      <div class="nav-child">Send</div>
-      <div class="nav-child">Receive</div>
-      <div class="nav-child">Convert FX</div>
-      <div class="nav-child">Beneficiaries</div>
+      <a href="nium-portal-money.html" style="text-decoration:none;color:inherit;"><div class="nav-child active">Balances</div></a>
+      <a href="nium-portal-send.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Send</div></a>
+      <a href="nium-portal-receive.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Receive</div></a>
+      <a href="nium-portal-convert-fx.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Convert FX</div></a>
+      <a href="nium-portal-beneficiaries.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Beneficiaries</div></a>
     </div>
 
     <a href="nium-portal-cards.html" class="nav-item-link">
@@ -1491,10 +1719,26 @@
       </div>
     </a>
     <div class="nav-children">
-      <div class="nav-child">Manage cards</div>
-      <div class="nav-child">Issue card</div>
-      <div class="nav-child">Card history</div>
-      <div class="nav-child">Authorisations</div>
+      <a href="nium-portal-cards.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Cards overview</div></a>
+      <a href="nium-portal-manage-cards.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Manage cards</div></a>
+      <a href="nium-portal-issue-card.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Issue card</div></a>
+      <a href="nium-portal-card-history.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Card history</div></a>
+      <a href="nium-portal-authorisations.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Authorisations</div></a>
+    </div>
+
+
+    <a href="nium-portal-funds.html" class="nav-item-link">
+      <div class="nav-item" data-label="Funds" data-expandable="true">
+        <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>
+        <span class="nav-label">Funds</span>
+        <span class="nav-chevron-wrap" data-chevron><svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </div>
+    </a>
+    <div class="nav-children">
+      <a href="nium-portal-funds.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Linked bank accounts</div></a>
+      <a href="nium-portal-funding-accounts.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Funding accounts</div></a>
+      <a href="nium-portal-funding-history.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Funding account history</div></a>
+      <a href="nium-portal-funding-settings.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Funding account settings</div></a>
     </div>
 
     <a href="nium-portal-customers.html" class="nav-item-link">
@@ -1587,45 +1831,224 @@
         <div class="travel-context">
           <h1 class="travel-title" id="page-h1">Balances</h1>
         </div>
-        <button class="btn-primary travel-cta">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Send Money
-        </button>
+
       </div>
 
-      <div class="skeleton-grid">
-        <div class="skel-card skel-stat"></div>
-        <div class="skel-card skel-stat"></div>
-        <div class="skel-card skel-stat"></div>
-        <div class="skel-card skel-stat"></div>
-      </div>
+      <div class="balances-page">
 
-      <div class="skeleton-grid skeleton-grid-2col">
-        <div class="skel-card skel-tall">
-          <div class="skel-bar skel-bar-title"></div>
-          <div class="skel-rows">
-            <div class="skel-row"></div>
-            <div class="skel-row"></div>
-            <div class="skel-row"></div>
-            <div class="skel-row"></div>
-            <div class="skel-row"></div>
+        <!-- Sub-header: customer + CTAs -->
+        <div class="balances-page-header">
+          <div style="position:relative;display:inline-block;">
+              <button class="bal-customer-select" id="balCustomerBtn">
+                <span id="balCustomerName">Workera AI</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="client-menu" id="balCustomerMenu">
+                <button data-value="goldbelly">Goldbelly</button>
+                <button data-value="cortex">Cortex Health</button>
+                <button data-value="salty">The Salty Donut</button>
+                <button data-value="workera" class="selected">Workera AI</button>
+                <button data-value="rocketpower">RocketPower</button>
+                <button data-value="roller">Roller Rabbit</button>
+                <button data-value="range">Range Leather</button>
+                <button data-value="circle">Circle Creek Therapy</button>
+                <button data-value="modernlaw">Modern Law Firms</button>
+                <button data-value="andela">Andela</button>
+              </div>
+            </div>
+          <div style="margin-left:auto;display:flex;gap:10px;">
+            <button class="btn-more-actions">
+              More actions <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <button class="btn-move-funds">Move funds</button>
           </div>
         </div>
-        <div class="skel-card skel-tall">
-          <div class="skel-bar skel-bar-title"></div>
-          <div class="skel-chart"></div>
-        </div>
-      </div>
 
-      <div class="skeleton-grid">
-        <div class="skel-card skel-wide">
-          <div class="skel-bar skel-bar-title"></div>
-          <div class="skel-rows">
-            <div class="skel-row"></div>
-            <div class="skel-row"></div>
-            <div class="skel-row"></div>
-            <div class="skel-row"></div>
-          </div>
+        <!-- Wallet tabs -->
+        <div class="balances-toolbar">
+          <button class="wallet-tab active">Marketing wallet</button>
+          <button class="wallet-tab">Engineering wallet</button>
+          <button class="wallet-tab">...b3c2fe9eb849</button>
+        </div>
+
+        <!-- Balances table -->
+        <div class="balances-table-wrap">
+          <table class="balances-table">
+            <thead>
+              <tr>
+                <th style="width:40%">Currency</th>
+                <th>Balance</th>
+                <th>Payout</th>
+                <th>Payin</th>
+                <th>Card</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="balances-tbody">
+
+              <!-- USD -->
+              <tr class="bal-row-main" data-row="usd">
+                <td>
+                  <div class="bal-currency-cell">
+                    <button class="bal-expand-btn open" data-target="usd-accounts"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+                    <span class="bal-flag">🇺🇸</span>
+                    <span class="bal-currency-name">USD US Dollar</span>
+                    <span class="bal-currency-sub">(default)</span>
+                  </div>
+                </td>
+                <td class="bal-amount">$14,183,141.86</td>
+                <td class="bal-check-cell"><span class="bal-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+                <td class="bal-check-cell"><span class="bal-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+                <td class="bal-check-cell"><span class="bal-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+                <td><span class="bal-action">New Virtual Account</span></td>
+              </tr>
+              <tr class="bal-row-accounts" id="usd-accounts">
+                <td colspan="6">
+                  <div class="bal-accounts-grid">
+                    <div class="bal-va-card">
+                      <div class="bal-va-bank">JPMorgan Chase Bank N.A., Singapore Branch</div>
+                      <div class="bal-va-number">22009756417 <button class="bal-va-copy" title="Copy"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
+                      <span class="bal-va-view">View Details</span>
+                    </div>
+                    <div class="bal-va-card">
+                      <div class="bal-va-bank">COMMUNITY FEDERAL SAVINGS BANK</div>
+                      <div class="bal-va-number">85086980184 <button class="bal-va-copy" title="Copy"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
+                      <span class="bal-va-view">View Details</span>
+                    </div>
+                    <div class="bal-va-card">
+                      <div class="bal-va-bank">JPMorgan Chase Bank N.A., Singapore Branch</div>
+                      <div class="bal-va-number">22009756153 <button class="bal-va-copy" title="Copy"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
+                      <span class="bal-va-view">View Details</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- AUD -->
+              <tr class="bal-row-main" data-row="aud">
+                <td>
+                  <div class="bal-currency-cell">
+                    <button class="bal-expand-btn" data-target="aud-accounts"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+                    <span class="bal-flag">🇦🇺</span>
+                    <span class="bal-currency-name">AUD Australian Dollar</span>
+                  </div>
+                </td>
+                <td class="bal-amount">$988,934.30</td>
+                <td class="bal-check-cell"><span class="bal-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+                <td class="bal-check-cell"><span class="bal-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+                <td class="bal-check-cell"><span class="bal-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+                <td><span class="bal-action">New Virtual Account</span></td>
+              </tr>
+              <tr class="bal-row-accounts hidden" id="aud-accounts">
+                <td colspan="6">
+                  <div class="bal-accounts-grid">
+                    <div class="bal-va-card">
+                      <div class="bal-va-bank">ANZ Bank Australia</div>
+                      <div class="bal-va-number">031-102 &nbsp;88012345 <button class="bal-va-copy" title="Copy"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
+                      <span class="bal-va-view">View Details</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- GBP -->
+              <tr class="bal-row-main" data-row="gbp">
+                <td>
+                  <div class="bal-currency-cell">
+                    <button class="bal-expand-btn open" data-target="gbp-accounts"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+                    <span class="bal-flag">🇬🇧</span>
+                    <span class="bal-currency-name">GBP British Pound</span>
+                  </div>
+                </td>
+                <td class="bal-amount">£0.00</td>
+                <td class="bal-check-cell"><span class="bal-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+                <td class="bal-check-cell"><span class="bal-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+                <td class="bal-check-cell"><span class="bal-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+                <td><span class="bal-action">New Virtual Account</span></td>
+              </tr>
+              <tr class="bal-row-accounts" id="gbp-accounts">
+                <td colspan="6">
+                  <span class="bal-no-accounts">No virtual accounts to display.</span>
+                </td>
+              </tr>
+
+              <!-- HKD -->
+              <tr class="bal-row-main" data-row="hkd">
+                <td>
+                  <div class="bal-currency-cell">
+                    <button class="bal-expand-btn" data-target="hkd-accounts"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+                    <span class="bal-flag">🇭🇰</span>
+                    <span class="bal-currency-name">HKD Hong Kong Dollar</span>
+                  </div>
+                </td>
+                <td class="bal-amount">$0.00</td>
+                <td class="bal-check-cell"><span class="bal-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+                <td class="bal-check-cell"><span class="bal-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+                <td class="bal-check-cell"><span class="bal-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+                <td><span class="bal-action">New Virtual Account</span></td>
+              </tr>
+              <tr class="bal-row-accounts hidden" id="hkd-accounts">
+                <td colspan="6">
+                  <span class="bal-no-accounts">No virtual accounts to display.</span>
+                </td>
+              </tr>
+
+              <!-- EUR -->
+              <tr class="bal-row-main" data-row="eur">
+                <td>
+                  <div class="bal-currency-cell">
+                    <button class="bal-expand-btn" data-target="eur-accounts"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+                    <span class="bal-flag">🇪🇺</span>
+                    <span class="bal-currency-name">EUR Euro</span>
+                  </div>
+                </td>
+                <td class="bal-amount">€9,402.80</td>
+                <td class="bal-check-cell"><span class="bal-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+                <td class="bal-check-cell"><span class="bal-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+                <td class="bal-check-cell"><span class="bal-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+                <td><span class="bal-action">New Virtual Account</span></td>
+              </tr>
+              <tr class="bal-row-accounts hidden" id="eur-accounts">
+                <td colspan="6">
+                  <div class="bal-accounts-grid">
+                    <div class="bal-va-card">
+                      <div class="bal-va-bank">Clearbank Europe</div>
+                      <div class="bal-va-number">DE89 3704 0044 0532 0130 00 <button class="bal-va-copy" title="Copy"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
+                      <span class="bal-va-view">View Details</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SGD -->
+              <tr class="bal-row-main" data-row="sgd">
+                <td>
+                  <div class="bal-currency-cell">
+                    <button class="bal-expand-btn" data-target="sgd-accounts"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+                    <span class="bal-flag">🇸🇬</span>
+                    <span class="bal-currency-name">SGD Singapore Dollar</span>
+                  </div>
+                </td>
+                <td class="bal-amount">S$9,248.80</td>
+                <td class="bal-check-cell"><span class="bal-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+                <td class="bal-check-cell"><span class="bal-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+                <td class="bal-check-cell"><span class="bal-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+                <td><span class="bal-action">New Virtual Account</span></td>
+              </tr>
+              <tr class="bal-row-accounts hidden" id="sgd-accounts">
+                <td colspan="6">
+                  <div class="bal-accounts-grid">
+                    <div class="bal-va-card">
+                      <div class="bal-va-bank">DBS Bank Singapore</div>
+                      <div class="bal-va-number">0720123456 <button class="bal-va-copy" title="Copy"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
+                      <span class="bal-va-view">View Details</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -1666,6 +2089,61 @@
 
   setupDropdown('[data-period-btn]', '.period-menu');
   setupDropdown('[data-client-btn]', '.client-menu');
+
+  // Balances customer dropdown — opens on click, closes on outside click or selection
+  var balBtn  = document.getElementById('balCustomerBtn');
+  var balMenu = document.getElementById('balCustomerMenu');
+  var balName = document.getElementById('balCustomerName');
+  if (balBtn && balMenu) {
+    balBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      balMenu.classList.toggle('open');
+    });
+    balMenu.querySelectorAll('button').forEach(function(item) {
+      item.addEventListener('click', function(e) {
+        e.stopPropagation();
+        balMenu.querySelectorAll('button').forEach(function(b) { b.classList.remove('selected'); });
+        item.classList.add('selected');
+        balName.textContent = item.textContent.trim();
+        balMenu.classList.remove('open');
+      });
+    });
+    document.addEventListener('click', function() {
+      balMenu.classList.remove('open');
+    });
+  }
+
+  // Wallet tabs
+  document.querySelectorAll('.wallet-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.wallet-tab').forEach(function(t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+    });
+  });
+  // Balances expand/collapse
+  document.querySelectorAll('.bal-expand-btn').forEach(function(btn) {
+    var targetId = btn.getAttribute('data-target');
+    var target = document.getElementById(targetId);
+    // Sync initial state
+    if (btn.classList.contains('open') && target) target.classList.remove('hidden');
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      btn.classList.toggle('open');
+      if (target) target.classList.toggle('hidden');
+    });
+  });
+
+  // Copy to clipboard
+  document.querySelectorAll('.bal-va-copy').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var num = btn.previousSibling.textContent.trim();
+      navigator.clipboard && navigator.clipboard.writeText(num);
+      btn.style.color = 'var(--color-success-dot)';
+      setTimeout(function() { btn.style.color = ''; }, 1200);
+    });
+  });
+
 
   // Click outside to close all
   document.addEventListener('click', function () {
