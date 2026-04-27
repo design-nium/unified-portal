@@ -375,26 +375,92 @@
     }
     .spacer { flex: 1; }
 
-    .live-pill {
+    /* ── Environment dropdown ── */
+    .env-dropdown { position: relative; flex-shrink: 0; }
+    .sidebar.collapsed .env-dropdown { display: none; }
+    .env-current {
       display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 3px 10px;
-      background: var(--color-success-bg);
-      border-radius: 999px;
-    }
-    .live-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--color-success-dot);
-    }
-    .live-label {
+      gap: 5px;
+      background: rgba(255,255,255,0.12);
+      border: none;
+      border-radius: 6px;
+      padding: 4px 8px 4px 10px;
+      cursor: pointer;
+      font-family: inherit;
       font-size: 11px;
-      font-weight: 500;
-      color: var(--color-success-text);
-      letter-spacing: 0.3px;
+      font-weight: 600;
+      color: #ffffff;
+      letter-spacing: 0.2px;
+      transition: background 0.15s;
     }
+    .env-current:hover { background: rgba(255,255,255,0.2); }
+    .env-current svg { opacity: 0.7; flex-shrink: 0; }
+    .env-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      background: #ffffff;
+      border: 0.5px solid #e2e8f0;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.14);
+      overflow: hidden;
+      z-index: 1000;
+      min-width: 140px;
+    }
+    .env-menu.open { display: block; }
+    .env-menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 10px 14px;
+      border: none;
+      background: none;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      color: #0f172a;
+      cursor: pointer;
+      text-align: left;
+    }
+    .env-menu-item:hover { background: #f1f5f9; }
+    .env-menu-item.active { font-weight: 700; }
+    .env-check { color: #0f172a; }
+    /* confirmation modal */
+    .env-modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+    }
+    .env-modal-backdrop.open { display: flex; }
+    .env-modal {
+      background: #fff;
+      border-radius: 14px;
+      padding: 28px 28px 22px;
+      width: 360px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.18);
+    }
+    .env-modal-title { font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+    .env-modal-body { font-size: 13.5px; color: #64748b; line-height: 1.55; margin-bottom: 22px; }
+    .env-modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+    .env-modal-cancel {
+      padding: 8px 16px; border-radius: 8px; border: 1px solid #e2e8f0;
+      background: #fff; font-size: 13px; font-weight: 500; color: #374151;
+      cursor: pointer; font-family: inherit;
+    }
+    .env-modal-confirm {
+      padding: 8px 16px; border-radius: 8px; border: none;
+      background: #0f1f6e; color: #fff;
+      font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;
+    }
+    .env-modal-cancel:hover { background: #f8fafc; }
+    .env-modal-confirm:hover { background: #1a2fa0; }
 
     .icon-btn {
       width: 32px;
@@ -409,6 +475,140 @@
       cursor: pointer;
     }
     .icon-btn:hover { background: var(--color-bg-secondary); }
+
+    .topbar-icon-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+    .topbar-tooltip {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e293b;
+      color: #fff;
+      font-size: 11.5px;
+      font-weight: 500;
+      padding: 4px 9px;
+      border-radius: 6px;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    .topbar-tooltip::after {
+      content: '';
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 4px solid transparent;
+      border-bottom-color: #1e293b;
+    }
+    .topbar-icon-wrap:hover .topbar-tooltip { display: block; }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    /* ── Notifications panel ── */
+    .notif-anchor { position: relative; display: inline-flex; align-items: center; }
+    .notif-panel {
+      display: none;
+      position: fixed;
+      width: 420px;
+      max-height: 580px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+      z-index: 9999;
+      overflow: hidden;
+      flex-direction: column;
+    }
+    .notif-panel.open { display: flex; }
+    .notif-panel-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 18px 14px;
+      border-bottom: 1px solid #e2e8f0;
+      flex-shrink: 0;
+      background: #ffffff;
+    }
+    .notif-panel-title { font-size: 17px; font-weight: 700; color: #0f172a; }
+    .notif-type-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 11px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: #ffffff;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #64748b;
+      cursor: pointer;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+    .notif-unread-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+      font-size: 12.5px;
+      color: #64748b;
+      white-space: nowrap;
+    }
+    .notif-toggle {
+      width: 36px;
+      height: 20px;
+      border-radius: 10px;
+      background: #d1d5db;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .notif-toggle.on { background: #0f1f6e; }
+    .notif-toggle::after {
+      content: '';
+      position: absolute;
+      top: 2px; left: 2px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      transition: left 0.2s;
+    }
+    .notif-toggle.on::after { left: 18px; }
+    .notif-body { overflow-y: auto; flex: 1; padding: 0 14px 8px; }
+    .notif-date-group { margin-top: 14px; }
+    .notif-date-label { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 6px; padding: 0 2px; }
+    .notif-item { padding: 11px 13px; border-radius: 10px; margin-bottom: 6px; cursor: pointer; }
+    .notif-item:hover { background: #f1f5f9; }
+    .notif-item-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 3px; }
+    .notif-item-title { font-size: 13px; font-weight: 600; color: #0f172a; }
+    .notif-item-time { font-size: 11.5px; color: #94a3b8; white-space: nowrap; flex-shrink: 0; }
+    .notif-item-type { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 3px; }
+    .notif-item-body { font-size: 12.5px; color: #64748b; line-height: 1.45; }
+    .notif-view-all {
+      display: block;
+      text-align: center;
+      padding: 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #0f1f6e;
+      text-decoration: none;
+      border-top: 1px solid #e2e8f0;
+      background: #ffffff;
+      flex-shrink: 0;
+    }
+    .notif-view-all:hover { background: #f8fafc; }
+
     .notification-dot {
       position: absolute;
       top: 6px;
@@ -1173,6 +1373,21 @@
         </svg>
         
       </div>
+      <div class="env-dropdown" id="envDropdown">
+        <button class="env-current" id="envCurrentBtn">
+          <span id="envCurrentLabel">Production</span>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="env-menu" id="envMenu">
+          <button class="env-menu-item active" id="envOptProd" data-env="Production">
+            Production
+            <svg class="env-check" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </button>
+          <button class="env-menu-item" id="envOptSandbox" data-env="Sandbox">
+            Sandbox
+          </button>
+        </div>
+      </div>
     </div>
 
     <div class="nav-item active" data-label="Dashboard">
@@ -1260,10 +1475,6 @@
       <span class="nav-label">Docs</span>
     </div>
 
-    <div class="nav-item" data-label="Settings">
-      <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 005 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 005 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"></path></svg></span>
-      <span class="nav-label">Settings</span>
-    </div>
   </aside>
 
   <div class="content">
@@ -1296,17 +1507,28 @@
 
       <div class="spacer"></div>
 
-      <div class="live-pill">
-        <span class="live-dot"></span>
-        <span class="live-label">Live</span>
+      <div class="topbar-icon-wrap">
+        <button class="icon-btn" aria-label="Settings">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5f5e5a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 005 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 005 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        </button>
+        <span class="topbar-tooltip">Settings</span>
       </div>
 
-      <button class="icon-btn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5f5e5a" stroke-width="1.8"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 01-3.46 0"></path></svg>
-        <span class="notification-dot"></span>
-      </button>
+      <div class="topbar-icon-wrap">
+        <span class="topbar-tooltip">Notifications</span>
+        <div class="notif-anchor">
+        <button class="icon-btn" id="notifBtn" aria-label="Notifications">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5f5e5a" stroke-width="1.8"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 01-3.46 0"></path></svg>
+          <span class="notification-dot" id="notifDot"></span>
+        </button>
 
-      <div class="avatar">PJ</div>
+        </div>
+      </div>
+
+      <div class="topbar-icon-wrap">
+        <div class="avatar">PJ</div>
+        <span class="topbar-tooltip">Profile</span>
+      </div>
     </div>
 
     <div class="content-inner">
@@ -1959,6 +2181,8 @@
       item.classList.add('active');
     });
   });
+
+
 </script>
 
 
@@ -2164,4 +2388,206 @@
 })();
 </script>
 
+        <div class="notif-panel" id="notifPanel">
+          <div class="notif-panel-header">
+            <span class="notif-panel-title">Notifications</span>
+            <button class="notif-type-btn">
+              All notifications
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="notif-unread-wrap">
+              Unread
+              <button class="notif-toggle" id="notifUnreadToggle"></button>
+            </div>
+          </div>
+          <div class="notif-body">
+            <div class="notif-date-group">
+              <div class="notif-date-label">Today</div>
+              <div class="notif-item">
+                <div class="notif-item-type">Transaction</div>
+                <div class="notif-item-top"><span class="notif-item-title">Payment sent to Andela</span><span class="notif-item-time">09:14</span></div>
+                <div class="notif-item-body">USD 14,500.00 transferred via local payout to account ending 8821.</div>
+              </div>
+              <div class="notif-item">
+                <div class="notif-item-type">Card</div>
+                <div class="notif-item-top"><span class="notif-item-title">Card spend limit reached</span><span class="notif-item-time">08:47</span></div>
+                <div class="notif-item-body">Card 460901xxxxxx3192 has reached 90% of its monthly spend limit.</div>
+              </div>
+              <div class="notif-item">
+                <div class="notif-item-type">Compliance</div>
+                <div class="notif-item-top"><span class="notif-item-title">Document RFI — action required</span><span class="notif-item-time">07:30</span></div>
+                <div class="notif-item-body">Passport verification for Bryana Shields has failed. Please resubmit a valid passport to avoid account restriction.</div>
+              </div>
+            </div>
+            <div class="notif-date-group">
+              <div class="notif-date-label">Yesterday</div>
+              <div class="notif-item">
+                <div class="notif-item-type">Transaction</div>
+                <div class="notif-item-top"><span class="notif-item-title">Inbound payment received</span><span class="notif-item-time">16:52</span></div>
+                <div class="notif-item-body">EUR 8,200.00 received from Cortex Health into your EUR wallet.</div>
+              </div>
+              <div class="notif-item">
+                <div class="notif-item-type">Client management</div>
+                <div class="notif-item-top"><span class="notif-item-title">New client onboarded</span><span class="notif-item-time">14:10</span></div>
+                <div class="notif-item-body">RocketPower has been added to your client portfolio and is ready to transact.</div>
+              </div>
+              <div class="notif-item">
+                <div class="notif-item-type">Card</div>
+                <div class="notif-item-top"><span class="notif-item-title">New card issued</span><span class="notif-item-time">11:33</span></div>
+                <div class="notif-item-body">A virtual card ending 7127 was issued to Mustafa Lesch under Goldbelly.</div>
+              </div>
+              <div class="notif-item">
+                <div class="notif-item-type">Compliance</div>
+                <div class="notif-item-top"><span class="notif-item-title">Compliance review required</span><span class="notif-item-time">09:05</span></div>
+                <div class="notif-item-body">Annual compliance review is due for Workera AI. Please submit documents by Apr 30.</div>
+              </div>
+              <div class="notif-item">
+                <div class="notif-item-type">Transaction</div>
+                <div class="notif-item-top"><span class="notif-item-title">FX conversion completed</span><span class="notif-item-time">08:21</span></div>
+                <div class="notif-item-body">GBP 5,000.00 converted to USD 6,287.50 at a rate of 1.2575.</div>
+              </div>
+            </div>
+            <div class="notif-date-group">
+              <div class="notif-date-label">April 25, 2026</div>
+              <div class="notif-item">
+                <div class="notif-item-type">Client management</div>
+                <div class="notif-item-top"><span class="notif-item-title">Client details updated</span><span class="notif-item-time">17:44</span></div>
+                <div class="notif-item-body">Billing address for Andela has been updated by admin user peter@nium.com.</div>
+              </div>
+              <div class="notif-item">
+                <div class="notif-item-type">Card</div>
+                <div class="notif-item-top"><span class="notif-item-title">Card frozen by cardholder</span><span class="notif-item-time">15:20</span></div>
+                <div class="notif-item-body">Card 492921xxxxxx3745 was temporarily frozen at the cardholder's request.</div>
+              </div>
+              <div class="notif-item">
+                <div class="notif-item-type">Transaction</div>
+                <div class="notif-item-top"><span class="notif-item-title">Payment failed</span><span class="notif-item-time">12:08</span></div>
+                <div class="notif-item-body">USD 3,100.00 payout to United Citizen failed. Reason: invalid account number.</div>
+              </div>
+              <div class="notif-item">
+                <div class="notif-item-type">Compliance</div>
+                <div class="notif-item-top"><span class="notif-item-title">Enhanced due diligence triggered</span><span class="notif-item-time">10:55</span></div>
+                <div class="notif-item-body">Transaction pattern for RanjithP Singh has triggered an EDD review.</div>
+              </div>
+            </div>
+            <div class="notif-date-group">
+              <div class="notif-date-label">April 24, 2026</div>
+              <div class="notif-item">
+                <div class="notif-item-type">Transaction</div>
+                <div class="notif-item-top"><span class="notif-item-title">Batch payout completed</span><span class="notif-item-time">18:30</span></div>
+                <div class="notif-item-body">Batch of 12 payouts totalling PHP 920,000.00 processed successfully.</div>
+              </div>
+              <div class="notif-item">
+                <div class="notif-item-type">Client management</div>
+                <div class="notif-item-top"><span class="notif-item-title">API key rotated</span><span class="notif-item-time">14:02</span></div>
+                <div class="notif-item-body">Production API key for Mercury was rotated. Previous key deactivated.</div>
+              </div>
+              <div class="notif-item">
+                <div class="notif-item-type">Card</div>
+                <div class="notif-item-top"><span class="notif-item-title">Card programme limit updated</span><span class="notif-item-time">11:17</span></div>
+                <div class="notif-item-body">Monthly aggregate limit for the Gusto card programme increased to USD 500,000.</div>
+              </div>
+            </div>
+          </div>
+          <a class="notif-view-all" href="#">View all notifications</a>
+        </div>
+<script>
+  // ── Notifications panel ──
+  (function() {
+    var btn    = document.getElementById('notifBtn');
+    var panel  = document.getElementById('notifPanel');
+    var toggle = document.getElementById('notifUnreadToggle');
+    if (!btn || !panel) return;
+    function positionPanel() {
+      var r = btn.getBoundingClientRect();
+      panel.style.top   = (r.bottom + 8) + 'px';
+      panel.style.right = (window.innerWidth - r.right) + 'px';
+    }
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (panel.classList.contains('open')) {
+        panel.classList.remove('open');
+      } else {
+        positionPanel();
+        panel.classList.add('open');
+      }
+    });
+    document.addEventListener('click', function(e) {
+      if (!panel.contains(e.target) && e.target !== btn) {
+        panel.classList.remove('open');
+      }
+    });
+    panel.addEventListener('click', function(e) { e.stopPropagation(); });
+    if (toggle) toggle.addEventListener('click', function() { toggle.classList.toggle('on'); });
+  })();
+</script>
+
+<!-- Environment switch confirmation modal -->
+<div class="env-modal-backdrop" id="envModalBackdrop">
+  <div class="env-modal">
+    <div class="env-modal-title">Switch to Sandbox?</div>
+    <div class="env-modal-body">You're switching to Sandbox mode. All data shown will be test data and no real transactions will be processed.</div>
+    <div class="env-modal-actions">
+      <button class="env-modal-cancel" id="envModalCancel">Cancel</button>
+      <button class="env-modal-confirm" id="envModalConfirm">Switch to Sandbox</button>
+    </div>
+  </div>
+</div>
+<script>
+  // ── Environment dropdown ──
+  (function() {
+    var currentBtn   = document.getElementById('envCurrentBtn');
+    var currentLabel = document.getElementById('envCurrentLabel');
+    var menu         = document.getElementById('envMenu');
+    var optProd      = document.getElementById('envOptProd');
+    var optSandbox   = document.getElementById('envOptSandbox');
+    var backdrop     = document.getElementById('envModalBackdrop');
+    var cancel       = document.getElementById('envModalCancel');
+    var confirm      = document.getElementById('envModalConfirm');
+    if (!currentBtn || !menu) return;
+
+    var current = 'Production';
+
+    function setEnv(env) {
+      current = env;
+      currentLabel.textContent = env;
+      optProd.className    = 'env-menu-item' + (env === 'Production' ? ' active' : '');
+      optSandbox.className = 'env-menu-item' + (env === 'Sandbox'    ? ' active' : '');
+      optProd.innerHTML    = 'Production' + (env === 'Production' ? ' <svg class="env-check" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' : '');
+      optSandbox.innerHTML = 'Sandbox'    + (env === 'Sandbox'    ? ' <svg class="env-check" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' : '');
+      menu.classList.remove('open');
+    }
+
+    currentBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      menu.classList.toggle('open');
+    });
+
+    document.addEventListener('click', function() { menu.classList.remove('open'); });
+    menu.addEventListener('click', function(e) { e.stopPropagation(); });
+
+    if (optProd) optProd.addEventListener('click', function() {
+      if (current !== 'Production') setEnv('Production');
+      else menu.classList.remove('open');
+    });
+
+    if (optSandbox) optSandbox.addEventListener('click', function() {
+      if (current !== 'Sandbox') {
+        menu.classList.remove('open');
+        if (backdrop) backdrop.classList.add('open');
+      } else {
+        menu.classList.remove('open');
+      }
+    });
+
+    if (cancel)  cancel.addEventListener('click', function() { backdrop.classList.remove('open'); });
+    if (confirm) confirm.addEventListener('click', function() {
+      setEnv('Sandbox');
+      backdrop.classList.remove('open');
+    });
+    if (backdrop) backdrop.addEventListener('click', function(e) {
+      if (e.target === backdrop) backdrop.classList.remove('open');
+    });
+  })();
+</script>
 </body></html>
