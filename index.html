@@ -77,7 +77,7 @@
 
     main {
       flex: 1;
-      padding: 64px 48px;
+      padding: 40px 48px;
       max-width: 1100px;
       margin: 0 auto;
       width: 100%;
@@ -87,15 +87,8 @@
       margin-bottom: 56px;
     }
 
-    .intro-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--muted);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 14px;
-    }
+    .intro-label { display: none; }
+    .intro { margin-bottom: 32px; }
 
     .intro h1 { display: none; }
     .intro p { display: none; }
@@ -327,12 +320,9 @@
 
   <header>
     <div class="logo">
-      <div class="logo-mark">
-        <svg width="20" height="12" viewBox="0 0 60 16" fill="none" aria-label="nium">
-          <path d="M18.7 0v15.3h3V0h-3zM27 9.5C27 13.4 29.4 15.7 33.3 15.7c3.7 0 6.4-2.2 6.4-6.2V0h-3v9.5c0 1.9-.9 3.4-3.4 3.4s-3.3-1.8-3.3-3.6V0H27v9.5zM0 15.3V0h2.8l8.6 10.2V0h3v15.3h-2.7L3 5v10.3H0zM43.3 15.3V0h2.8l8.6 10.2V0h3v15.3h-2.7L46 5v10.3h-2.7z" fill="white"/>
-        </svg>
-      </div>
-      <span class="logo-wordmark">Nium</span>
+      <svg width="64" height="17" viewBox="0 0 60 16" fill="none" aria-label="nium">
+        <path d="M18.7269 0.000999078V15.2795H21.7379V0.000999078H18.7269ZM27.0254 9.46631C27.0254 13.4163 29.3755 15.6522 33.3412 15.6522C37.0131 15.6522 39.7304 13.4163 39.7304 9.46631V0.000999078H36.7193V9.46631C36.7193 11.3295 35.8379 12.8946 33.3412 12.8946C30.8442 12.8946 30.0364 11.106 30.0364 9.24266V0.000999078H27.0254V9.46631ZM0 0.000999078V15.2795H2.86407V4.91994H2.9376L9.91427 15.2795H12.9252V0.000999078H10.0611V10.2116H9.9877L3.08445 0.000999078H0ZM45.0179 0.000999078V15.2795H47.7351V4.77091H47.8084L52.2882 12.4474H52.582L57.2086 4.77091H57.2822V15.2795H59.9992V0.000999078H56.9148L52.7289 7.67753H52.6553L48.2491 0.000999078H45.0179Z" fill="#0b0e58"/>
+      </svg>
     </div>
     <span class="header-badge">Portal Prototypes · April 2026</span>
   </header>
