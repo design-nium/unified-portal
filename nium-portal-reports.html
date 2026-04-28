@@ -2076,6 +2076,15 @@
     }
     /* Make the topbar search look clickable */
     .search-input { cursor: pointer; }
+  
+    .env-current.env-production {
+      background: #aef233;
+      color: #1a2a00;
+    }
+    .env-current.env-sandbox {
+      background: #f5ff57;
+      color: #1a1a00;
+    }
   </style>
   <script>
     // Apply persisted sidebar state before render to avoid flicker
@@ -3027,6 +3036,22 @@
     if (backdrop) backdrop.addEventListener('click', function(e) {
       if (e.target === backdrop) backdrop.classList.remove('open');
     });
+  })();
+</script>
+<script>
+  // Colour-code env button
+  (function() {
+    function updateEnvColor() {
+      var btn = document.getElementById('envCurrentBtn');
+      var label = document.getElementById('envCurrentLabel');
+      if (!btn || !label) return;
+      btn.classList.remove('env-production', 'env-sandbox');
+      btn.classList.add(label.textContent.trim() === 'Sandbox' ? 'env-sandbox' : 'env-production');
+    }
+    updateEnvColor();
+    var observer = new MutationObserver(updateEnvColor);
+    var label = document.getElementById('envCurrentLabel');
+    if (label) observer.observe(label, { childList: true, characterData: true, subtree: true });
   })();
 </script>
 </body>
