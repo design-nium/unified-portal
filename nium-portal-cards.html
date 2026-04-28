@@ -2106,10 +2106,25 @@
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
       <div class="logo-mark">
-        <svg class="sidebar-logo-svg" width="64" height="17" viewBox="0 0 60 16" fill="none" aria-label="nium">
+        <svg class="sidebar-logo-svg" width="74" height="20" viewBox="0 0 60 16" fill="none" aria-label="nium">
           <path d="M18.7269 0.000999078V15.2795H21.7379V0.000999078H18.7269ZM27.0254 9.46631C27.0254 13.4163 29.3755 15.6522 33.3412 15.6522C37.0131 15.6522 39.7304 13.4163 39.7304 9.46631V0.000999078H36.7193V9.46631C36.7193 11.3295 35.8379 12.8946 33.3412 12.8946C30.8442 12.8946 30.0364 11.106 30.0364 9.24266V0.000999078H27.0254V9.46631ZM0 0.000999078V15.2795H2.86407V4.91994H2.9376L9.91427 15.2795H12.9252V0.000999078H10.0611V10.2116H9.9877L3.08445 0.000999078H0ZM45.0179 0.000999078V15.2795H47.7351V4.77091H47.8084L52.2882 12.4474H52.582L57.2086 4.77091H57.2822V15.2795H59.9992V0.000999078H56.9148L52.7289 7.67753H52.6553L48.2491 0.000999078H45.0179Z" fill="#ffffff"/>
         </svg>
         
+      </div>
+      <div class="env-dropdown" id="envDropdown">
+        <button class="env-current" id="envCurrentBtn">
+          <span id="envCurrentLabel">Production</span>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="env-menu" id="envMenu">
+          <button class="env-menu-item active" id="envOptProd" data-env="Production">
+            Production
+            <svg class="env-check" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </button>
+          <button class="env-menu-item" id="envOptSandbox" data-env="Sandbox">
+            Sandbox
+          </button>
+        </div>
       </div>
     </div>
 
