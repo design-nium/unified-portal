@@ -2116,12 +2116,12 @@
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="env-menu" id="envMenu">
+          <button class="env-menu-item" id="envOptSandbox" data-env="Sandbox">
+            Sandbox
+          </button>
           <button class="env-menu-item active" id="envOptProd" data-env="Production">
             Production
             <svg class="env-check" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          </button>
-          <button class="env-menu-item" id="envOptSandbox" data-env="Sandbox">
-            Sandbox
           </button>
         </div>
       </div>
@@ -3015,8 +3015,11 @@
     menu.addEventListener('click', function(e) { e.stopPropagation(); });
 
     if (optProd) optProd.addEventListener('click', function() {
-      if (current !== 'Production') setEnv('Production');
-      else menu.classList.remove('open');
+      if (current === 'Production') { menu.classList.remove('open'); return; }
+      // If in Sandbox, show confirmation modal instead of switching immediately
+      menu.classList.remove('open');
+      var confirmBackdrop = document.getElementById('prodConfirmBackdrop');
+      if (confirmBackdrop) { confirmBackdrop.style.display='flex'; confirmBackdrop.classList.add('open'); }
     });
 
     if (optSandbox) optSandbox.addEventListener('click', function() {
@@ -3053,6 +3056,61 @@
     var label = document.getElementById('envCurrentLabel');
     if (label) observer.observe(label, { childList: true, characterData: true, subtree: true });
   })();
+</script>
+
+<!-- Switch to Production confirmation modal -->
+<div class="env-modal-backdrop" id="prodConfirmBackdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:20000;align-items:center;justify-content:center;">
+  <div class="env-modal">
+    <div class="env-modal-title">Switch to Production?</div>
+    <div class="env-modal-body">You&#39;re about to switch to the live environment. Real transactions will be processed.</div>
+    <div class="env-modal-actions">
+      <button class="env-modal-cancel" id="prodConfirmCancel">Cancel</button>
+      <button class="env-modal-confirm" id="prodConfirmOk">Switch to Production</button>
+    </div>
+  </div>
+</div>
+<script>
+(function() {
+  var backdrop = document.getElementById('prodConfirmBackdrop');
+  if (!backdrop) return;
+  backdrop.style.display = 'flex';
+  backdrop.style.display = 'none';
+  backdrop.classList.remove('open');
+
+  function openModal()  { backdrop.style.display = 'flex'; backdrop.classList.add('open'); }
+  function closeModal() { backdrop.classList.remove('open'); setTimeout(function(){ backdrop.style.display='none'; }, 200); }
+
+  document.getElementById('prodConfirmCancel').addEventListener('click', closeModal);
+  backdrop.addEventListener('click', function(e){ if(e.target===backdrop) closeModal(); });
+
+  document.getElementById('prodConfirmOk').addEventListener('click', function() {
+    closeModal();
+    // Actually switch to production
+    var label = document.getElementById('envCurrentLabel');
+    var btn   = document.getElementById('envCurrentBtn');
+    var optProd    = document.getElementById('envOptProd');
+    var optSandbox = document.getElementById('envOptSandbox');
+    if (label) label.textContent = 'Production';
+    if (optProd)    optProd.className    = 'env-menu-item active';
+    if (optSandbox) optSandbox.className = 'env-menu-item';
+    if (btn) {
+      btn.classList.remove('env-sandbox');
+      btn.classList.add('env-production');
+    }
+  });
+
+  // Wire up the Production menu item click to open modal when in Sandbox
+  var optProd = document.getElementById('envOptProd');
+  if (optProd) {
+    optProd.addEventListener('click', function() {
+      var label = document.getElementById('envCurrentLabel');
+      if (label && label.textContent.trim() === 'Sandbox') {
+        document.getElementById('envMenu').classList.remove('open');
+        openModal();
+      }
+    }, true); // capture phase to intercept before existing handler
+  }
+})();
 </script>
 </body>
 </html>
