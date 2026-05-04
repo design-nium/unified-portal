@@ -1981,8 +1981,10 @@
       border-bottom: 1px solid var(--color-border-tertiary);
       background: var(--color-bg-tertiary);
       white-space: nowrap;
+      text-transform: none;
+      letter-spacing: 0.02em;
     }
-    .balances-table thead th:not(:first-child) { text-align: center; }
+    .balances-table thead th:not(:first-child):not(:nth-child(2)):not(:last-child) { text-align: center; }
     .balances-table thead th:last-child { text-align: left; }
 
     /* Currency rows */

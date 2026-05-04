@@ -2587,6 +2587,7 @@
       font-weight: 600;
       color: var(--color-text-secondary);
       letter-spacing: 0.04em;
+      text-transform: none;
       border-bottom: 1px solid var(--color-border-tertiary);
       background: var(--color-bg-tertiary);
       white-space: nowrap;
@@ -2638,6 +2639,41 @@
       color: #9a5c00;
     }
     .dt-badge-pending::before { background: #e07b0e; }
+    .dt-badge-uploaded {
+      background: #f0f2f5;
+      color: #4a5568;
+    }
+    .dt-badge-uploaded::before { background: #8a96a8; }
+    .dt-badge-failed {
+      background: #fdf0f0;
+      color: #9a2020;
+    }
+    .dt-badge-failed::before { background: #d04040; }
+    .dt-badge-partial {
+      background: #fff8ec;
+      color: #9a5c00;
+    }
+    .dt-badge-partial::before { background: #e07b0e; }
+    .dt-badge-approval {
+      background: #f3f0fc;
+      color: #5a3ea0;
+    }
+    .dt-badge-approval::before { background: #7a5fc0; }
+    .dt-badge-approved {
+      background: #eafaf0;
+      color: #1a7a3a;
+    }
+    .dt-badge-approved::before { background: #2ea44f; }
+    .dt-badge-rejected {
+      background: #fdf0f0;
+      color: #9a2020;
+    }
+    .dt-badge-rejected::before { background: #d04040; }
+    .dt-badge-cancelled {
+      background: #f0f2f5;
+      color: #6b7280;
+    }
+    .dt-badge-cancelled::before { background: #b0b8c8; }
 
     /* ── Column header filters ─────────────────────────────────── */
 
@@ -3253,7 +3289,6 @@
               </tr>
             </thead>
             <tbody id="payoutsTbody">
-              <!-- Row 1 -->
               <tr>
                 <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">04 May 2026, 09:14</td>
                 <td>Upload</td>
@@ -3263,7 +3298,6 @@
                 <td style="font-size:12.5px;color:var(--color-text-secondary);">james.wu@gusto.com</td>
                 <td><div class="dt-actions-col"><span class="dt-link">View transaction details</span><span class="dt-link">View batch details</span></div></td>
               </tr>
-              <!-- Row 2 -->
               <tr data-actionable="1">
                 <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">04 May 2026, 08:52</td>
                 <td>Upload</td>
@@ -3273,87 +3307,78 @@
                 <td style="font-size:12.5px;color:var(--color-text-tertiary);">—</td>
                 <td><div class="dt-actions-col"><span class="dt-link-amber">Review and submit</span></div></td>
               </tr>
-              <!-- Row 3 -->
               <tr>
                 <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">04 May 2026, 07:33</td>
                 <td>Upload</td>
-                <td><span class="dt-badge dt-badge-submitted">Submitted for payout</span></td>
+                <td><span class="dt-badge dt-badge-approval">Submitted for approval</span></td>
                 <td style="color:var(--color-text-primary);font-size:12.5px;">apr_final_reconciliation.csv</td>
                 <td style="font-size:12.5px;color:var(--color-text-secondary);">anna.chen@gusto.com</td>
                 <td style="font-size:12.5px;color:var(--color-text-secondary);">sarah.kim@gusto.com</td>
-                <td><div class="dt-actions-col"><span class="dt-link">View transaction details</span><span class="dt-link">View batch details</span></div></td>
+                <td><div class="dt-actions-col"><span class="dt-link">View batch details</span></div></td>
               </tr>
-              <!-- Row 4 -->
-              <tr data-actionable="1">
+              <tr>
                 <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">03 May 2026, 16:48</td>
                 <td>Upload</td>
-                <td><span class="dt-badge dt-badge-validated">Validation successful</span></td>
+                <td><span class="dt-badge dt-badge-rejected">Rejected</span></td>
                 <td style="color:var(--color-text-primary);font-size:12.5px;">payouts_may3_eve.csv</td>
                 <td style="font-size:12.5px;color:var(--color-text-secondary);">david.ng@gusto.com</td>
-                <td style="font-size:12.5px;color:var(--color-text-tertiary);">—</td>
-                <td><div class="dt-actions-col"><span class="dt-link-amber">Review and submit</span></div></td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">james.wu@gusto.com</td>
+                <td><div class="dt-actions-col"><span class="dt-link">View batch details</span></div></td>
               </tr>
-              <!-- Row 5 -->
               <tr>
                 <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">03 May 2026, 14:22</td>
                 <td>Upload</td>
-                <td><span class="dt-badge dt-badge-submitted">Submitted for payout</span></td>
+                <td><span class="dt-badge dt-badge-approved">Approved</span></td>
                 <td style="color:var(--color-text-primary);font-size:12.5px;">payouts_may3_afternoon.csv</td>
                 <td style="font-size:12.5px;color:var(--color-text-secondary);">raj.patel@gusto.com</td>
                 <td style="font-size:12.5px;color:var(--color-text-secondary);">james.wu@gusto.com</td>
                 <td><div class="dt-actions-col"><span class="dt-link">View transaction details</span><span class="dt-link">View batch details</span></div></td>
               </tr>
-              <!-- Row 6 -->
-              <tr>
+              <tr data-actionable="1">
                 <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">03 May 2026, 11:09</td>
-                <td>Upload</td>
-                <td><span class="dt-badge dt-badge-submitted">Submitted for payout</span></td>
+                <td>Inline</td>
+                <td><span class="dt-badge dt-badge-validated">Validation successful</span></td>
                 <td style="color:var(--color-text-primary);font-size:12.5px;">payouts_may3_morning.csv</td>
                 <td style="font-size:12.5px;color:var(--color-text-secondary);">anna.chen@gusto.com</td>
-                <td style="font-size:12.5px;color:var(--color-text-secondary);">sarah.kim@gusto.com</td>
-                <td><div class="dt-actions-col"><span class="dt-link">View transaction details</span><span class="dt-link">View batch details</span></div></td>
+                <td style="font-size:12.5px;color:var(--color-text-tertiary);">—</td>
+                <td><div class="dt-actions-col"><span class="dt-link-amber">Review and submit</span></div></td>
               </tr>
-              <!-- Row 7 -->
-              <tr data-actionable="1">
+              <tr>
                 <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">03 May 2026, 09:55</td>
                 <td>Upload</td>
-                <td><span class="dt-badge dt-badge-validated">Validation successful</span></td>
+                <td><span class="dt-badge dt-badge-partial">Validation partially successful</span></td>
                 <td style="color:var(--color-text-primary);font-size:12.5px;">contractor_payouts_wk18.csv</td>
                 <td style="font-size:12.5px;color:var(--color-text-secondary);">david.ng@gusto.com</td>
                 <td style="font-size:12.5px;color:var(--color-text-tertiary);">—</td>
-                <td><div class="dt-actions-col"><span class="dt-link-amber">Review and submit</span></div></td>
+                <td><div class="dt-actions-col"><span class="dt-link">View batch details</span></div></td>
               </tr>
-              <!-- Row 8 -->
               <tr>
                 <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">02 May 2026, 17:31</td>
                 <td>Upload</td>
-                <td><span class="dt-badge dt-badge-submitted">Submitted for payout</span></td>
+                <td><span class="dt-badge dt-badge-failed">Validation failed</span></td>
                 <td style="color:var(--color-text-primary);font-size:12.5px;">payouts_may2_evening.csv</td>
                 <td style="font-size:12.5px;color:var(--color-text-secondary);">raj.patel@gusto.com</td>
-                <td style="font-size:12.5px;color:var(--color-text-secondary);">james.wu@gusto.com</td>
-                <td><div class="dt-actions-col"><span class="dt-link">View transaction details</span><span class="dt-link">View batch details</span></div></td>
+                <td style="font-size:12.5px;color:var(--color-text-tertiary);">—</td>
+                <td><div class="dt-actions-col"><span class="dt-link">View batch details</span></div></td>
               </tr>
-              <!-- Row 9 -->
               <tr>
                 <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">02 May 2026, 15:12</td>
-                <td>Upload</td>
-                <td><span class="dt-badge dt-badge-submitted">Submitted for payout</span></td>
+                <td>Inline</td>
+                <td><span class="dt-badge dt-badge-uploaded">Uploaded</span></td>
                 <td style="color:var(--color-text-primary);font-size:12.5px;">employee_disbursements_q2.csv</td>
                 <td style="font-size:12.5px;color:var(--color-text-secondary);">anna.chen@gusto.com</td>
-                <td style="font-size:12.5px;color:var(--color-text-secondary);">sarah.kim@gusto.com</td>
-                <td><div class="dt-actions-col"><span class="dt-link">View transaction details</span><span class="dt-link">View batch details</span></div></td>
+                <td style="font-size:12.5px;color:var(--color-text-tertiary);">—</td>
+                <td><div class="dt-actions-col"><span class="dt-link">View batch details</span></div></td>
               </tr>
-              <!-- Row 10 -->
-              <tr data-actionable="1">
+              <tr>
                 <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">02 May 2026, 13:07</td>
                 <td>Upload</td>
-                <td><span class="dt-badge dt-badge-validated">Validation successful</span></td>
+                <td><span class="dt-badge dt-badge-failed">Upload failed</span></td>
                 <td style="color:var(--color-text-primary);font-size:12.5px;">payouts_may2_midday.csv</td>
                 <td style="font-size:12.5px;color:var(--color-text-secondary);">david.ng@gusto.com</td>
                 <td style="font-size:12.5px;color:var(--color-text-tertiary);">—</td>
-                <td><div class="dt-actions-col"><span class="dt-link-amber">Review and submit</span></div></td>
+                <td><div class="dt-actions-col"><span class="dt-link">View batch details</span></div></td>
               </tr>
-              <!-- Row 11 -->
               <tr>
                 <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">02 May 2026, 10:45</td>
                 <td>Upload</td>
@@ -3363,20 +3388,18 @@
                 <td style="font-size:12.5px;color:var(--color-text-secondary);">james.wu@gusto.com</td>
                 <td><div class="dt-actions-col"><span class="dt-link">View transaction details</span><span class="dt-link">View batch details</span></div></td>
               </tr>
-              <!-- Row 12 -->
               <tr>
                 <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">01 May 2026, 16:20</td>
                 <td>Upload</td>
-                <td><span class="dt-badge dt-badge-submitted">Submitted for payout</span></td>
+                <td><span class="dt-badge dt-badge-cancelled">Cancelled</span></td>
                 <td style="color:var(--color-text-primary);font-size:12.5px;">payouts_may1_afternoon.csv</td>
                 <td style="font-size:12.5px;color:var(--color-text-secondary);">anna.chen@gusto.com</td>
                 <td style="font-size:12.5px;color:var(--color-text-secondary);">sarah.kim@gusto.com</td>
-                <td><div class="dt-actions-col"><span class="dt-link">View transaction details</span><span class="dt-link">View batch details</span></div></td>
+                <td><div class="dt-actions-col"><span class="dt-link">View batch details</span></div></td>
               </tr>
-              <!-- Row 13 -->
-              <tr>
+              <tr data-actionable="1">
                 <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">01 May 2026, 09:30</td>
-                <td>Upload</td>
+                <td>Inline</td>
                 <td><span class="dt-badge dt-badge-validated">Validation successful</span></td>
                 <td style="color:var(--color-text-primary);font-size:12.5px;">payouts_may1_morning.csv</td>
                 <td style="font-size:12.5px;color:var(--color-text-secondary);">david.ng@gusto.com</td>
