@@ -2142,17 +2142,21 @@
     }
     .balances-customer-label svg { color: var(--color-text-tertiary); }
     .bal-customer-select {
-      background: none;
-      border: none;
-      font-size: 20px;
-      font-weight: 600;
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border-secondary);
+      border-radius: var(--radius-sm);
+      padding: 7px 11px;
+      font-size: 13px;
+      font-weight: 500;
       color: var(--color-text-primary);
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 0;
+      gap: 7px;
+      font-family: inherit;
+      white-space: nowrap;
     }
+    .bal-customer-select:hover { border-color: var(--color-text-tertiary); }
 
     /* Wallet dropdown — client/customer type indicator dots */
     .bal-type-dot {
