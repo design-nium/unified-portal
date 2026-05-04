@@ -1718,7 +1718,7 @@
     <div class="actions-section">
       <div class="section-heading">Quick actions</div>
       <div class="actions-grid">
-        <button class="action-btn">
+        <button class="action-btn" onclick="openVerifyModal()">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0b0e58" stroke-width="1.8"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
           <div><div class="action-title">Send money</div><div class="action-sub">Payout</div></div>
         </button>
@@ -3050,6 +3050,116 @@
         if (e.key === 'Escape') overlay.classList.remove('open');
       });
     })();
+  </script>
+
+
+  <!-- Verify Account Modal -->
+  <div id="verifyModalOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:4000;align-items:center;justify-content:center;" onclick="if(event.target===this)closeVerifyModal()">
+    <div style="background:#fff;border-radius:20px;width:520px;max-height:92vh;overflow-y:auto;padding:36px 40px 32px;box-shadow:0 24px 60px rgba(0,0,0,0.18);position:relative;animation:modal-in 0.2s ease;">
+      <button onclick="closeVerifyModal()" style="position:absolute;top:20px;right:24px;background:none;border:none;cursor:pointer;color:#94a3b8;font-size:20px;line-height:1;">&#x2715;</button>
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:28px;">
+        <h2 style="font-size:28px;font-weight:700;color:#0f172a;margin:0;">Verify</h2>
+        <span style="background:#22c55e;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:0.04em;">LIVE</span>
+      </div>
+      <div class="vf-field">
+        <label class="vf-label">Destination country*</label>
+        <div class="vf-select-wrap">
+          <select class="vf-select vf-has-flag" id="vfCountry" onchange="updateVerifyForm()">
+            <option value="US">United States</option>
+            <option value="GB">United Kingdom</option>
+            <option value="DE">Germany</option>
+            <option value="SG">Singapore</option>
+            <option value="IN">India</option>
+            <option value="AU">Australia</option>
+          </select>
+          <span id="vfCountryFlag" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:20px;pointer-events:none;">&#x1F1FA;&#x1F1F8;</span>
+        </div>
+      </div>
+      <div class="vf-field">
+        <label class="vf-label">Destination currency*</label>
+        <div class="vf-select-wrap">
+          <select class="vf-select vf-has-flag" id="vfCurrency">
+            <option>US dollar</option>
+            <option>British pound</option>
+            <option>Euro</option>
+            <option>Singapore dollar</option>
+            <option>Indian rupee</option>
+            <option>Australian dollar</option>
+          </select>
+          <span id="vfCurrencyFlag" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:20px;pointer-events:none;">&#x1F1FA;&#x1F1F8;</span>
+        </div>
+      </div>
+      <div class="vf-field">
+        <label class="vf-label">Payout method</label>
+        <div class="vf-select-wrap">
+          <select class="vf-select" id="vfMethod" onchange="updateVerifyForm()">
+            <option value="LOCAL">Local</option>
+            <option value="PROXY">Proxy</option>
+          </select>
+        </div>
+      </div>
+      <div id="vfAccountTypeWrap" class="vf-field">
+        <label class="vf-label">Account type</label>
+        <div class="vf-select-wrap">
+          <select class="vf-select"><option>Checking</option><option>Savings</option></select>
+        </div>
+      </div>
+      <div id="vfAccountNumberWrap" class="vf-field">
+        <label class="vf-label">Account number*</label>
+        <input type="text" class="vf-input" placeholder="Enter account number" value="1234567890">
+      </div>
+      <div id="vfRoutingWrap" class="vf-field">
+        <label class="vf-label">Routing number*</label>
+        <input type="text" class="vf-input" placeholder="Enter routing number" value="1234567890">
+      </div>
+      <div id="vfProxyWrap" class="vf-field" style="display:none;">
+        <label class="vf-label">Proxy ID*</label>
+        <input type="text" class="vf-input" placeholder="e.g. UPI ID or PayNow number">
+      </div>
+      <div id="verifyResult" style="display:none;margin-bottom:20px;"></div>
+      <div style="display:flex;justify-content:flex-end;margin-top:8px;">
+        <button onclick="runVerify()" style="background:#0C0E54;color:#fff;border:none;border-radius:50px;padding:14px 32px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;">Verify</button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .vf-field { margin-bottom:18px; }
+    .vf-label { display:block;font-size:13px;color:#64748b;margin-bottom:6px; }
+    .vf-select-wrap { position:relative; }
+    .vf-select { width:100%;padding:16px;border:1.5px solid #cbd5e1;border-radius:10px;font-size:16px;color:#0f172a;font-family:inherit;outline:none;appearance:none;background:#fff;cursor:pointer; }
+    .vf-select.vf-has-flag { padding-left:52px; }
+    .vf-select:focus { border-color:#A9B4FF; }
+    .vf-input { width:100%;padding:16px;border:1.5px solid #cbd5e1;border-radius:10px;font-size:16px;color:#0f172a;font-family:inherit;outline:none;box-sizing:border-box; }
+    .vf-input:focus { border-color:#A9B4FF; }
+    .vf-result-valid { background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:16px 20px;color:#166534; }
+    .vf-result-invalid { background:#fef2f2;border:1px solid #fca5a5;border-radius:10px;padding:16px 20px;color:#991b1b; }
+    .vf-result-title { font-size:14px;font-weight:700;margin-bottom:4px; }
+    .vf-result-detail { font-size:13px;line-height:1.5; }
+  </style>
+
+  <script>
+    function openVerifyModal() {
+      document.getElementById('verifyModalOverlay').style.display = 'flex';
+      document.getElementById('verifyResult').style.display = 'none';
+    }
+    function closeVerifyModal() {
+      document.getElementById('verifyModalOverlay').style.display = 'none';
+    }
+    function updateVerifyForm() {
+      var method = document.getElementById('vfMethod').value;
+      var isProxy = method === 'PROXY';
+      document.getElementById('vfAccountNumberWrap').style.display = isProxy ? 'none' : 'block';
+      document.getElementById('vfRoutingWrap').style.display = isProxy ? 'none' : 'block';
+      document.getElementById('vfAccountTypeWrap').style.display = isProxy ? 'none' : 'block';
+      document.getElementById('vfProxyWrap').style.display = isProxy ? 'block' : 'none';
+    }
+    function runVerify() {
+      var result = document.getElementById('verifyResult');
+      result.style.display = 'block';
+      result.className = 'vf-result-valid';
+      result.innerHTML = '<div class="vf-result-title">&#x2713; Account verified</div><div class="vf-result-detail"><strong>Account holder:</strong> Workera AI Inc.<br><strong>Status:</strong> Valid<br><strong>Name match:</strong> Strong match</div>';
+    }
   </script>
 
 </body></html>

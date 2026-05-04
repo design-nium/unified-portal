@@ -2150,8 +2150,115 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       padding: 0;
+    }
+
+    /* Wallet dropdown — client/customer type indicator dots */
+    .bal-type-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .bal-dot-client   { background: var(--color-brand-navy); }
+    .bal-dot-customer { background: #b0b8c8; }
+
+    /* Wallet dropdown menu */
+    .bal-wallet-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      width: 248px;
+      background: var(--color-bg-primary);
+      border: 0.5px solid var(--color-border-secondary);
+      border-radius: var(--radius-md);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+      z-index: 20;
+      display: none;
+      overflow: hidden;
+    }
+    .bal-wallet-menu.open { display: block; }
+
+    .bal-search-row {
+      padding: 8px 8px 6px;
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+    }
+    .bal-search-input {
+      width: 100%;
+      border: 1px solid var(--color-border-secondary);
+      border-radius: var(--radius-sm);
+      padding: 5px 9px;
+      font-size: 12px;
+      color: var(--color-text-primary);
+      background: var(--color-bg-secondary);
+      outline: none;
+      font-family: inherit;
+    }
+    .bal-search-input:focus {
+      border-color: var(--color-brand-accent-light);
+      background: var(--color-bg-primary);
+    }
+    .bal-menu-section-label {
+      padding: 6px 10px 3px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+    }
+    .bal-client-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      cursor: pointer;
+    }
+    .bal-client-row:hover { background: #f0f1fc; }
+    .bal-client-row-name {
+      flex: 1;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-brand-navy);
+    }
+    .bal-client-badge {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      background: var(--color-brand-navy);
+      color: #fff;
+      border-radius: 4px;
+      padding: 2px 7px;
+    }
+    .bal-menu-divider {
+      height: 1px;
+      background: var(--color-border-tertiary);
+      margin: 2px 0;
+    }
+    .bal-customer-list {
+      max-height: 208px;
+      overflow-y: auto;
+    }
+    .bal-customer-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      cursor: pointer;
+    }
+    .bal-customer-item:hover { background: var(--color-bg-secondary); }
+    .bal-customer-item.active .bal-item-name {
+      font-weight: 500;
+      color: var(--color-brand-navy);
+    }
+    .bal-item-name { font-size: 13px; color: var(--color-text-primary); }
+    .bal-highlight { background: #dce3ff; border-radius: 2px; padding: 0 1px; }
+    .bal-no-results {
+      padding: 16px 10px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+      display: none;
     }
 
     /* -------------------------------------------------------------
@@ -2480,20 +2587,35 @@
         <div class="balances-page-header">
           <div style="position:relative;display:inline-block;">
               <button class="bal-customer-select" id="balCustomerBtn">
+                <span class="bal-type-dot bal-dot-customer" id="balTypeDot"></span>
                 <span id="balCustomerName">Workera AI</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
               </button>
-              <div class="client-menu" id="balCustomerMenu">
-                <button data-value="goldbelly">Goldbelly</button>
-                <button data-value="cortex">Cortex Health</button>
-                <button data-value="salty">The Salty Donut</button>
-                <button data-value="workera" class="selected">Workera AI</button>
-                <button data-value="rocketpower">RocketPower</button>
-                <button data-value="roller">Roller Rabbit</button>
-                <button data-value="range">Range Leather</button>
-                <button data-value="circle">Circle Creek Therapy</button>
-                <button data-value="modernlaw">Modern Law Firms</button>
-                <button data-value="andela">Andela</button>
+              <div class="bal-wallet-menu" id="balCustomerMenu">
+                <div class="bal-search-row">
+                  <input class="bal-search-input" id="balSearchInput" type="text" placeholder="Search customers…" autocomplete="off" />
+                </div>
+                <div class="bal-menu-section-label">Client</div>
+                <div class="bal-client-row" id="balClientRow" data-name="Gusto">
+                  <span class="bal-type-dot bal-dot-client"></span>
+                  <span class="bal-client-row-name">Gusto</span>
+                  <span class="bal-client-badge">Client</span>
+                </div>
+                <div class="bal-menu-divider"></div>
+                <div class="bal-menu-section-label">Customers</div>
+                <div class="bal-customer-list" id="balCustomerList">
+                  <div class="bal-customer-item" data-name="Goldbelly"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Goldbelly</span></div>
+                  <div class="bal-customer-item" data-name="Cortex Health"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Cortex Health</span></div>
+                  <div class="bal-customer-item" data-name="The Salty Donut"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">The Salty Donut</span></div>
+                  <div class="bal-customer-item active" data-name="Workera AI"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Workera AI</span></div>
+                  <div class="bal-customer-item" data-name="RocketPower"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">RocketPower</span></div>
+                  <div class="bal-customer-item" data-name="Roller Rabbit"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Roller Rabbit</span></div>
+                  <div class="bal-customer-item" data-name="Range Leather"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Range Leather</span></div>
+                  <div class="bal-customer-item" data-name="Circle Creek Therapy"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Circle Creek Therapy</span></div>
+                  <div class="bal-customer-item" data-name="Modern Law Firms"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Modern Law Firms</span></div>
+                  <div class="bal-customer-item" data-name="Andela"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Andela</span></div>
+                </div>
+                <div class="bal-no-results" id="balNoResults">No customers found</div>
               </div>
             </div>
           <div style="margin-left:auto;display:flex;gap:10px;">
@@ -2730,27 +2852,82 @@
   setupDropdown('[data-period-btn]', '.period-menu');
   setupDropdown('[data-client-btn]', '.client-menu');
 
-  // Balances customer dropdown — opens on click, closes on outside click or selection
-  var balBtn  = document.getElementById('balCustomerBtn');
-  var balMenu = document.getElementById('balCustomerMenu');
-  var balName = document.getElementById('balCustomerName');
+  // Wallet customer dropdown — client/customer distinction + type-ahead search
+  var balBtn          = document.getElementById('balCustomerBtn');
+  var balMenu         = document.getElementById('balCustomerMenu');
+  var balName         = document.getElementById('balCustomerName');
+  var balTypeDot      = document.getElementById('balTypeDot');
+  var balSearchInput  = document.getElementById('balSearchInput');
+  var balClientRow    = document.getElementById('balClientRow');
+  var balCustomerList = document.getElementById('balCustomerList');
+  var balNoResults    = document.getElementById('balNoResults');
+
+  function balOpen() {
+    balMenu.classList.add('open');
+    balSearchInput.value = '';
+    balFilterCustomers('');
+    setTimeout(function() { balSearchInput.focus(); }, 10);
+  }
+  function balClose() {
+    balMenu.classList.remove('open');
+  }
+  function balSetSelection(name, isClient) {
+    balName.textContent = name;
+    balTypeDot.className = 'bal-type-dot ' + (isClient ? 'bal-dot-client' : 'bal-dot-customer');
+  }
+  function escRe(s) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+  function balFilterCustomers(query) {
+    var q = query.trim().toLowerCase();
+    var visible = 0;
+    balCustomerList.querySelectorAll('.bal-customer-item').forEach(function(item) {
+      var name = item.getAttribute('data-name');
+      if (!q || name.toLowerCase().indexOf(q) !== -1) {
+        item.style.display = 'flex';
+        var nameEl = item.querySelector('.bal-item-name');
+        if (q) {
+          nameEl.innerHTML = name.replace(new RegExp('(' + escRe(q) + ')', 'gi'),
+            '<span class="bal-highlight">$1</span>');
+        } else {
+          nameEl.textContent = name;
+        }
+        visible++;
+      } else {
+        item.style.display = 'none';
+      }
+    });
+    balNoResults.style.display = visible === 0 ? 'block' : 'none';
+  }
+
   if (balBtn && balMenu) {
     balBtn.addEventListener('click', function(e) {
       e.stopPropagation();
-      balMenu.classList.toggle('open');
+      balMenu.classList.contains('open') ? balClose() : balOpen();
     });
-    balMenu.querySelectorAll('button').forEach(function(item) {
+    balClientRow.addEventListener('click', function(e) {
+      e.stopPropagation();
+      balCustomerList.querySelectorAll('.bal-customer-item').forEach(function(i) { i.classList.remove('active'); });
+      balSetSelection('Gusto', true);
+      balClose();
+    });
+    balCustomerList.querySelectorAll('.bal-customer-item').forEach(function(item) {
       item.addEventListener('click', function(e) {
         e.stopPropagation();
-        balMenu.querySelectorAll('button').forEach(function(b) { b.classList.remove('selected'); });
-        item.classList.add('selected');
-        balName.textContent = item.textContent.trim();
-        balMenu.classList.remove('open');
+        balCustomerList.querySelectorAll('.bal-customer-item').forEach(function(i) { i.classList.remove('active'); });
+        item.classList.add('active');
+        balSetSelection(item.getAttribute('data-name'), false);
+        balClose();
       });
     });
-    document.addEventListener('click', function() {
-      balMenu.classList.remove('open');
+    balSearchInput.addEventListener('input', function() {
+      balFilterCustomers(this.value);
     });
+    balSearchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') balClose();
+    });
+    balMenu.addEventListener('click', function(e) { e.stopPropagation(); });
+    document.addEventListener('click', function() { balClose(); });
   }
 
   // Wallet tabs
