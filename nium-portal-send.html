@@ -2317,6 +2317,577 @@
       background: #f5ff57;
       color: #1a1a00;
     }
+
+    /* =============================================================
+       Payouts page
+       ============================================================= */
+    .payouts-page { padding: 0 0 48px; }
+
+    /* Page header */
+    .payouts-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .payouts-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin: 0;
+    }
+
+    /* KPI row */
+    .pay-kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .pay-kpi-card {
+      background: var(--color-bg-primary);
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+      transition: border-color 0.12s ease-out;
+    }
+    .pay-kpi-card:hover { border-color: var(--color-border-secondary); }
+    .pay-kpi-label {
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--color-text-secondary);
+    }
+    .pay-kpi-value {
+      font-size: 26px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+    .pay-kpi-sub {
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+      margin-top: 2px;
+    }
+    .pay-kpi-card.attention {
+      border-left: 3px solid #e07b0e;
+      background: #fffaf4;
+    }
+    .pay-kpi-card.attention .pay-kpi-value { color: #c0640a; }
+    .pay-kpi-card.attention .pay-kpi-label { color: #a05208; }
+
+    /* Filter bar */
+    .pay-filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Customer dropdown (reuse bal-* pattern) */
+    .bal-type-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .bal-dot-client   { background: var(--color-brand-navy); }
+    .bal-dot-customer { background: #b0b8c8; }
+    .pay-customer-select {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border-secondary);
+      border-radius: var(--radius-sm);
+      padding: 7px 11px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      cursor: pointer;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+    .pay-customer-select:hover { border-color: var(--color-text-tertiary); }
+    .pay-customer-wrap { position: relative; display: inline-block; }
+
+    .bal-wallet-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      width: 248px;
+      background: var(--color-bg-primary);
+      border: 0.5px solid var(--color-border-secondary);
+      border-radius: var(--radius-md);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+      z-index: 20;
+      display: none;
+      overflow: hidden;
+    }
+    .bal-wallet-menu.open { display: block; }
+    .bal-search-row { padding: 8px 8px 6px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .bal-search-input {
+      width: 100%;
+      border: 1px solid var(--color-border-secondary);
+      border-radius: var(--radius-sm);
+      padding: 5px 9px;
+      font-size: 12px;
+      color: var(--color-text-primary);
+      background: var(--color-bg-secondary);
+      outline: none;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+    .bal-search-input:focus { border-color: var(--color-brand-accent-light); background: var(--color-bg-primary); }
+    .bal-menu-section-label {
+      padding: 6px 10px 3px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+    }
+    .bal-client-row {
+      display: flex; align-items: center; gap: 8px; padding: 7px 10px; cursor: pointer;
+    }
+    .bal-client-row:hover { background: #f0f1fc; }
+    .bal-client-row-name { flex: 1; font-size: 13px; font-weight: 500; color: var(--color-brand-navy); }
+    .bal-client-badge {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.04em;
+      background: var(--color-brand-navy); color: #fff;
+      border-radius: 4px; padding: 2px 6px;
+    }
+    .bal-menu-divider { height: 0.5px; background: var(--color-border-tertiary); margin: 2px 0; }
+    .bal-customer-list { max-height: 220px; overflow-y: auto; }
+    .bal-customer-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 7px 10px; cursor: pointer; font-size: 13px;
+    }
+    .bal-customer-item:hover { background: var(--color-bg-secondary); }
+    .bal-customer-item.active { background: #f0f1fc; }
+    .bal-item-name { color: var(--color-text-primary); }
+    .bal-highlight { background: #ffe58f; border-radius: 2px; }
+    .bal-no-results { padding: 10px 12px; font-size: 12.5px; color: var(--color-text-tertiary); display: none; }
+
+    /* Batch ID filter input */
+    .pay-filter-input {
+      border: 1px solid var(--color-border-secondary);
+      border-radius: var(--radius-sm);
+      padding: 7px 11px;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--color-text-primary);
+      background: var(--color-bg-primary);
+      outline: none;
+      width: 180px;
+    }
+    .pay-filter-input:focus { border-color: var(--color-brand-accent-light); }
+    .pay-filter-input::placeholder { color: var(--color-text-tertiary); }
+
+    /* "View actionable rows only" toggle */
+    .pay-toggle-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--color-text-primary);
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .pay-toggle {
+      width: 34px;
+      height: 18px;
+      background: var(--color-border-secondary);
+      border-radius: 9px;
+      position: relative;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .pay-toggle::after {
+      content: '';
+      position: absolute;
+      top: 2px; left: 2px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform 0.15s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .pay-toggle.on { background: var(--color-brand-navy); }
+    .pay-toggle.on::after { transform: translateX(16px); }
+
+    /* "New payouts" split button */
+    .pay-split-wrap { position: relative; display: inline-flex; margin-left: auto; }
+    .pay-split-main {
+      background: var(--color-brand-navy);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+      padding: 8px 16px;
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+    .pay-split-main:hover { background: #1a2070; }
+    .pay-split-caret {
+      background: var(--color-brand-navy);
+      color: #fff;
+      border: none;
+      border-left: 1px solid rgba(255,255,255,0.25);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 8px 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    .pay-split-caret:hover { background: #1a2070; }
+    .pay-split-menu {
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      background: var(--color-bg-primary);
+      border: 0.5px solid var(--color-border-secondary);
+      border-radius: var(--radius-md);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+      z-index: 20;
+      display: none;
+      min-width: 168px;
+      overflow: hidden;
+    }
+    .pay-split-menu.open { display: block; }
+    .pay-split-item {
+      padding: 9px 16px;
+      font-size: 13px;
+      color: var(--color-text-primary);
+      cursor: pointer;
+    }
+    .pay-split-item:hover { background: var(--color-bg-secondary); }
+
+    /* Data table */
+    .pay-table-wrap {
+      background: var(--color-bg-primary);
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .data-table thead th {
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--color-border-tertiary);
+      background: var(--color-bg-tertiary);
+      white-space: nowrap;
+    }
+    .data-table tbody td {
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--color-border-tertiary);
+      vertical-align: middle;
+      color: var(--color-text-primary);
+    }
+    .data-table tbody tr:last-child td { border-bottom: none; }
+    .data-table tbody tr:hover td { background: var(--color-bg-tertiary); }
+    .dt-link { color: var(--color-brand-navy); font-weight: 500; cursor: pointer; font-size: 12.5px; }
+    .dt-link:hover { text-decoration: underline; }
+    .dt-link-amber { color: #c0640a; font-weight: 500; cursor: pointer; font-size: 12.5px; }
+    .dt-link-amber:hover { text-decoration: underline; }
+    .dt-muted { color: var(--color-text-tertiary); }
+    .dt-actions-col { display: flex; flex-direction: column; gap: 3px; }
+
+    /* Status badges */
+    .dt-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .dt-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dt-badge-submitted {
+      background: #e6f7f7;
+      color: #0a7a7a;
+    }
+    .dt-badge-submitted::before { background: #0a9e9e; }
+    .dt-badge-validated {
+      background: #eafaf0;
+      color: #1a7a3a;
+    }
+    .dt-badge-validated::before { background: #2ea44f; }
+    .dt-badge-pending {
+      background: #fff8ec;
+      color: #9a5c00;
+    }
+    .dt-badge-pending::before { background: #e07b0e; }
+
+    /* ── Column header filters ─────────────────────────────────── */
+
+    /* Wrapper inside each <th> that has a filter */
+    .col-filter-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    /* The clickable header label + icon */
+    .col-filter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font: inherit;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      letter-spacing: 0.04em;
+      padding: 0;
+      white-space: nowrap;
+    }
+    .col-filter-btn svg { color: var(--color-text-tertiary); transition: color 0.12s; }
+    .col-filter-btn:hover svg { color: var(--color-text-primary); }
+    .col-filter-btn.active svg { color: var(--color-brand-navy); }
+    /* small indicator dot when filter is applied */
+    .col-filter-btn.active::after {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--color-brand-navy);
+      flex-shrink: 0;
+    }
+
+    /* Generic popover shell */
+    .col-filter-popover {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      background: var(--color-bg-primary);
+      border: 0.5px solid var(--color-border-secondary);
+      border-radius: var(--radius-md);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+      z-index: 30;
+      display: none;
+      min-width: 200px;
+    }
+    .col-filter-popover.open { display: block; }
+
+    /* ── Date range popover ── */
+    .date-pop-presets {
+      padding: 6px 4px;
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+    }
+    .date-pop-preset {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 7px 14px;
+      font-size: 13px;
+      border: none;
+      background: none;
+      font-family: inherit;
+      color: var(--color-text-primary);
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+    }
+    .date-pop-preset:hover { background: var(--color-bg-secondary); }
+    .date-pop-preset.active {
+      background: #f0f1fc;
+      color: var(--color-brand-navy);
+      font-weight: 500;
+    }
+    .date-pop-custom {
+      padding: 10px 14px 12px;
+    }
+    .date-pop-custom-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: 8px;
+    }
+    .date-pop-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .date-pop-field {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--color-text-secondary);
+    }
+    .date-pop-field label { width: 28px; flex-shrink: 0; }
+    .date-pop-input {
+      flex: 1;
+      border: 1px solid var(--color-border-secondary);
+      border-radius: var(--radius-sm);
+      padding: 5px 8px;
+      font-size: 12px;
+      font-family: inherit;
+      color: var(--color-text-primary);
+      background: var(--color-bg-primary);
+      outline: none;
+    }
+    .date-pop-input:focus { border-color: var(--color-brand-accent-light); }
+    .date-pop-apply {
+      margin-top: 8px;
+      width: 100%;
+      padding: 6px;
+      background: var(--color-brand-navy);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 12.5px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .date-pop-apply:hover { background: #1a2070; }
+
+    /* ── Sort toggle button (used in Type column header) ── */
+    .col-sort-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 2px 3px;
+      color: var(--color-text-tertiary);
+      display: inline-flex;
+      align-items: center;
+      border-radius: 3px;
+      transition: color 0.12s, background 0.12s;
+    }
+    .col-sort-btn:hover { color: var(--color-text-primary); background: var(--color-bg-secondary); }
+    .col-sort-btn.sorted { color: var(--color-brand-navy); }
+
+    /* ── Status grouped multi-select ── */
+    .status-pop-controls {
+      display: flex;
+      gap: 0;
+      padding: 8px 12px 6px;
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+    }
+    .status-pop-ctrl {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-brand-navy);
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+      font-family: inherit;
+    }
+    .status-pop-ctrl:hover { text-decoration: underline; }
+    .status-pop-ctrl + .status-pop-ctrl::before {
+      content: '·';
+      margin: 0 6px;
+      color: var(--color-text-tertiary);
+    }
+    .status-pop-body {
+      padding: 4px 0 8px;
+      max-height: 310px;
+      overflow-y: auto;
+    }
+    .status-pop-group-label {
+      padding: 8px 12px 3px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+    }
+    .status-pop-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 6px 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .status-pop-item:hover { background: var(--color-bg-secondary); }
+    .status-pop-checkbox {
+      width: 14px; height: 14px;
+      flex-shrink: 0;
+      accent-color: var(--color-brand-navy);
+      cursor: pointer;
+    }
+    .status-pop-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .status-pop-name {
+      font-size: 12.5px;
+      color: var(--color-text-primary);
+    }
+
+    /* ── Text search popover (File name / Maker / Checker) ── */
+    .text-pop-inner {
+      padding: 10px 10px;
+    }
+    .text-pop-input {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid var(--color-border-secondary);
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--color-text-primary);
+      background: var(--color-bg-primary);
+      outline: none;
+    }
+    .text-pop-input:focus { border-color: var(--color-brand-accent-light); }
+    .text-pop-input::placeholder { color: var(--color-text-tertiary); }
+
+    /* Pagination footer */
+    .pay-table-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 16px;
+      border-top: 1px solid var(--color-border-tertiary);
+      font-size: 12.5px;
+      color: var(--color-text-secondary);
+    }
+    .pay-page-btns { display: flex; gap: 4px; }
+    .pay-page-btn {
+      padding: 4px 10px;
+      font-size: 12.5px;
+      border: 0.5px solid var(--color-border-secondary);
+      border-radius: var(--radius-sm);
+      background: var(--color-bg-primary);
+      cursor: pointer;
+      font-family: inherit;
+      color: var(--color-text-primary);
+    }
+    .pay-page-btn:hover { background: var(--color-bg-secondary); }
+    .pay-page-btn.active {
+      background: var(--color-brand-navy);
+      color: #fff;
+      border-color: var(--color-brand-navy);
+    }
   </style>
   <script>
     // Apply persisted sidebar state before render to avoid flicker
@@ -2466,27 +3037,365 @@
     </div>
 
         <div class="content-inner">
-      <div class="travel-page-header">
-        <h1 class="travel-title" id="page-h1">Payouts</h1>
-        <button class="btn-move-funds">+ New payout</button>
-      </div>
-      <div style="margin-top:4px;">
-        <div class="data-table-wrap">
-          <table class="data-table">
-            <thead><tr><th>Date</th><th>Reference</th><th>Beneficiary</th><th>Amount</th><th>Currency</th><th>Status</th><th>Actions</th></tr></thead>
-            <tbody>
+      <div class="payouts-page">
+
+        <!-- Page heading — matches .travel-page-header pattern used by Wallets and other pages -->
+        <div class="travel-page-header">
+          <div class="travel-context">
+            <h1 class="travel-title" id="page-h1">Payouts</h1>
+          </div>
+        </div>
+
+        <!-- Filter bar -->
+        <div class="pay-filter-bar">
+
+          <!-- Customer dropdown -->
+          <div class="pay-customer-wrap">
+            <button class="pay-customer-select" id="payCustomerBtn">
+              <span class="bal-type-dot bal-dot-customer" id="payTypeDot"></span>
+              <span id="payCustomerName">Workera AI</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="bal-wallet-menu" id="payCustomerMenu">
+              <div class="bal-search-row">
+                <input class="bal-search-input" id="paySearchInput" type="text" placeholder="Search customers…" autocomplete="off" />
+              </div>
+              <div class="bal-menu-section-label">Client</div>
+              <div class="bal-client-row" id="payClientRow" data-name="Gusto">
+                <span class="bal-type-dot bal-dot-client"></span>
+                <span class="bal-client-row-name">Gusto</span>
+                <span class="bal-client-badge">Client</span>
+              </div>
+              <div class="bal-menu-divider"></div>
+              <div class="bal-menu-section-label">Customers</div>
+              <div class="bal-customer-list" id="payCustomerList">
+                <div class="bal-customer-item" data-name="Goldbelly"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Goldbelly</span></div>
+                <div class="bal-customer-item" data-name="Cortex Health"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Cortex Health</span></div>
+                <div class="bal-customer-item" data-name="The Salty Donut"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">The Salty Donut</span></div>
+                <div class="bal-customer-item active" data-name="Workera AI"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Workera AI</span></div>
+                <div class="bal-customer-item" data-name="RocketPower"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">RocketPower</span></div>
+                <div class="bal-customer-item" data-name="Roller Rabbit"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Roller Rabbit</span></div>
+                <div class="bal-customer-item" data-name="Range Leather"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Range Leather</span></div>
+                <div class="bal-customer-item" data-name="Circle Creek Therapy"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Circle Creek Therapy</span></div>
+                <div class="bal-customer-item" data-name="Modern Law Firms"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Modern Law Firms</span></div>
+                <div class="bal-customer-item" data-name="Andela"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Andela</span></div>
+              </div>
+              <div class="bal-no-results" id="payNoResults">No customers found</div>
+            </div>
+          </div>
+
+          <!-- Batch ID input -->
+          <input class="pay-filter-input" type="text" placeholder="Batch ID" id="payBatchInput" />
+
+          <!-- Actionable rows toggle -->
+          <label class="pay-toggle-wrap" for="payActionableToggle">
+            <span class="pay-toggle" id="payActionableToggle"></span>
+            View actionable rows only
+          </label>
+
+          <!-- New payouts split button (right-aligned) -->
+          <div class="pay-split-wrap" style="margin-left:auto;">
+            <button class="pay-split-main">New payouts</button>
+            <button class="pay-split-caret" id="paySplitCaret" aria-label="More options">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="pay-split-menu" id="paySplitMenu">
+              <div class="pay-split-item">Create payouts</div>
+              <div class="pay-split-item">Upload payouts</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payouts table -->
+        <div class="pay-table-wrap">
+          <table class="data-table" id="payoutsTable">
+            <thead>
               <tr>
-                <td colspan="7" style="text-align:center;padding:64px 24px;border:none;">
-                  <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-tertiary)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/><line x1="5" y1="19" x2="19" y2="19"/></svg>
-                    <div style="font-size:15px;font-weight:500;color:var(--color-text-primary);">No payouts yet</div>
-                    <div style="font-size:13px;color:var(--color-text-secondary);max-width:300px;line-height:1.5;">Outgoing payments will appear here once you start sending funds.</div>
+
+                <!-- Created (UTC) — date range preset popover -->
+                <th>
+                  <div class="col-filter-wrap">
+                    <button class="col-filter-btn" id="dateFilterBtn">
+                      Created (UTC)
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+                    </button>
+                    <div class="col-filter-popover" id="dateFilterPop" style="min-width:190px;">
+                      <div class="date-pop-presets">
+                        <button class="date-pop-preset active" data-preset="all">All time</button>
+                        <button class="date-pop-preset" data-preset="24h">Last 24 hours</button>
+                        <button class="date-pop-preset" data-preset="7d">Last 7 days</button>
+                        <button class="date-pop-preset" data-preset="30d">Last 30 days</button>
+                      </div>
+                      <div class="date-pop-custom">
+                        <div class="date-pop-custom-label">Custom range</div>
+                        <div class="date-pop-inputs">
+                          <div class="date-pop-field">
+                            <label>From</label>
+                            <input class="date-pop-input" type="date" id="dateFrom" />
+                          </div>
+                          <div class="date-pop-field">
+                            <label>To</label>
+                            <input class="date-pop-input" type="date" id="dateTo" />
+                          </div>
+                        </div>
+                        <button class="date-pop-apply" id="dateApplyBtn">Apply</button>
+                      </div>
+                    </div>
                   </div>
-                </td>
+                </th>
+
+                <!-- Type — filter popover (Inline / Upload) + sort toggle -->
+                <th>
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <div class="col-filter-wrap">
+                      <button class="col-filter-btn" id="typeFilterBtn">
+                        Type
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+                      </button>
+                      <div class="col-filter-popover" id="typeFilterPop" style="min-width:140px;">
+                        <div style="padding:6px 4px;">
+                          <label class="status-pop-item"><input class="status-pop-checkbox type-radio" type="radio" name="typeFilter" value="all" checked /><span class="status-pop-name">All</span></label>
+                          <label class="status-pop-item"><input class="status-pop-checkbox type-radio" type="radio" name="typeFilter" value="Inline" /><span class="status-pop-name">Inline</span></label>
+                          <label class="status-pop-item"><input class="status-pop-checkbox type-radio" type="radio" name="typeFilter" value="Upload" /><span class="status-pop-name">Upload</span></label>
+                        </div>
+                      </div>
+                    </div>
+                    <button class="col-sort-btn" id="typeSortBtn" title="Sort by type" data-sort="none">
+                      <svg class="sort-icon sort-icon-both" width="10" height="14" viewBox="0 0 10 14" fill="none"><path d="M5 1L1.5 5H8.5L5 1Z" fill="currentColor" opacity="0.35"/><path d="M5 13L8.5 9H1.5L5 13Z" fill="currentColor" opacity="0.35"/></svg>
+                      <svg class="sort-icon sort-icon-asc" width="10" height="14" viewBox="0 0 10 14" fill="none" style="display:none"><path d="M5 1L1.5 5H8.5L5 1Z" fill="currentColor"/><path d="M5 13L8.5 9H1.5L5 13Z" fill="currentColor" opacity="0.2"/></svg>
+                      <svg class="sort-icon sort-icon-desc" width="10" height="14" viewBox="0 0 10 14" fill="none" style="display:none"><path d="M5 1L1.5 5H8.5L5 1Z" fill="currentColor" opacity="0.2"/><path d="M5 13L8.5 9H1.5L5 13Z" fill="currentColor"/></svg>
+                    </button>
+                  </div>
+                </th>
+
+                <!-- Status — grouped multi-select popover -->
+                <th>
+                  <div class="col-filter-wrap">
+                    <button class="col-filter-btn" id="statusFilterBtn">
+                      Status
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+                    </button>
+                    <div class="col-filter-popover" id="statusFilterPop" style="min-width:230px;">
+                      <div class="status-pop-controls">
+                        <button class="status-pop-ctrl" id="statusSelectAll">Select all</button>
+                        <button class="status-pop-ctrl" id="statusClear">Clear</button>
+                      </div>
+                      <div class="status-pop-body">
+                        <!-- Upload -->
+                        <div class="status-pop-group-label">Upload</div>
+                        <label class="status-pop-item"><input class="status-pop-checkbox" type="checkbox" value="Uploaded" /><span class="status-pop-dot" style="background:#7a8fa6;"></span><span class="status-pop-name">Uploaded</span></label>
+                        <label class="status-pop-item"><input class="status-pop-checkbox" type="checkbox" value="Upload failed" /><span class="status-pop-dot" style="background:#d04040;"></span><span class="status-pop-name">Upload failed</span></label>
+                        <!-- Validation -->
+                        <div class="status-pop-group-label">Validation</div>
+                        <label class="status-pop-item"><input class="status-pop-checkbox" type="checkbox" value="Validation failed" /><span class="status-pop-dot" style="background:#d04040;"></span><span class="status-pop-name">Validation failed</span></label>
+                        <label class="status-pop-item"><input class="status-pop-checkbox" type="checkbox" value="Validation partially successful" /><span class="status-pop-dot" style="background:#e07b0e;"></span><span class="status-pop-name">Validation partially successful</span></label>
+                        <label class="status-pop-item"><input class="status-pop-checkbox" type="checkbox" value="Validation successful" /><span class="status-pop-dot" style="background:#2ea44f;"></span><span class="status-pop-name">Validation successful</span></label>
+                        <!-- Approval -->
+                        <div class="status-pop-group-label">Approval</div>
+                        <label class="status-pop-item"><input class="status-pop-checkbox" type="checkbox" value="Submitted for approval" /><span class="status-pop-dot" style="background:#7a5fc0;"></span><span class="status-pop-name">Submitted for approval</span></label>
+                        <label class="status-pop-item"><input class="status-pop-checkbox" type="checkbox" value="Rejected" /><span class="status-pop-dot" style="background:#d04040;"></span><span class="status-pop-name">Rejected</span></label>
+                        <label class="status-pop-item"><input class="status-pop-checkbox" type="checkbox" value="Approved" /><span class="status-pop-dot" style="background:#2ea44f;"></span><span class="status-pop-name">Approved</span></label>
+                        <!-- Payout -->
+                        <div class="status-pop-group-label">Payout</div>
+                        <label class="status-pop-item"><input class="status-pop-checkbox" type="checkbox" value="Submitted for payout" /><span class="status-pop-dot" style="background:#0a9e9e;"></span><span class="status-pop-name">Submitted for payout</span></label>
+                        <label class="status-pop-item"><input class="status-pop-checkbox" type="checkbox" value="Cancelled" /><span class="status-pop-dot" style="background:#b0b8c8;"></span><span class="status-pop-name">Cancelled</span></label>
+                      </div>
+                    </div>
+                  </div>
+                </th>
+
+                <!-- File name — text search popover -->
+                <th>
+                  <div class="col-filter-wrap">
+                    <button class="col-filter-btn" id="fileFilterBtn">
+                      File name
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+                    </button>
+                    <div class="col-filter-popover" id="fileFilterPop" style="min-width:210px;">
+                      <div class="text-pop-inner">
+                        <input class="text-pop-input" id="fileFilterInput" type="text" placeholder="Search file name…" autocomplete="off" />
+                      </div>
+                    </div>
+                  </div>
+                </th>
+
+                <!-- Maker — text search popover -->
+                <th>
+                  <div class="col-filter-wrap">
+                    <button class="col-filter-btn" id="makerFilterBtn">
+                      Maker
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+                    </button>
+                    <div class="col-filter-popover" id="makerFilterPop" style="min-width:200px;">
+                      <div class="text-pop-inner">
+                        <input class="text-pop-input" id="makerFilterInput" type="text" placeholder="Search maker…" autocomplete="off" />
+                      </div>
+                    </div>
+                  </div>
+                </th>
+
+                <!-- Checker — text search popover -->
+                <th>
+                  <div class="col-filter-wrap">
+                    <button class="col-filter-btn" id="checkerFilterBtn">
+                      Checker
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+                    </button>
+                    <div class="col-filter-popover" id="checkerFilterPop" style="min-width:200px;">
+                      <div class="text-pop-inner">
+                        <input class="text-pop-input" id="checkerFilterInput" type="text" placeholder="Search checker…" autocomplete="off" />
+                      </div>
+                    </div>
+                  </div>
+                </th>
+
+                <th><span style="font-size:11.5px;font-weight:600;color:var(--color-text-secondary);letter-spacing:0.04em;">Actions</span></th>
+              </tr>
+            </thead>
+            <tbody id="payoutsTbody">
+              <!-- Row 1 -->
+              <tr>
+                <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">04 May 2026, 09:14</td>
+                <td>Upload</td>
+                <td><span class="dt-badge dt-badge-submitted">Submitted for payout</span></td>
+                <td style="color:var(--color-text-primary);font-size:12.5px;">payouts_may4_morning.csv</td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">anna.chen@gusto.com</td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">james.wu@gusto.com</td>
+                <td><div class="dt-actions-col"><span class="dt-link">View transaction details</span><span class="dt-link">View batch details</span></div></td>
+              </tr>
+              <!-- Row 2 -->
+              <tr data-actionable="1">
+                <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">04 May 2026, 08:52</td>
+                <td>Upload</td>
+                <td><span class="dt-badge dt-badge-validated">Validation successful</span></td>
+                <td style="color:var(--color-text-primary);font-size:12.5px;">payouts_may4_batch2.csv</td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">raj.patel@gusto.com</td>
+                <td style="font-size:12.5px;color:var(--color-text-tertiary);">—</td>
+                <td><div class="dt-actions-col"><span class="dt-link-amber">Review and submit</span></div></td>
+              </tr>
+              <!-- Row 3 -->
+              <tr>
+                <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">04 May 2026, 07:33</td>
+                <td>Upload</td>
+                <td><span class="dt-badge dt-badge-submitted">Submitted for payout</span></td>
+                <td style="color:var(--color-text-primary);font-size:12.5px;">apr_final_reconciliation.csv</td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">anna.chen@gusto.com</td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">sarah.kim@gusto.com</td>
+                <td><div class="dt-actions-col"><span class="dt-link">View transaction details</span><span class="dt-link">View batch details</span></div></td>
+              </tr>
+              <!-- Row 4 -->
+              <tr data-actionable="1">
+                <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">03 May 2026, 16:48</td>
+                <td>Upload</td>
+                <td><span class="dt-badge dt-badge-validated">Validation successful</span></td>
+                <td style="color:var(--color-text-primary);font-size:12.5px;">payouts_may3_eve.csv</td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">david.ng@gusto.com</td>
+                <td style="font-size:12.5px;color:var(--color-text-tertiary);">—</td>
+                <td><div class="dt-actions-col"><span class="dt-link-amber">Review and submit</span></div></td>
+              </tr>
+              <!-- Row 5 -->
+              <tr>
+                <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">03 May 2026, 14:22</td>
+                <td>Upload</td>
+                <td><span class="dt-badge dt-badge-submitted">Submitted for payout</span></td>
+                <td style="color:var(--color-text-primary);font-size:12.5px;">payouts_may3_afternoon.csv</td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">raj.patel@gusto.com</td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">james.wu@gusto.com</td>
+                <td><div class="dt-actions-col"><span class="dt-link">View transaction details</span><span class="dt-link">View batch details</span></div></td>
+              </tr>
+              <!-- Row 6 -->
+              <tr>
+                <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">03 May 2026, 11:09</td>
+                <td>Upload</td>
+                <td><span class="dt-badge dt-badge-submitted">Submitted for payout</span></td>
+                <td style="color:var(--color-text-primary);font-size:12.5px;">payouts_may3_morning.csv</td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">anna.chen@gusto.com</td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">sarah.kim@gusto.com</td>
+                <td><div class="dt-actions-col"><span class="dt-link">View transaction details</span><span class="dt-link">View batch details</span></div></td>
+              </tr>
+              <!-- Row 7 -->
+              <tr data-actionable="1">
+                <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">03 May 2026, 09:55</td>
+                <td>Upload</td>
+                <td><span class="dt-badge dt-badge-validated">Validation successful</span></td>
+                <td style="color:var(--color-text-primary);font-size:12.5px;">contractor_payouts_wk18.csv</td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">david.ng@gusto.com</td>
+                <td style="font-size:12.5px;color:var(--color-text-tertiary);">—</td>
+                <td><div class="dt-actions-col"><span class="dt-link-amber">Review and submit</span></div></td>
+              </tr>
+              <!-- Row 8 -->
+              <tr>
+                <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">02 May 2026, 17:31</td>
+                <td>Upload</td>
+                <td><span class="dt-badge dt-badge-submitted">Submitted for payout</span></td>
+                <td style="color:var(--color-text-primary);font-size:12.5px;">payouts_may2_evening.csv</td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">raj.patel@gusto.com</td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">james.wu@gusto.com</td>
+                <td><div class="dt-actions-col"><span class="dt-link">View transaction details</span><span class="dt-link">View batch details</span></div></td>
+              </tr>
+              <!-- Row 9 -->
+              <tr>
+                <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">02 May 2026, 15:12</td>
+                <td>Upload</td>
+                <td><span class="dt-badge dt-badge-submitted">Submitted for payout</span></td>
+                <td style="color:var(--color-text-primary);font-size:12.5px;">employee_disbursements_q2.csv</td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">anna.chen@gusto.com</td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">sarah.kim@gusto.com</td>
+                <td><div class="dt-actions-col"><span class="dt-link">View transaction details</span><span class="dt-link">View batch details</span></div></td>
+              </tr>
+              <!-- Row 10 -->
+              <tr data-actionable="1">
+                <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">02 May 2026, 13:07</td>
+                <td>Upload</td>
+                <td><span class="dt-badge dt-badge-validated">Validation successful</span></td>
+                <td style="color:var(--color-text-primary);font-size:12.5px;">payouts_may2_midday.csv</td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">david.ng@gusto.com</td>
+                <td style="font-size:12.5px;color:var(--color-text-tertiary);">—</td>
+                <td><div class="dt-actions-col"><span class="dt-link-amber">Review and submit</span></div></td>
+              </tr>
+              <!-- Row 11 -->
+              <tr>
+                <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">02 May 2026, 10:45</td>
+                <td>Upload</td>
+                <td><span class="dt-badge dt-badge-submitted">Submitted for payout</span></td>
+                <td style="color:var(--color-text-primary);font-size:12.5px;">payouts_may2_morning.csv</td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">raj.patel@gusto.com</td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">james.wu@gusto.com</td>
+                <td><div class="dt-actions-col"><span class="dt-link">View transaction details</span><span class="dt-link">View batch details</span></div></td>
+              </tr>
+              <!-- Row 12 -->
+              <tr>
+                <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">01 May 2026, 16:20</td>
+                <td>Upload</td>
+                <td><span class="dt-badge dt-badge-submitted">Submitted for payout</span></td>
+                <td style="color:var(--color-text-primary);font-size:12.5px;">payouts_may1_afternoon.csv</td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">anna.chen@gusto.com</td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">sarah.kim@gusto.com</td>
+                <td><div class="dt-actions-col"><span class="dt-link">View transaction details</span><span class="dt-link">View batch details</span></div></td>
+              </tr>
+              <!-- Row 13 -->
+              <tr>
+                <td style="white-space:nowrap;color:var(--color-text-secondary);font-size:12.5px;">01 May 2026, 09:30</td>
+                <td>Upload</td>
+                <td><span class="dt-badge dt-badge-validated">Validation successful</span></td>
+                <td style="color:var(--color-text-primary);font-size:12.5px;">payouts_may1_morning.csv</td>
+                <td style="font-size:12.5px;color:var(--color-text-secondary);">david.ng@gusto.com</td>
+                <td style="font-size:12.5px;color:var(--color-text-tertiary);">—</td>
+                <td><div class="dt-actions-col"><span class="dt-link-amber">Review and submit</span></div></td>
               </tr>
             </tbody>
           </table>
+          <div class="pay-table-footer">
+            <span>Showing 13 of 247 batches</span>
+            <div class="pay-page-btns">
+              <button class="pay-page-btn active">1</button>
+              <button class="pay-page-btn">2</button>
+              <button class="pay-page-btn">3</button>
+              <button class="pay-page-btn" style="padding:4px 8px;">›</button>
+            </div>
+          </div>
         </div>
+
       </div>
     </div><!-- /content-inner -->
 
@@ -2526,28 +3435,295 @@
   setupDropdown('[data-period-btn]', '.period-menu');
   setupDropdown('[data-client-btn]', '.client-menu');
 
-  // Balances customer dropdown — opens on click, closes on outside click or selection
-  var balBtn  = document.getElementById('balCustomerBtn');
-  var balMenu = document.getElementById('balCustomerMenu');
-  var balName = document.getElementById('balCustomerName');
-  if (balBtn && balMenu) {
-    balBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      balMenu.classList.toggle('open');
+  // ── Payouts: Customer dropdown (client/customer + type-ahead search) ──
+  var payBtn          = document.getElementById('payCustomerBtn');
+  var payMenu         = document.getElementById('payCustomerMenu');
+  var payName         = document.getElementById('payCustomerName');
+  var payTypeDot      = document.getElementById('payTypeDot');
+  var paySearchInput  = document.getElementById('paySearchInput');
+  var payClientRow    = document.getElementById('payClientRow');
+  var payCustomerList = document.getElementById('payCustomerList');
+  var payNoResults    = document.getElementById('payNoResults');
+
+  function payOpen() {
+    payMenu.classList.add('open');
+    paySearchInput.value = '';
+    payFilterCustomers('');
+    setTimeout(function() { paySearchInput.focus(); }, 10);
+  }
+  function payClose() { payMenu.classList.remove('open'); }
+  function paySetSelection(name, isClient) {
+    payName.textContent = name;
+    payTypeDot.className = 'bal-type-dot ' + (isClient ? 'bal-dot-client' : 'bal-dot-customer');
+  }
+  function payEscRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+  function payFilterCustomers(query) {
+    var q = query.trim().toLowerCase();
+    var visible = 0;
+    payCustomerList.querySelectorAll('.bal-customer-item').forEach(function(item) {
+      var name = item.getAttribute('data-name');
+      if (!q || name.toLowerCase().indexOf(q) !== -1) {
+        item.style.display = 'flex';
+        var nameEl = item.querySelector('.bal-item-name');
+        if (q) {
+          nameEl.innerHTML = name.replace(new RegExp('(' + payEscRe(q) + ')', 'gi'),
+            '<span class="bal-highlight">$1</span>');
+        } else {
+          nameEl.textContent = name;
+        }
+        visible++;
+      } else {
+        item.style.display = 'none';
+      }
     });
-    balMenu.querySelectorAll('button').forEach(function(item) {
+    payNoResults.style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  if (payBtn && payMenu) {
+    payBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      payMenu.classList.contains('open') ? payClose() : payOpen();
+    });
+    payClientRow.addEventListener('click', function(e) {
+      e.stopPropagation();
+      payCustomerList.querySelectorAll('.bal-customer-item').forEach(function(i) { i.classList.remove('active'); });
+      paySetSelection('Gusto', true);
+      payClose();
+    });
+    payCustomerList.querySelectorAll('.bal-customer-item').forEach(function(item) {
       item.addEventListener('click', function(e) {
         e.stopPropagation();
-        balMenu.querySelectorAll('button').forEach(function(b) { b.classList.remove('selected'); });
-        item.classList.add('selected');
-        balName.textContent = item.textContent.trim();
-        balMenu.classList.remove('open');
+        payCustomerList.querySelectorAll('.bal-customer-item').forEach(function(i) { i.classList.remove('active'); });
+        item.classList.add('active');
+        paySetSelection(item.getAttribute('data-name'), false);
+        payClose();
       });
     });
+    paySearchInput.addEventListener('input', function() { payFilterCustomers(this.value); });
+    paySearchInput.addEventListener('keydown', function(e) { if (e.key === 'Escape') payClose(); });
+    payMenu.addEventListener('click', function(e) { e.stopPropagation(); });
+    document.addEventListener('click', function() { payClose(); });
+  }
+
+  // ── Payouts: Split button ──
+  var paySplitCaret = document.getElementById('paySplitCaret');
+  var paySplitMenu  = document.getElementById('paySplitMenu');
+  if (paySplitCaret && paySplitMenu) {
+    paySplitCaret.addEventListener('click', function(e) {
+      e.stopPropagation();
+      paySplitMenu.classList.toggle('open');
+    });
+    paySplitMenu.querySelectorAll('.pay-split-item').forEach(function(item) {
+      item.addEventListener('click', function(e) {
+        e.stopPropagation();
+        paySplitMenu.classList.remove('open');
+      });
+    });
+    paySplitMenu.addEventListener('click', function(e) { e.stopPropagation(); });
     document.addEventListener('click', function() {
-      balMenu.classList.remove('open');
+      if (paySplitMenu) paySplitMenu.classList.remove('open');
     });
   }
+
+  // ── Payouts: Actionable rows toggle ──
+  var payToggle = document.getElementById('payActionableToggle');
+  if (payToggle) {
+    payToggle.addEventListener('click', function() {
+      var on = payToggle.classList.toggle('on');
+      applyTableFilters();
+    });
+  }
+
+  // ── Payouts: Column filter state ──
+  var colFilters = {
+    date:    { preset: 'all', from: '', to: '' },
+    type:    'all',
+    status:  [],          // empty = show all
+    file:    '',
+    maker:   '',
+    checker: ''
+  };
+
+  function applyTableFilters() {
+    var actionableOnly = payToggle && payToggle.classList.contains('on');
+    document.querySelectorAll('#payoutsTbody tr').forEach(function(row) {
+      if (actionableOnly && row.getAttribute('data-actionable') !== '1') {
+        row.style.display = 'none'; return;
+      }
+      // Type
+      if (colFilters.type !== 'all') {
+        var typeCell = row.cells[1] ? row.cells[1].textContent.trim() : '';
+        if (typeCell !== colFilters.type) { row.style.display = 'none'; return; }
+      }
+      // Status
+      if (colFilters.status.length > 0) {
+        var statusBadge = row.cells[2] ? row.cells[2].querySelector('.dt-badge') : null;
+        var statusText = statusBadge ? statusBadge.textContent.trim() : '';
+        if (colFilters.status.indexOf(statusText) === -1) { row.style.display = 'none'; return; }
+      }
+      // File name
+      if (colFilters.file) {
+        var fileCell = row.cells[3] ? row.cells[3].textContent.trim().toLowerCase() : '';
+        if (fileCell.indexOf(colFilters.file.toLowerCase()) === -1) { row.style.display = 'none'; return; }
+      }
+      // Maker
+      if (colFilters.maker) {
+        var makerCell = row.cells[4] ? row.cells[4].textContent.trim().toLowerCase() : '';
+        if (makerCell.indexOf(colFilters.maker.toLowerCase()) === -1) { row.style.display = 'none'; return; }
+      }
+      // Checker
+      if (colFilters.checker) {
+        var checkerCell = row.cells[5] ? row.cells[5].textContent.trim().toLowerCase() : '';
+        if (checkerCell.indexOf(colFilters.checker.toLowerCase()) === -1) { row.style.display = 'none'; return; }
+      }
+      row.style.display = '';
+    });
+    // Update active-dot on buttons
+    updateFilterDot('dateFilterBtn',    colFilters.date.preset !== 'all' || colFilters.date.from || colFilters.date.to);
+    updateFilterDot('typeFilterBtn',    colFilters.type !== 'all');
+    updateFilterDot('statusFilterBtn',  colFilters.status.length > 0);
+    updateFilterDot('fileFilterBtn',    !!colFilters.file);
+    updateFilterDot('makerFilterBtn',   !!colFilters.maker);
+    updateFilterDot('checkerFilterBtn', !!colFilters.checker);
+  }
+  function updateFilterDot(btnId, active) {
+    var btn = document.getElementById(btnId);
+    if (btn) btn.classList.toggle('active', active);
+  }
+
+  // ── Helper: open/close popovers ──
+  var openPop = null;
+  function openPopover(popId, btnId) {
+    closeAllPopovers();
+    var pop = document.getElementById(popId);
+    if (pop) { pop.classList.add('open'); openPop = pop; }
+    // auto-focus text inputs
+    var inp = pop && pop.querySelector('input[type=text], input[type=date]');
+    if (inp) setTimeout(function() { inp.focus(); }, 10);
+  }
+  function closeAllPopovers() {
+    document.querySelectorAll('.col-filter-popover.open').forEach(function(p) { p.classList.remove('open'); });
+    openPop = null;
+  }
+  function wirePopoverBtn(btnId, popId) {
+    var btn = document.getElementById(btnId);
+    var pop = document.getElementById(popId);
+    if (!btn || !pop) return;
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      pop.classList.contains('open') ? closeAllPopovers() : openPopover(popId, btnId);
+    });
+    pop.addEventListener('click', function(e) { e.stopPropagation(); });
+  }
+  document.addEventListener('click', function() { closeAllPopovers(); });
+
+  // ── Date filter ──
+  wirePopoverBtn('dateFilterBtn', 'dateFilterPop');
+  document.querySelectorAll('.date-pop-preset').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.date-pop-preset').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      colFilters.date.preset = btn.getAttribute('data-preset');
+      colFilters.date.from = ''; colFilters.date.to = '';
+      document.getElementById('dateFrom').value = '';
+      document.getElementById('dateTo').value = '';
+      applyTableFilters();
+    });
+  });
+  document.getElementById('dateApplyBtn') && document.getElementById('dateApplyBtn').addEventListener('click', function(e) {
+    e.stopPropagation();
+    colFilters.date.preset = 'custom';
+    colFilters.date.from = document.getElementById('dateFrom').value;
+    colFilters.date.to   = document.getElementById('dateTo').value;
+    document.querySelectorAll('.date-pop-preset').forEach(function(b) { b.classList.remove('active'); });
+    applyTableFilters();
+    closeAllPopovers();
+  });
+
+  // ── Type filter (radio popover) ──
+  wirePopoverBtn('typeFilterBtn', 'typeFilterPop');
+  document.querySelectorAll('.type-radio').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+      colFilters.type = radio.value;
+      updateFilterDot('typeFilterBtn', colFilters.type !== 'all');
+      applyTableFilters();
+    });
+  });
+
+  // ── Type sort toggle ──
+  var typeSortBtn = document.getElementById('typeSortBtn');
+  if (typeSortBtn) {
+    typeSortBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var cur = typeSortBtn.getAttribute('data-sort');
+      var next = cur === 'none' ? 'asc' : cur === 'asc' ? 'desc' : 'none';
+      typeSortBtn.setAttribute('data-sort', next);
+      typeSortBtn.classList.toggle('sorted', next !== 'none');
+      typeSortBtn.querySelector('.sort-icon-both').style.display = next === 'none'  ? '' : 'none';
+      typeSortBtn.querySelector('.sort-icon-asc').style.display  = next === 'asc'   ? '' : 'none';
+      typeSortBtn.querySelector('.sort-icon-desc').style.display = next === 'desc'  ? '' : 'none';
+      sortTableByType(next);
+    });
+  }
+  function sortTableByType(dir) {
+    var tbody = document.getElementById('payoutsTbody');
+    if (!tbody) return;
+    var rows = Array.from(tbody.querySelectorAll('tr'));
+    if (dir === 'none') {
+      // restore original order via data-orig-index
+      rows.sort(function(a, b) {
+        return parseInt(a.getAttribute('data-orig') || 0) - parseInt(b.getAttribute('data-orig') || 0);
+      });
+    } else {
+      rows.forEach(function(r, i) { if (!r.getAttribute('data-orig')) r.setAttribute('data-orig', i); });
+      rows.sort(function(a, b) {
+        var ta = a.cells[1] ? a.cells[1].textContent.trim() : '';
+        var tb = b.cells[1] ? b.cells[1].textContent.trim() : '';
+        return dir === 'asc' ? ta.localeCompare(tb) : tb.localeCompare(ta);
+      });
+    }
+    rows.forEach(function(r) { tbody.appendChild(r); });
+  }
+
+  // ── Status multi-select ──
+  wirePopoverBtn('statusFilterBtn', 'statusFilterPop');
+  document.querySelectorAll('.status-pop-checkbox').forEach(function(cb) {
+    cb.addEventListener('change', function() {
+      colFilters.status = Array.from(document.querySelectorAll('.status-pop-checkbox:checked')).map(function(c) { return c.value; });
+      applyTableFilters();
+    });
+  });
+  document.getElementById('statusSelectAll') && document.getElementById('statusSelectAll').addEventListener('click', function(e) {
+    e.stopPropagation();
+    document.querySelectorAll('.status-pop-checkbox').forEach(function(cb) { cb.checked = true; });
+    colFilters.status = Array.from(document.querySelectorAll('.status-pop-checkbox')).map(function(c) { return c.value; });
+    applyTableFilters();
+  });
+  document.getElementById('statusClear') && document.getElementById('statusClear').addEventListener('click', function(e) {
+    e.stopPropagation();
+    document.querySelectorAll('.status-pop-checkbox').forEach(function(cb) { cb.checked = false; });
+    colFilters.status = [];
+    applyTableFilters();
+  });
+
+  // ── Text search filters (File name / Maker / Checker) ──
+  wirePopoverBtn('fileFilterBtn', 'fileFilterPop');
+  wirePopoverBtn('makerFilterBtn', 'makerFilterPop');
+  wirePopoverBtn('checkerFilterBtn', 'checkerFilterPop');
+  function wireTextFilter(inputId, filterKey) {
+    var inp = document.getElementById(inputId);
+    if (!inp) return;
+    inp.addEventListener('input', function() {
+      colFilters[filterKey] = inp.value;
+      applyTableFilters();
+    });
+    inp.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') { inp.value = ''; colFilters[filterKey] = ''; applyTableFilters(); closeAllPopovers(); }
+    });
+  }
+  wireTextFilter('fileFilterInput',    'file');
+  wireTextFilter('makerFilterInput',   'maker');
+  wireTextFilter('checkerFilterInput', 'checker');
 
   // Wallet tabs
   document.querySelectorAll('.wallet-tab').forEach(function(tab) {
