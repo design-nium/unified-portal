@@ -4172,47 +4172,126 @@
 
   <!-- Issue New Card Drawer -->
   <div id="issueCardOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:3000;" onclick="if(event.target===this)closeDrawer()"></div>
-  <div id="issueCardDrawer" style="display:none;position:fixed;top:0;right:0;width:480px;height:100vh;background:#fff;z-index:3001;box-shadow:-4px 0 40px rgba(0,0,0,0.15);flex-direction:column;overflow:hidden;">
-    <div style="padding:20px 24px 16px;border-bottom:1px solid var(--color-border-primary);display:flex;align-items:center;justify-content:space-between;">
+  <div id="issueCardDrawer" style="position:fixed;top:0;right:0;width:480px;height:100vh;background:#fff;z-index:3001;box-shadow:-4px 0 40px rgba(0,0,0,0.18);flex-direction:column;overflow:hidden;display:none;transform:translateX(100%);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);">
+    <div style="padding:20px 24px 16px;border-bottom:1px solid var(--color-border-secondary);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
       <div style="font-size:16px;font-weight:600;color:var(--color-text-primary);">Issue New Card</div>
-      <button onclick="closeDrawer()" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--color-text-secondary);">
+      <button onclick="closeDrawer()" style="background:none;border:none;cursor:pointer;padding:6px;color:var(--color-text-secondary);border-radius:6px;display:flex;align-items:center;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
-    <div style="padding:16px 24px;border-bottom:1px solid var(--color-border-primary);">
-      <div style="display:flex;align-items:center;gap:0;" id="stepIndicator"></div>
+    <div style="padding:20px 24px 0;border-bottom:1px solid var(--color-border-secondary);flex-shrink:0;">
+      <div style="display:flex;align-items:flex-start;gap:0;" id="stepIndicator"></div>
     </div>
     <div style="flex:1;overflow-y:auto;padding:24px;" id="drawerContent"></div>
-    <div style="padding:16px 24px;border-top:1px solid var(--color-border-primary);display:flex;justify-content:space-between;align-items:center;">
+    <div style="padding:16px 24px;border-top:1px solid var(--color-border-secondary);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;background:#fff;">
       <button id="drawerBack" class="btn-more-actions" onclick="drawerNav(-1)">Back</button>
       <button id="drawerNext" class="btn-move-funds" onclick="drawerNav(1)">Next</button>
     </div>
   </div>
 
   <style>
+    /* ── Drawer base fields ── */
     .drawer-field { margin-bottom:18px; }
     .drawer-label { display:block;font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em; }
-    .drawer-input { width:100%;padding:9px 12px;border:1px solid var(--color-border-primary);border-radius:8px;font-size:14px;color:var(--color-text-primary);font-family:inherit;box-sizing:border-box;outline:none; }
-    .drawer-input:focus { border-color:#A9B4FF; }
-    .drawer-select { width:100%;padding:9px 12px;border:1px solid var(--color-border-primary);border-radius:8px;font-size:14px;color:var(--color-text-primary);font-family:inherit;box-sizing:border-box;outline:none;background:#fff; }
-    .card-type-btn { border:1.5px solid var(--color-border-primary);border-radius:10px;padding:14px 16px;cursor:pointer;background:#fff;flex:1;text-align:left;transition:border-color 0.15s; }
-    .card-type-btn.selected { border-color:#0C0E54;background:#F5F6FF; }
-    .card-type-btn .ct-label { font-size:13px;font-weight:600;color:var(--color-text-primary);margin-top:8px; }
-    .card-type-btn .ct-sub { font-size:11px;color:var(--color-text-tertiary);margin-top:2px; }
-    .brand-btn { border:1.5px solid var(--color-border-primary);border-radius:8px;padding:10px 14px;cursor:pointer;background:#fff;display:flex;align-items:center;justify-content:center;min-width:70px;transition:border-color 0.15s; }
+    .drawer-input { width:100%;padding:9px 12px;border:1px solid var(--color-border-secondary);border-radius:8px;font-size:14px;color:var(--color-text-primary);font-family:inherit;box-sizing:border-box;outline:none; }
+    .drawer-input:focus { border-color:#A9B4FF; box-shadow:0 0 0 3px rgba(169,180,255,0.18); }
+    .drawer-select {
+      width:100%;padding:9px 36px 9px 12px;border:1px solid var(--color-border-secondary);
+      border-radius:8px;font-size:14px;color:var(--color-text-primary);font-family:inherit;
+      box-sizing:border-box;outline:none;background:#fff;cursor:pointer;
+      appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right 12px center;
+    }
+    .drawer-select:focus { border-color:#A9B4FF; }
+    /* ── Card type tiles ── */
+    .card-type-tiles { display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:4px; }
+    .card-type-tile {
+      border:1.5px solid var(--color-border-secondary);border-radius:12px;
+      padding:20px 16px 16px;cursor:pointer;background:#fff;
+      display:flex;flex-direction:column;align-items:center;
+      text-align:center;transition:border-color 0.15s,background 0.15s;
+      position:relative;
+    }
+    .card-type-tile:hover { border-color:#A9B4FF; }
+    .card-type-tile.selected { border-color:#0C0E54;background:#F5F6FF; }
+    .ctt-icon { width:48px;height:48px;border-radius:10px;background:var(--color-bg-secondary);display:flex;align-items:center;justify-content:center;margin-bottom:12px; }
+    .card-type-tile.selected .ctt-icon { background:#E0E3FF; }
+    .ctt-check {
+      position:absolute;top:10px;right:10px;width:18px;height:18px;border-radius:50%;
+      background:#0C0E54;display:none;align-items:center;justify-content:center;
+    }
+    .card-type-tile.selected .ctt-check { display:flex; }
+    .ctt-label { font-size:14px;font-weight:600;color:var(--color-text-primary);margin-bottom:3px; }
+    .ctt-sub { font-size:11.5px;color:var(--color-text-tertiary); }
+    /* ── Brand tiles ── */
+    .brand-tile-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:8px; }
+    .brand-btn {
+      border:1.5px solid var(--color-border-secondary);border-radius:8px;padding:10px 8px;
+      cursor:pointer;background:#fff;display:flex;align-items:center;justify-content:center;
+      min-height:44px;transition:border-color 0.15s,background 0.15s;position:relative;
+    }
+    .brand-btn:hover { border-color:#A9B4FF; }
     .brand-btn.selected { border-color:#0C0E54;background:#F5F6FF; }
-    .step-dot { width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0; }
+    .brand-btn .bb-check {
+      position:absolute;top:-6px;right:-6px;width:16px;height:16px;border-radius:50%;
+      background:#0C0E54;display:none;align-items:center;justify-content:center;
+    }
+    .brand-btn.selected .bb-check { display:flex; }
+    /* ── Amount split input ── */
+    .amount-split {
+      display:flex;align-items:center;border:1px solid var(--color-border-secondary);
+      border-radius:8px;overflow:hidden;
+    }
+    .amount-split:focus-within { border-color:#A9B4FF;box-shadow:0 0 0 3px rgba(169,180,255,0.18); }
+    .amount-int { flex:1;border:none;outline:none;padding:9px 12px;font-size:14px;font-family:inherit;color:var(--color-text-primary);background:#fff; }
+    .amount-sep { padding:9px 2px;color:var(--color-text-tertiary);font-size:16px;font-weight:300;background:#fff; }
+    .amount-dec { width:46px;border:none;outline:none;padding:9px 10px 9px 4px;font-size:14px;font-family:inherit;color:var(--color-text-primary);background:#fff;text-align:left; }
+    /* ── Stepper ── */
+    .step-dot { width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0; }
     .step-dot.done { background:#0C0E54;color:#fff; }
     .step-dot.active { background:#0C0E54;color:#fff; }
     .step-dot.pending { background:#f1f5f9;color:var(--color-text-tertiary); }
-    .step-connector { flex:1;height:1.5px;background:var(--color-border-primary); }
+    .step-connector { flex:1;height:1.5px;background:var(--color-border-secondary);margin-bottom:18px; }
     .step-connector.done { background:#0C0E54; }
     .step-label { font-size:10px;margin-top:4px;color:var(--color-text-tertiary);white-space:nowrap;text-align:center;max-width:80px; }
-    .review-section { margin-bottom:20px; }
-    .review-section h4 { font-size:13px;font-weight:600;color:var(--color-text-primary);margin:0 0 10px 0;padding-bottom:6px;border-bottom:1px solid var(--color-border-primary); }
-    .review-row { display:flex;justify-content:space-between;font-size:13px;padding:4px 0; }
-    .review-row .rv-label { color:var(--color-text-secondary); }
-    .review-row .rv-val { color:var(--color-text-primary);font-weight:500; }
+    /* ── Scheduled loads table ── */
+    .sl-table { width:100%;border-collapse:collapse;margin-bottom:12px; }
+    .sl-table th { font-size:11px;font-weight:500;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:0.05em;padding:0 0 8px 0;text-align:left;border-bottom:1px solid var(--color-border-secondary); }
+    .sl-table td { padding:10px 0 0 0;vertical-align:top; }
+    .sl-table td:last-child { width:32px;text-align:right; }
+    .sl-row-del { background:none;border:none;cursor:pointer;color:var(--color-text-tertiary);padding:9px 0 0 0;line-height:1;font-size:16px; }
+    .sl-row-del:hover { color:#ef4444; }
+    .sl-freq-sel {
+      width:100%;padding:8px 28px 8px 10px;border:1px solid var(--color-border-secondary);
+      border-radius:7px;font-size:13px;font-family:inherit;color:var(--color-text-primary);
+      background:#fff;outline:none;cursor:pointer;appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right 8px center;
+    }
+    /* ── Additional Details step ── */
+    .drawer-textarea { width:100%;padding:9px 12px;border:1px solid var(--color-border-secondary);border-radius:8px;font-size:14px;color:var(--color-text-primary);font-family:inherit;box-sizing:border-box;outline:none;resize:vertical;min-height:72px; }
+    .drawer-textarea:focus { border-color:#A9B4FF;box-shadow:0 0 0 3px rgba(169,180,255,0.18); }
+    .char-counter { font-size:11px;color:var(--color-text-tertiary);text-align:right;margin-top:3px; }
+    .spend-check-row { display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--color-border-secondary);border-radius:8px;cursor:pointer;user-select:none; }
+    .spend-check-row input[type=checkbox] { width:16px;height:16px;accent-color:#0C0E54;cursor:pointer;flex-shrink:0; }
+    .spend-check-label { font-size:14px;color:var(--color-text-primary); }
+    /* ── Review & Create step ── */
+    .rv-section { margin-bottom:18px; }
+    .rv-section-head { display:flex;align-items:center;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--color-border-secondary);margin-bottom:10px; }
+    .rv-section-head h4 { margin:0;font-size:13px;font-weight:600;color:var(--color-text-primary); }
+    .rv-edit { background:none;border:none;cursor:pointer;font-size:12px;font-weight:500;color:#4B5EFF;padding:0;font-family:inherit; }
+    .rv-edit:hover { text-decoration:underline; }
+    .rv-grid { display:grid;grid-template-columns:1fr 1fr;gap:4px 16px; }
+    .rv-cell { padding:5px 0; }
+    .rv-cell-label { font-size:11.5px;color:var(--color-text-tertiary);margin-bottom:2px; }
+    .rv-cell-val { font-size:13px;font-weight:500;color:var(--color-text-primary); }
+    .rv-info-box {
+      background:#EFF6FF;border:1px solid #BFDBFE;border-radius:10px;
+      padding:12px 14px;display:flex;gap:10px;align-items:flex-start;margin-top:4px;
+    }
+    .rv-info-icon { flex-shrink:0;color:#2563EB;margin-top:1px; }
+    .rv-info-text { font-size:12.5px;color:#1E40AF;line-height:1.5; }
   </style>
 
   <script>
@@ -4221,41 +4300,56 @@
 
     function openDrawer() {
       drawerStep = 0;
-      document.getElementById('issueCardOverlay').style.display = 'block';
-      document.getElementById('issueCardDrawer').style.display = 'flex';
       renderDrawer();
+      var overlay = document.getElementById('issueCardOverlay');
+      var drawer  = document.getElementById('issueCardDrawer');
+      overlay.style.display = 'block';
+      drawer.style.display  = 'flex';
+      // Commit the display:flex + translateX(100%) to layout before animating
+      drawer.getBoundingClientRect();
+      drawer.style.transform = 'translateX(0)';
     }
     function closeDrawer() {
-      document.getElementById('issueCardOverlay').style.display = 'none';
-      document.getElementById('issueCardDrawer').style.display = 'none';
+      var overlay = document.getElementById('issueCardOverlay');
+      var drawer  = document.getElementById('issueCardDrawer');
+      drawer.style.transform = 'translateX(100%)';
+      setTimeout(function() {
+        overlay.style.display = 'none';
+        drawer.style.display  = 'none';
+      }, 300);
     }
     function drawerNav(dir) {
       if (dir === 1 && drawerStep < STEPS.length - 1) drawerStep++;
       else if (dir === -1 && drawerStep > 0) drawerStep--;
       renderDrawer();
     }
-    function selectCardType(btn) {
-      document.querySelectorAll('.card-type-btn').forEach(function(b) { b.classList.remove('selected'); });
-      btn.classList.add('selected');
+    function selectCardType(tile) {
+      document.querySelectorAll('.card-type-tile').forEach(function(t) { t.classList.remove('selected'); });
+      tile.classList.add('selected');
     }
     function selectBrand(btn) {
       document.querySelectorAll('.brand-btn').forEach(function(b) { b.classList.remove('selected'); });
       btn.classList.add('selected');
     }
+    function updateCharCount(el) {
+      el.nextElementSibling.textContent = el.value.length + '/200';
+    }
     function renderDrawer() {
+      /* ── Step indicator ── */
       var si = document.getElementById('stepIndicator');
       si.innerHTML = '';
       STEPS.forEach(function(s, i) {
         var wrap = document.createElement('div');
         wrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;';
         var cls = i < drawerStep ? 'done' : i === drawerStep ? 'active' : 'pending';
-        var dotHTML = i < drawerStep ? '&#10003;' : String(i + 1);
+        var dotHTML = i < drawerStep
+          ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+          : String(i + 1);
         wrap.innerHTML = '<div class="step-dot ' + cls + '">' + dotHTML + '</div><span class="step-label">' + s + '</span>';
         si.appendChild(wrap);
         if (i < STEPS.length - 1) {
           var conn = document.createElement('div');
           conn.className = 'step-connector' + (i < drawerStep ? ' done' : '');
-          conn.style.marginBottom = '18px';
           si.appendChild(conn);
         }
       });
@@ -4266,87 +4360,239 @@
       var c = document.getElementById('drawerContent');
       var h = '';
 
+      /* ══════════════════════════════════════════
+         STEP 1 — Card Details & Limits
+      ══════════════════════════════════════════ */
       if (drawerStep === 0) {
+        /* Card Type tiles — Virtual / Physical only */
         h += '<div class="drawer-field">';
         h += '<label class="drawer-label">Card Type</label>';
-        h += '<div style="display:flex;gap:10px;">';
-        h += '<button class="card-type-btn selected" onclick="selectCardType(this)">';
-        h += '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0C0E54" stroke-width="1.6"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>';
-        h += '<div class="ct-label">Virtual</div><div class="ct-sub">For online payments</div></button>';
-        h += '<button class="card-type-btn" onclick="selectCardType(this)">';
-        h += '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.6"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><circle cx="6" cy="15" r="1.5" fill="#999"/></svg>';
-        h += '<div class="ct-label">Physical</div><div class="ct-sub">For in-person use</div></button>';
-        h += '<button class="card-type-btn" onclick="selectCardType(this)">';
-        h += '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.6"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>';
-        h += '<div class="ct-label">Single Use</div><div class="ct-sub">One-time only</div></button>';
-        h += '</div></div>';
-        h += '<div class="drawer-field"><label class="drawer-label">Card Brand</label>';
-        h += '<div style="display:flex;gap:8px;flex-wrap:wrap;">';
-        h += '<button class="brand-btn selected" onclick="selectBrand(this)"><span style="font-weight:700;font-style:italic;color:#1A1F71;letter-spacing:-0.5px;font-size:15px;">VISA</span></button>';
-        h += '<button class="brand-btn" onclick="selectBrand(this)"><svg width="36" height="22" viewBox="0 0 38 24"><circle cx="15" cy="12" r="11" fill="#EB001B"/><circle cx="23" cy="12" r="11" fill="#F79E1B"/><path d="M19 4.5a11 11 0 010 15A11 11 0 0119 4.5z" fill="#FF5F00"/></svg></button>';
-        h += '<button class="brand-btn" onclick="selectBrand(this)"><span style="font-weight:700;font-size:13px;letter-spacing:1px;">UATP</span></button>';
-        h += '<button class="brand-btn" onclick="selectBrand(this)"><span style="font-weight:600;font-size:12px;color:#004A97;">Diners</span></button>';
-        h += '</div></div>';
+        h += '<div class="card-type-tiles">';
+
+        /* Virtual */
+        h += '<div class="card-type-tile selected" onclick="selectCardType(this)">';
+        h += '<div class="ctt-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>';
+        h += '<div class="ctt-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0C0E54" stroke-width="1.7" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2.5"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="14" x2="10" y2="14" stroke-width="1.5"/></svg></div>';
+        h += '<div class="ctt-label">Virtual</div>';
+        h += '<div class="ctt-sub">For online &amp; digital payments</div>';
+        h += '</div>';
+
+        /* Physical */
+        h += '<div class="card-type-tile" onclick="selectCardType(this)">';
+        h += '<div class="ctt-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>';
+        h += '<div class="ctt-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="1.7" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2.5"/><line x1="2" y1="10" x2="22" y2="10"/><circle cx="6.5" cy="15" r="1.5" fill="#64748b" stroke="none"/></svg></div>';
+        h += '<div class="ctt-label">Physical</div>';
+        h += '<div class="ctt-sub">For in-person point-of-sale use</div>';
+        h += '</div>';
+
+        h += '</div></div>'; /* end card-type-tiles + drawer-field */
+
+        /* Card Brand — 4 tiles */
+        h += '<div class="drawer-field">';
+        h += '<label class="drawer-label">Card Brand</label>';
+        h += '<div class="brand-tile-grid">';
+
+        h += '<button class="brand-btn selected" onclick="selectBrand(this)">';
+        h += '<div class="bb-check"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>';
+        h += '<span style="font-weight:800;font-style:italic;color:#1A1F71;letter-spacing:-0.5px;font-size:16px;">VISA</span>';
+        h += '</button>';
+
+        h += '<button class="brand-btn" onclick="selectBrand(this)">';
+        h += '<div class="bb-check"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>';
+        h += '<svg width="36" height="22" viewBox="0 0 38 24"><circle cx="15" cy="12" r="11" fill="#EB001B"/><circle cx="23" cy="12" r="11" fill="#F79E1B"/><path d="M19 4.5a11 11 0 010 15A11 11 0 0119 4.5z" fill="#FF5F00"/></svg>';
+        h += '</button>';
+
+        h += '<button class="brand-btn" onclick="selectBrand(this)">';
+        h += '<div class="bb-check"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>';
+        h += '<span style="font-weight:700;font-size:12px;letter-spacing:1px;color:#1a1a2e;">UATP</span>';
+        h += '</button>';
+
+        h += '<button class="brand-btn" onclick="selectBrand(this)">';
+        h += '<div class="bb-check"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>';
+        h += '<span style="font-weight:600;font-size:12px;color:#004A97;">Diners</span>';
+        h += '</button>';
+
+        h += '</div></div>'; /* end brand-tile-grid + drawer-field */
+
+        /* Currency + Funding Account */
         h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:4px;">';
         h += '<div class="drawer-field" style="margin:0;"><label class="drawer-label">Currency</label>';
-        h += '<select class="drawer-select"><option>EUR - Euro</option><option>USD</option><option>GBP</option><option>AED</option><option>SAR</option></select></div>';
+        h += '<select class="drawer-select">';
+        var currencies = [['EUR','🇪🇺 EUR — Euro'],['USD','🇺🇸 USD — US Dollar'],['GBP','🇬🇧 GBP — Pound'],['AED','🇦🇪 AED — Dirham'],['SAR','🇸🇦 SAR — Riyal']];
+        for (var ci = 0; ci < currencies.length; ci++) { h += '<option value="' + currencies[ci][0] + '">' + currencies[ci][1] + '</option>'; }
+        h += '</select></div>';
+
         h += '<div class="drawer-field" style="margin:0;"><label class="drawer-label">Funding Account</label>';
-        h += '<select class="drawer-select"><option>fabcorp_DAK</option><option>fabcorp_OPS</option></select></div></div>';
-        h += '<div style="font-size:12px;color:var(--color-text-tertiary);margin:4px 0 16px;">Available Balance: EUR 400,237.29</div>';
+        h += '<select class="drawer-select"><option>fabcorp_DAK</option><option>fabcorp_OPS</option><option>fabcorp_TRV</option></select>';
+        h += '</div></div>';
+
+        /* Available balance hint */
+        h += '<div style="font-size:12px;color:var(--color-text-tertiary);margin:5px 0 18px;display:flex;align-items:center;gap:4px;">';
+        h += '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2.5"/></svg>';
+        h += '<span>Available Balance: <strong style="color:#16A34A;">EUR 400,237.29</strong></span></div>';
+
+        /* Amount + Clearance Date */
         h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">';
-        h += '<div class="drawer-field" style="margin:0;"><label class="drawer-label">Amount</label>';
-        h += '<div style="display:flex;gap:6px;"><input type="text" class="drawer-input" value="1,000" style="flex:1;"><input type="text" class="drawer-input" value="00" style="width:52px;"></div></div>';
-        h += '<div class="drawer-field" style="margin:0;"><label class="drawer-label">Clearance Date</label>';
-        h += '<input type="date" class="drawer-input" value="2026-06-30"></div></div>';
 
+        h += '<div class="drawer-field" style="margin:0;">';
+        h += '<label class="drawer-label">Amount';
+        h += ' <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="vertical-align:middle;color:var(--color-text-tertiary);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2.5"/></svg>';
+        h += '</label>';
+        h += '<div class="amount-split">';
+        h += '<input class="amount-int" type="text" value="1,000" placeholder="0">';
+        h += '<span class="amount-sep">.</span>';
+        h += '<input class="amount-dec" type="text" value="00" maxlength="2">';
+        h += '</div></div>';
+
+        h += '<div class="drawer-field" style="margin:0;">';
+        h += '<label class="drawer-label">Clearance Date';
+        h += ' <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="vertical-align:middle;color:var(--color-text-tertiary);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2.5"/></svg>';
+        h += '</label>';
+        h += '<input type="date" class="drawer-input" value="2026-06-30">';
+        h += '</div>';
+
+        h += '</div>'; /* end grid */
+
+      /* ══════════════════════════════════════════
+         STEP 2 — Scheduled Loads
+      ══════════════════════════════════════════ */
       } else if (drawerStep === 1) {
-        h += '<p style="font-size:14px;color:var(--color-text-secondary);margin:0 0 20px;">Set up initial and recurring loads for this card.</p>';
-        h += '<div class="drawer-field"><label class="drawer-label">Initial Load Amount</label>';
-        h += '<div style="display:flex;gap:6px;"><input type="text" class="drawer-input" value="1,000" style="flex:1;"><input type="text" class="drawer-input" value="00" style="width:52px;"></div>';
-        h += '<p style="font-size:11px;color:var(--color-text-tertiary);margin-top:4px;">This amount will be immediately loaded upon card creation.</p></div>';
-        h += '<div class="drawer-field"><label class="drawer-label">Recurring Scheduled Loads</label>';
-        h += '<div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin-bottom:8px;font-size:11px;color:var(--color-text-tertiary);font-weight:500;text-transform:uppercase;letter-spacing:0.04em;">';
-        h += '<span>Amount</span><span>Load Date</span><span></span></div>';
-        h += '<div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;">';
-        h += '<input type="text" class="drawer-input" value="500" style="flex:1;">';
-        h += '<input type="date" class="drawer-input" value="2026-07-15" style="flex:1;">';
-        h += '<button style="background:none;border:none;cursor:pointer;color:var(--color-text-tertiary);font-size:16px;">x</button></div>';
-        h += '<button style="background:none;border:none;cursor:pointer;color:#4B5EFF;font-size:13px;font-weight:500;padding:4px 0;">+ Add Another Load</button></div>';
 
+        /* Initial Load Amount */
+        h += '<div class="drawer-field">';
+        h += '<label class="drawer-label">Initial Load Amount</label>';
+        h += '<div class="amount-split">';
+        h += '<input class="amount-int" type="text" value="1,000" placeholder="0">';
+        h += '<span class="amount-sep">.</span>';
+        h += '<input class="amount-dec" type="text" value="00" maxlength="2">';
+        h += '</div>';
+        h += '<div style="font-size:12px;color:var(--color-text-tertiary);margin-top:5px;">This amount will be immediately loaded upon card creation.</div>';
+        h += '</div>';
+
+        /* Recurring Scheduled Loads table */
+        h += '<div class="drawer-field">';
+        h += '<label class="drawer-label">Recurring Scheduled Loads</label>';
+        h += '<table class="sl-table">';
+        h += '<thead><tr>';
+        h += '<th style="width:34%;">Amount</th>';
+        h += '<th style="width:34%;">Load Date</th>';
+        h += '<th style="width:26%;">Frequency</th>';
+        h += '<th style="width:6%;"></th>';
+        h += '</tr></thead>';
+        h += '<tbody>';
+
+        /* Row 1 */
+        h += '<tr>';
+        h += '<td style="padding-right:8px;"><div class="amount-split" style="height:36px;"><input class="amount-int" type="text" value="500" style="padding:7px 8px;font-size:13px;"><span class="amount-sep" style="font-size:13px;">.</span><input class="amount-dec" type="text" value="00" style="padding:7px 6px;font-size:13px;" maxlength="2"></div></td>';
+        h += '<td style="padding-right:8px;"><input type="date" class="drawer-input" value="2026-07-15" style="padding:7px 8px;font-size:13px;height:36px;"></td>';
+        h += '<td style="padding-right:8px;"><select class="sl-freq-sel"><option selected>Monthly</option><option>Weekly</option><option>Bi-weekly</option><option>Quarterly</option><option>Annually</option></select></td>';
+        h += '<td><button class="sl-row-del" title="Remove">&#215;</button></td>';
+        h += '</tr>';
+
+        /* Row 2 */
+        h += '<tr>';
+        h += '<td style="padding-right:8px;"><div class="amount-split" style="height:36px;"><input class="amount-int" type="text" value="250" style="padding:7px 8px;font-size:13px;"><span class="amount-sep" style="font-size:13px;">.</span><input class="amount-dec" type="text" value="00" style="padding:7px 6px;font-size:13px;" maxlength="2"></div></td>';
+        h += '<td style="padding-right:8px;"><input type="date" class="drawer-input" value="2026-08-01" style="padding:7px 8px;font-size:13px;height:36px;"></td>';
+        h += '<td style="padding-right:8px;"><select class="sl-freq-sel"><option>Monthly</option><option selected>Weekly</option><option>Bi-weekly</option><option>Quarterly</option><option>Annually</option></select></td>';
+        h += '<td><button class="sl-row-del" title="Remove">&#215;</button></td>';
+        h += '</tr>';
+
+        h += '</tbody></table>';
+
+        h += '<button style="background:none;border:none;cursor:pointer;color:#4B5EFF;font-size:13px;font-weight:500;padding:4px 0;font-family:inherit;">+ Add Another Load</button>';
+        h += '</div>';
+
+        /* Footer note */
+        h += '<div style="font-size:12px;color:var(--color-text-tertiary);margin-top:4px;padding:10px 12px;background:var(--color-bg-secondary);border-radius:8px;display:flex;align-items:center;gap:6px;">';
+        h += '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+        h += 'Scheduled loads will take place at <strong>07:00 hrs GMT</strong>.';
+        h += '</div>';
+
+      /* ══════════════════════════════════════════
+         STEP 3 — Additional Details
+      ══════════════════════════════════════════ */
       } else if (drawerStep === 2) {
-        h += '<p style="font-size:14px;color:var(--color-text-secondary);margin:0 0 20px;">Add any metadata for this card (optional).</p>';
-        h += '<div class="drawer-field"><label class="drawer-label">External ID (Optional)</label>';
-        h += '<input type="text" class="drawer-input" placeholder="Enter an external ID"></div>';
-        h += '<div class="drawer-field"><label class="drawer-label">Additional Details (Optional)</label>';
-        h += '<div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin-bottom:8px;font-size:11px;color:var(--color-text-tertiary);font-weight:500;text-transform:uppercase;letter-spacing:0.04em;">';
-        h += '<span>Name</span><span>Value</span><span></span></div>';
-        var rows = [['Cost Center','Marketing'],['Department','Global Growth'],['Project Code','PRJ-3039-118']];
-        for (var i = 0; i < rows.length; i++) {
-          h += '<div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin-bottom:8px;align-items:center;">';
-          h += '<input type="text" class="drawer-input" value="' + rows[i][0] + '">';
-          h += '<input type="text" class="drawer-input" value="' + rows[i][1] + '">';
-          h += '<button style="background:none;border:none;cursor:pointer;color:var(--color-text-tertiary);">x</button></div>';
-        }
-        h += '<button style="background:none;border:none;cursor:pointer;color:#4B5EFF;font-size:13px;font-weight:500;padding:4px 0;">+ Add Additional Detail</button></div>';
 
+        /* Cardholder Name */
+        h += '<div class="drawer-field">';
+        h += '<label class="drawer-label">Cardholder Name <span style="font-weight:400;color:var(--color-text-tertiary);text-transform:none;letter-spacing:0;">(Optional)</span></label>';
+        h += '<input type="text" class="drawer-input" placeholder="e.g. Jane Smith">';
+        h += '</div>';
+
+        /* Department */
+        h += '<div class="drawer-field">';
+        h += '<label class="drawer-label">Department <span style="font-weight:400;color:var(--color-text-tertiary);text-transform:none;letter-spacing:0;">(Optional)</span></label>';
+        h += '<select class="drawer-select"><option value="">Select department…</option><option>Finance</option><option>Marketing</option><option>Operations</option><option>Technology</option><option>Human Resources</option><option>Legal</option><option>Sales</option></select>';
+        h += '</div>';
+
+        /* Cost Center */
+        h += '<div class="drawer-field">';
+        h += '<label class="drawer-label">Cost Center <span style="font-weight:400;color:var(--color-text-tertiary);text-transform:none;letter-spacing:0;">(Optional)</span></label>';
+        h += '<input type="text" class="drawer-input" placeholder="e.g. CC-4021">';
+        h += '</div>';
+
+        /* Purpose of Card */
+        h += '<div class="drawer-field">';
+        h += '<label class="drawer-label">Purpose of Card <span style="font-weight:400;color:var(--color-text-tertiary);text-transform:none;letter-spacing:0;">(Optional)</span></label>';
+        h += '<textarea class="drawer-textarea" placeholder="Describe the intended purpose of this card…" maxlength="200" oninput="updateCharCount(this)"></textarea>';
+        h += '<div class="char-counter">0/200</div>';
+        h += '</div>';
+
+        /* Spending Controls */
+        h += '<div class="drawer-field">';
+        h += '<label class="drawer-label">Spending Controls</label>';
+        h += '<label class="spend-check-row">';
+        h += '<input type="checkbox" id="spendingLimitCheck">';
+        h += '<span class="spend-check-label">Enable spending limit for this card</span>';
+        h += '</label>';
+        h += '</div>';
+
+        /* Notes */
+        h += '<div class="drawer-field">';
+        h += '<label class="drawer-label">Notes <span style="font-weight:400;color:var(--color-text-tertiary);text-transform:none;letter-spacing:0;">(Optional)</span></label>';
+        h += '<textarea class="drawer-textarea" placeholder="Any additional notes…" maxlength="200" oninput="updateCharCount(this)"></textarea>';
+        h += '<div class="char-counter">0/200</div>';
+        h += '</div>';
+
+      /* ══════════════════════════════════════════
+         STEP 4 — Review & Create
+      ══════════════════════════════════════════ */
       } else {
-        h += '<p style="font-size:14px;color:var(--color-text-secondary);margin:0 0 20px;">Please review the details before creating the card.</p>';
-        h += '<div class="review-section"><h4>Card Details &amp; Limits</h4>';
-        var d1 = [['Card Type','Virtual'],['Card Brand','Visa'],['Currency','EUR - Euro'],['Amount','EUR 1,000.00'],['Funding Account','fabcorp_DAK'],['Clearance Date','30/06/2026']];
-        for (var j = 0; j < d1.length; j++) {
-          h += '<div class="review-row"><span class="rv-label">' + d1[j][0] + '</span><span class="rv-val">' + d1[j][1] + '</span></div>';
+
+        /* Section 1 — Card Details */
+        h += '<div class="rv-section">';
+        h += '<div class="rv-section-head"><h4>Card Details &amp; Limits</h4><button class="rv-edit" onclick="drawerStep=0;renderDrawer()">Edit</button></div>';
+        h += '<div class="rv-grid">';
+        var cd = [['Card Type','Virtual'],['Funding Account','fabcorp_DAK'],['Card Brand','Visa'],['Amount','EUR 1,000.00'],['Currency','EUR — Euro'],['Clearance Date','30 Jun 2026']];
+        for (var ri = 0; ri < cd.length; ri++) {
+          h += '<div class="rv-cell"><div class="rv-cell-label">' + cd[ri][0] + '</div><div class="rv-cell-val">' + cd[ri][1] + '</div></div>';
         }
-        h += '</div><div class="review-section"><h4>Scheduled Loads</h4>';
-        var d2 = [['Initial Load','EUR 1,000.00'],['Recurring Loads','1'],['Load Amount','EUR 500.00'],['Load Date','15/07/2026']];
-        for (var k = 0; k < d2.length; k++) {
-          h += '<div class="review-row"><span class="rv-label">' + d2[k][0] + '</span><span class="rv-val">' + d2[k][1] + '</span></div>';
+        h += '</div></div>';
+
+        /* Section 2 — Scheduled Loads */
+        h += '<div class="rv-section">';
+        h += '<div class="rv-section-head"><h4>Scheduled Loads</h4><button class="rv-edit" onclick="drawerStep=1;renderDrawer()">Edit</button></div>';
+        h += '<div class="rv-grid">';
+        var sl = [['Initial Load','EUR 1,000.00'],['Frequency','Monthly'],['Recurring Loads','2 scheduled'],['Next Load Date','15 Jul 2026']];
+        for (var si2 = 0; si2 < sl.length; si2++) {
+          h += '<div class="rv-cell"><div class="rv-cell-label">' + sl[si2][0] + '</div><div class="rv-cell-val">' + sl[si2][1] + '</div></div>';
         }
-        h += '<p style="font-size:11px;color:var(--color-text-tertiary);margin-top:6px;">Scheduled loads will take place at 07:00am GMT.</p></div>';
-        h += '<div class="review-section"><h4>Additional Details</h4>';
-        var d3 = [['Cost Center','Marketing'],['Department','Global Growth'],['Project Code','PRJ-3039-118'],['External ID','-']];
-        for (var l = 0; l < d3.length; l++) {
-          h += '<div class="review-row"><span class="rv-label">' + d3[l][0] + '</span><span class="rv-val">' + d3[l][1] + '</span></div>';
+        h += '</div></div>';
+
+        /* Section 3 — Additional Details */
+        h += '<div class="rv-section">';
+        h += '<div class="rv-section-head"><h4>Additional Details</h4><button class="rv-edit" onclick="drawerStep=2;renderDrawer()">Edit</button></div>';
+        h += '<div class="rv-grid">';
+        var ad = [['Cardholder','—'],['Purpose','—'],['Department','—'],['Spending Limit','Not enabled'],['Cost Center','—'],['Notes','—']];
+        for (var ai = 0; ai < ad.length; ai++) {
+          h += '<div class="rv-cell"><div class="rv-cell-label">' + ad[ai][0] + '</div><div class="rv-cell-val">' + ad[ai][1] + '</div></div>';
         }
+        h += '</div></div>';
+
+        /* Important info box */
+        h += '<div class="rv-info-box">';
+        h += '<svg class="rv-info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2.5"/></svg>';
+        h += '<div class="rv-info-text">Once the card is created, scheduled loads and spending controls cannot be changed without contacting support. Please review all details carefully before proceeding.</div>';
         h += '</div>';
       }
 
