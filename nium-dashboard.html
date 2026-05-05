@@ -690,6 +690,39 @@
       font-weight: 600;
       color: var(--color-text-secondary);
     }
+    .kpi-attention .drill-wrap {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .kpi-attention .drill-wrap:hover { background: rgba(0,0,0,0.05); }
+    .kpi-attention .drill-wrap::after {
+      content: 'View all';
+      position: absolute;
+      right: calc(100% + 8px);
+      top: 50%;
+      transform: translateY(-50%);
+      background: #212b36;
+      color: #ffffff;
+      padding: 5px 9px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.12s ease-out;
+      z-index: 60;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .kpi-attention .drill-wrap:hover::after { opacity: 1; }
     .kpi-attention .number {
       font-size: 40px;
       font-weight: 500;
@@ -746,14 +779,12 @@
       cursor: pointer;
     }
     .kpi-attention .drill {
-      position: absolute;
-      top: 16px;
-      right: 16px;
       color: var(--color-attention-text);
-      opacity: 0.6;
+      opacity: 0.5;
       transition: opacity 0.12s ease-out;
+      display: block;
     }
-    .kpi-attention:hover .drill { opacity: 1; }
+    .kpi-attention .drill-wrap:hover .drill { opacity: 1; }
     .kpi-card .label {
       font-size: 12px;
       font-weight: 600;
@@ -1376,6 +1407,65 @@
       background: #f5ff57;
       color: #1a1a00;
     }
+
+    /* ── For your attention expanded card ──────────────────────── */
+    .kpi-attention .pa-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 6px;
+      flex: 1;
+    }
+    .kpi-attention .pa-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 0;
+      border-top: 0.5px solid rgba(153,60,29,0.15);
+    }
+    .kpi-attention .pa-item-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+    .kpi-attention .pa-item-type {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--color-attention-text);
+      opacity: 0.7;
+    }
+    .kpi-attention .pa-item-desc {
+      font-size: 12.5px;
+      color: var(--color-text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 180px;
+      font-weight: 500;
+    }
+    .kpi-attention .pa-item-meta {
+      font-size: 11.5px;
+      color: var(--color-text-secondary);
+    }
+    .kpi-attention .pa-item-cta {
+      flex-shrink: 0;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-attention-text);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      font-family: inherit;
+      white-space: nowrap;
+      align-self: center;
+    }
+    .kpi-attention .pa-item-cta:hover { text-decoration: underline; }
+    .kpi-attention .pa-see-all { display: none; }
   </style>
 </head>
 <body>
@@ -1522,11 +1612,31 @@
     <div class="kpi-grid">
 
       <div class="kpi-attention">
-        <svg class="drill" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-        <div class="title">Pending Actions</div>
-        <div class="number">7</div>
-        <div class="hint">Need your attention</div>
-        <button class="action">Review now →</button>
+        <div class="drill-wrap" onclick="window.location='nium-portal-send.html'">
+          <svg class="drill" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </div>
+        <div class="title">For your attention</div>
+        <div class="pa-list">
+          <!-- Action 1 -->
+          <div class="pa-item">
+            <div class="pa-item-left">
+              <span class="pa-item-type">Payout</span>
+              <span class="pa-item-desc">payouts_may4_batch2.csv</span>
+              <span class="pa-item-meta">Validation successful · awaiting checker</span>
+            </div>
+            <button class="pa-item-cta" onclick="window.location='nium-portal-send.html'">Review →</button>
+          </div>
+          <!-- Action 2 -->
+          <div class="pa-item">
+            <div class="pa-item-left">
+              <span class="pa-item-type">Beneficiary</span>
+              <span class="pa-item-desc">Acme Corp</span>
+              <span class="pa-item-meta">New beneficiary · approval required</span>
+            </div>
+            <button class="pa-item-cta" onclick="window.location='nium-portal-beneficiaries.html'">Review →</button>
+          </div>
+        </div>
+        <button class="pa-see-all">see all that need your attention →</button>
       </div>
 
       <div class="kpi-card" data-card="balance">
@@ -3160,6 +3270,8 @@
       result.className = 'vf-result-valid';
       result.innerHTML = '<div class="vf-result-title">&#x2713; Account verified</div><div class="vf-result-detail"><strong>Account holder:</strong> Workera AI Inc.<br><strong>Status:</strong> Valid<br><strong>Name match:</strong> Strong match</div>';
     }
+  </script>
+
   </script>
 
 </body></html>

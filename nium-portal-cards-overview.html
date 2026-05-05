@@ -2477,22 +2477,107 @@
     #tab-management .data-table tbody td {
       border-bottom: 1px solid var(--color-border-primary);
     }
-    /* Pinned pagination */
-    .cards-pagination-bar {
-      position: fixed;
-      bottom: 0;
-      left: 180px;
-      right: 0;
-      background: #fff;
-      border-top: 1px solid var(--color-border-primary);
-      padding: 10px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 100;
+    /* ── Column filter popovers ── */
+    .col-filter-wrap { position: relative; display: inline-flex; align-items: center; }
+    .col-filter-btn {
+      display: inline-flex; align-items: center; gap: 5px; cursor: pointer;
+      border: none; background: none; font: inherit; font-size: 11.5px; font-weight: 600;
+      color: var(--color-text-secondary); letter-spacing: 0.04em; padding: 0; white-space: nowrap;
     }
-    /* Extra bottom padding so table content isn't hidden behind pinned bar */
-    #tab-management { padding-bottom: 60px; }
+    .col-filter-btn svg { color: var(--color-text-tertiary); transition: color 0.12s; }
+    .col-filter-btn:hover svg { color: var(--color-text-primary); }
+    .col-filter-btn.active svg { color: var(--color-brand-navy); }
+    .col-filter-btn.active::after {
+      content: ''; width: 5px; height: 5px; border-radius: 50%;
+      background: var(--color-brand-navy); flex-shrink: 0;
+    }
+    .col-filter-popover {
+      position: absolute; top: calc(100% + 6px); left: 0;
+      background: var(--color-bg-primary); border: 0.5px solid var(--color-border-secondary);
+      border-radius: var(--radius-md); box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+      z-index: 30; display: none; min-width: 200px;
+    }
+    .col-filter-popover.open { display: block; }
+    /* Date popover */
+    .date-pop-presets { padding: 6px 4px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .date-pop-preset {
+      display: block; width: 100%; text-align: left; padding: 7px 14px; font-size: 13px;
+      border: none; background: none; font-family: inherit; color: var(--color-text-primary);
+      cursor: pointer; border-radius: var(--radius-sm);
+    }
+    .date-pop-preset:hover { background: var(--color-bg-secondary); }
+    .date-pop-preset.active { background: #f0f1fc; color: var(--color-brand-navy); font-weight: 500; }
+    .date-pop-custom { padding: 10px 14px 12px; }
+    .date-pop-custom-label { font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 8px; }
+    .date-pop-inputs { display: flex; flex-direction: column; gap: 6px; }
+    .date-pop-field { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--color-text-secondary); }
+    .date-pop-field label { width: 28px; flex-shrink: 0; }
+    .date-pop-input { flex: 1; border: 1px solid var(--color-border-secondary); border-radius: var(--radius-sm); padding: 5px 8px; font-size: 12px; font-family: inherit; color: var(--color-text-primary); background: var(--color-bg-primary); outline: none; }
+    .date-pop-input:focus { border-color: var(--color-brand-accent-light,#a9b4ff); }
+    .date-pop-apply { margin-top: 8px; width: 100%; padding: 6px; background: var(--color-brand-navy); color: #fff; border: none; border-radius: var(--radius-sm); font-size: 12.5px; font-weight: 500; cursor: pointer; font-family: inherit; }
+    .date-pop-apply:hover { background: #1a2070; }
+    /* Dropdown list popover */
+    .drop-pop-list { padding: 6px 4px; }
+    .drop-pop-item {
+      display: flex; align-items: center; gap: 9px; padding: 6px 12px;
+      cursor: pointer; user-select: none; font-size: 12.5px; color: var(--color-text-primary);
+      border-radius: var(--radius-sm);
+    }
+    .drop-pop-item:hover { background: var(--color-bg-secondary); }
+    .drop-pop-checkbox { width: 14px; height: 14px; flex-shrink: 0; accent-color: var(--color-brand-navy); cursor: pointer; }
+    /* Text search popover */
+    .text-pop-inner { padding: 10px; }
+    .text-pop-input {
+      width: 100%; box-sizing: border-box; border: 1px solid var(--color-border-secondary);
+      border-radius: var(--radius-sm); padding: 6px 10px; font-size: 13px; font-family: inherit;
+      color: var(--color-text-primary); background: var(--color-bg-primary); outline: none;
+    }
+    .text-pop-input:focus { border-color: var(--color-brand-accent-light,#a9b4ff); }
+    .text-pop-input::placeholder { color: var(--color-text-tertiary); }
+    /* Kebab (vertical ellipsis) menu */
+    .card-kebab-wrap { position: relative; display: inline-block; }
+    .card-kebab-btn {
+      background: none; border: none; cursor: pointer; padding: 4px 6px;
+      font-size: 16px; color: var(--color-text-secondary); border-radius: 4px;
+      letter-spacing: 0; writing-mode: vertical-rl; line-height: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 2px;
+    }
+    .card-kebab-btn:hover { background: var(--color-bg-secondary); }
+    .card-kebab-dot { width: 3px; height: 3px; border-radius: 50%; background: currentColor; display: block; }
+    .card-kebab-menu {
+      display: none; position: absolute; right: 0; top: calc(100% + 4px);
+      background: var(--color-bg-primary); border: 0.5px solid var(--color-border-secondary);
+      border-radius: var(--radius-md); box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+      z-index: 50; min-width: 170px; padding: 4px 0;
+    }
+    .card-kebab-menu.open { display: block; }
+    .card-kebab-item {
+      display: block; width: 100%; text-align: left; padding: 8px 14px;
+      font-size: 13px; font-family: inherit; background: none; border: none;
+      color: var(--color-text-primary); cursor: pointer;
+    }
+    .card-kebab-item:hover { background: var(--color-bg-secondary); }
+    .card-kebab-item.danger { color: #d04040; }
+    /* Pagination footer */
+    .pay-table-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 11px 16px; border-top: 1px solid var(--color-border-tertiary);
+      font-size: 12.5px; color: var(--color-text-secondary); background: #fff;
+    }
+    .pay-page-btns { display: flex; gap: 4px; }
+    .pay-page-btn {
+      padding: 4px 10px; font-size: 12.5px; border: 0.5px solid var(--color-border-secondary);
+      border-radius: var(--radius-sm); background: var(--color-bg-primary);
+      cursor: pointer; font-family: inherit; color: var(--color-text-primary);
+    }
+    .pay-page-btn:hover { background: var(--color-bg-secondary); }
+    .pay-page-btn.active { background: var(--color-brand-navy); color: #fff; border-color: var(--color-brand-navy); }
+    /* State badges */
+    .card-badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+    .card-badge-active   { background: #E6FAF0; color: #16A34A; }
+    .card-badge-frozen   { background: #EFF6FF; color: #2563EB; }
+    .card-badge-expired  { background: #FEF2F2; color: #DC2626; }
+    .card-badge-cancelled{ background: #F1F5F9; color: #64748B; }
   </style>
   <script>
     // Apply persisted sidebar state before render to avoid flicker
@@ -2812,18 +2897,135 @@
         <!-- Card table -->
         <div class="data-table-wrap">
           <table class="data-table">
-            <thead><tr>
-              <th style="width:32px;"><input type="checkbox" class="dt-checkbox"></th>
-              <th>Card reference</th>
-              <th>Card type</th>
-              <th>Card brand</th>
-              <th>Card number</th>
-              <th>Expiry date</th>
-              <th>Currency</th>
-              <th>Available balance</th>
-              <th>State</th>
-              <th>Actions</th>
-            </tr></thead>
+            <thead>
+              <tr>
+                <th style="width:32px;"><input type="checkbox" class="dt-checkbox"></th>
+
+                <!-- Card reference — text search -->
+                <th>
+                  <div class="col-filter-wrap">
+                    <button class="col-filter-btn" id="cRefFilterBtn">Card reference <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
+                    <div class="col-filter-popover" id="cRefFilterPop" style="min-width:220px;">
+                      <div class="text-pop-inner">
+                        <input class="text-pop-input" id="cRefInput" type="text" placeholder="Search card reference" autocomplete="off" />
+                      </div>
+                    </div>
+                  </div>
+                </th>
+
+                <!-- Card type — dropdown -->
+                <th>
+                  <div class="col-filter-wrap">
+                    <button class="col-filter-btn" id="cTypeFilterBtn">Card type <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
+                    <div class="col-filter-popover" id="cTypeFilterPop" style="min-width:160px;">
+                      <div class="drop-pop-list">
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cTypeFilter" value="" checked /><span>All</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cTypeFilter" value="vccmultigps" /><span>vccmultigps</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cTypeFilter" value="vccsingle" /><span>vccsingle</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cTypeFilter" value="vcctravel" /><span>vcctravel</span></label>
+                      </div>
+                    </div>
+                  </div>
+                </th>
+
+                <!-- Card brand — dropdown -->
+                <th>
+                  <div class="col-filter-wrap">
+                    <button class="col-filter-btn" id="cBrandFilterBtn">Card brand <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
+                    <div class="col-filter-popover" id="cBrandFilterPop" style="min-width:150px;">
+                      <div class="drop-pop-list">
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cBrandFilter" value="" checked /><span>All</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cBrandFilter" value="VISA" /><span>Visa</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cBrandFilter" value="Mastercard" /><span>Mastercard</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cBrandFilter" value="UATP" /><span>UATP</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cBrandFilter" value="Diners" /><span>Diners</span></label>
+                      </div>
+                    </div>
+                  </div>
+                </th>
+
+                <!-- Card number — text search -->
+                <th>
+                  <div class="col-filter-wrap">
+                    <button class="col-filter-btn" id="cNumFilterBtn">Card number <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
+                    <div class="col-filter-popover" id="cNumFilterPop" style="min-width:210px;">
+                      <div class="text-pop-inner">
+                        <input class="text-pop-input" id="cNumInput" type="text" placeholder="Search card number" autocomplete="off" />
+                      </div>
+                    </div>
+                  </div>
+                </th>
+
+                <!-- Expiry date — date range -->
+                <th>
+                  <div class="col-filter-wrap">
+                    <button class="col-filter-btn" id="cExpFilterBtn">Expiry date <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
+                    <div class="col-filter-popover" id="cExpFilterPop" style="min-width:190px;">
+                      <div class="date-pop-presets">
+                        <button class="date-pop-preset active" data-preset="all">All time</button>
+                        <button class="date-pop-preset" data-preset="30d">Expiring in 30 days</button>
+                        <button class="date-pop-preset" data-preset="90d">Expiring in 90 days</button>
+                      </div>
+                      <div class="date-pop-custom">
+                        <div class="date-pop-custom-label">Custom range</div>
+                        <div class="date-pop-inputs">
+                          <div class="date-pop-field"><label>From</label><input class="date-pop-input" type="date" id="cExpFrom" /></div>
+                          <div class="date-pop-field"><label>To</label><input class="date-pop-input" type="date" id="cExpTo" /></div>
+                        </div>
+                        <button class="date-pop-apply" id="cExpApply">Apply</button>
+                      </div>
+                    </div>
+                  </div>
+                </th>
+
+                <!-- Currency — dropdown -->
+                <th>
+                  <div class="col-filter-wrap">
+                    <button class="col-filter-btn" id="cCcyFilterBtn">Currency <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
+                    <div class="col-filter-popover" id="cCcyFilterPop" style="min-width:140px;">
+                      <div class="drop-pop-list">
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cCcyFilter" value="" checked /><span>All</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cCcyFilter" value="EUR" /><span>EUR</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cCcyFilter" value="USD" /><span>USD</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cCcyFilter" value="GBP" /><span>GBP</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cCcyFilter" value="SAR" /><span>SAR</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cCcyFilter" value="AED" /><span>AED</span></label>
+                      </div>
+                    </div>
+                  </div>
+                </th>
+
+                <!-- Available balance — text search -->
+                <th>
+                  <div class="col-filter-wrap">
+                    <button class="col-filter-btn" id="cBalFilterBtn">Available balance <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
+                    <div class="col-filter-popover" id="cBalFilterPop" style="min-width:210px;">
+                      <div class="text-pop-inner">
+                        <input class="text-pop-input" id="cBalInput" type="text" placeholder="Search available balance" autocomplete="off" />
+                      </div>
+                    </div>
+                  </div>
+                </th>
+
+                <!-- State — dropdown -->
+                <th>
+                  <div class="col-filter-wrap">
+                    <button class="col-filter-btn" id="cStateFilterBtn">State <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
+                    <div class="col-filter-popover" id="cStateFilterPop" style="min-width:140px;">
+                      <div class="drop-pop-list">
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cStateFilter" value="" checked /><span>All</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cStateFilter" value="Active" /><span>Active</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cStateFilter" value="Frozen" /><span>Frozen</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cStateFilter" value="Expired" /><span>Expired</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cStateFilter" value="Cancelled" /><span>Cancelled</span></label>
+                      </div>
+                    </div>
+                  </div>
+                </th>
+
+                <th><span style="font-size:11.5px;font-weight:600;color:var(--color-text-secondary);letter-spacing:0.04em;">Actions</span></th>
+              </tr>
+            </thead>
             <tbody>
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
@@ -2834,8 +3036,20 @@
                 <td class="dt-muted">21/04/2028</td>
                 <td class="dt-muted">EUR</td>
                 <td class="dt-muted">EUR 80.00</td>
-                <td><span class="status-active" style="background:#E6FAF0;color:#16A34A;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;">ACTIVE</span></td>
-                <td><button class="dt-kebab">···</button></td>
+                <td><span class="card-badge card-badge-active">Active</span></td>
+                <td><div class="card-kebab-wrap">
+                  <button class="card-kebab-btn" onclick="toggleCardMenu(this)">
+                    <span class="card-kebab-dot"></span>
+                    <span class="card-kebab-dot"></span>
+                    <span class="card-kebab-dot"></span>
+                  </button>
+                  <div class="card-kebab-menu">
+                    <button class="card-kebab-item">View statement</button>
+                    <button class="card-kebab-item">Load / Unload card</button>
+                    <button class="card-kebab-item">Freeze card</button>
+                    <button class="card-kebab-item danger">Delete card</button>
+                  </div>
+                </div></td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
@@ -2846,8 +3060,20 @@
                 <td class="dt-muted">18/04/2028</td>
                 <td class="dt-muted">USD</td>
                 <td class="dt-muted">USD 250.00</td>
-                <td><span style="background:#E6FAF0;color:#16A34A;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;">ACTIVE</span></td>
-                <td><button class="dt-kebab">···</button></td>
+                <td><span class="card-badge card-badge-active">Active</span></td>
+                <td><div class="card-kebab-wrap">
+                  <button class="card-kebab-btn" onclick="toggleCardMenu(this)">
+                    <span class="card-kebab-dot"></span>
+                    <span class="card-kebab-dot"></span>
+                    <span class="card-kebab-dot"></span>
+                  </button>
+                  <div class="card-kebab-menu">
+                    <button class="card-kebab-item">View statement</button>
+                    <button class="card-kebab-item">Load / Unload card</button>
+                    <button class="card-kebab-item">Freeze card</button>
+                    <button class="card-kebab-item danger">Delete card</button>
+                  </div>
+                </div></td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
@@ -2858,8 +3084,20 @@
                 <td class="dt-muted">15/04/2027</td>
                 <td class="dt-muted">GBP</td>
                 <td class="dt-muted">GBP 0.00</td>
-                <td><span style="background:#EFF6FF;color:#2563EB;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;">FROZEN</span></td>
-                <td><button class="dt-kebab">···</button></td>
+                <td><span class="card-badge card-badge-frozen">Frozen</span></td>
+                <td><div class="card-kebab-wrap">
+                  <button class="card-kebab-btn" onclick="toggleCardMenu(this)">
+                    <span class="card-kebab-dot"></span>
+                    <span class="card-kebab-dot"></span>
+                    <span class="card-kebab-dot"></span>
+                  </button>
+                  <div class="card-kebab-menu">
+                    <button class="card-kebab-item">View statement</button>
+                    <button class="card-kebab-item">Load / Unload card</button>
+                    <button class="card-kebab-item">Freeze card</button>
+                    <button class="card-kebab-item danger">Delete card</button>
+                  </div>
+                </div></td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
@@ -2870,8 +3108,20 @@
                 <td class="dt-muted">10/04/2028</td>
                 <td class="dt-muted">SAR</td>
                 <td class="dt-muted">SAR 0.00</td>
-                <td><span style="background:#FEF2F2;color:#DC2626;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;">EXPIRED</span></td>
-                <td><button class="dt-kebab">···</button></td>
+                <td><span class="card-badge card-badge-expired">Expired</span></td>
+                <td><div class="card-kebab-wrap">
+                  <button class="card-kebab-btn" onclick="toggleCardMenu(this)">
+                    <span class="card-kebab-dot"></span>
+                    <span class="card-kebab-dot"></span>
+                    <span class="card-kebab-dot"></span>
+                  </button>
+                  <div class="card-kebab-menu">
+                    <button class="card-kebab-item">View statement</button>
+                    <button class="card-kebab-item">Load / Unload card</button>
+                    <button class="card-kebab-item">Freeze card</button>
+                    <button class="card-kebab-item danger">Delete card</button>
+                  </div>
+                </div></td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
@@ -2882,25 +3132,95 @@
                 <td class="dt-muted">05/04/2027</td>
                 <td class="dt-muted">AED</td>
                 <td class="dt-muted">AED 120.00</td>
-                <td><span style="background:#E6FAF0;color:#16A34A;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;">ACTIVE</span></td>
-                <td><button class="dt-kebab">···</button></td>
+                <td><span class="card-badge card-badge-active">Active</span></td>
+                <td><div class="card-kebab-wrap">
+                  <button class="card-kebab-btn" onclick="toggleCardMenu(this)">
+                    <span class="card-kebab-dot"></span>
+                    <span class="card-kebab-dot"></span>
+                    <span class="card-kebab-dot"></span>
+                  </button>
+                  <div class="card-kebab-menu">
+                    <button class="card-kebab-item">View statement</button>
+                    <button class="card-kebab-item">Load / Unload card</button>
+                    <button class="card-kebab-item">Freeze card</button>
+                    <button class="card-kebab-item danger">Delete card</button>
+                  </div>
+                </div></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" class="dt-checkbox"></td>
+                <td style="color:#4B5EFF;font-size:13px;">Rw2KpX7M_nB4vQzJ6TsL1Yd</td>
+                <td class="dt-muted">vccsingle</td>
+                <td><svg width="36" height="22" viewBox="0 0 38 24"><circle cx="15" cy="12" r="11" fill="#EB001B"/><circle cx="23" cy="12" r="11" fill="#F79E1B"/><path d="M19 4.5a11 11 0 010 15A11 11 0 0119 4.5z" fill="#FF5F00"/></svg></td>
+                <td class="dt-muted">5105 1051 0510 5100</td>
+                <td class="dt-muted">22/09/2026</td>
+                <td class="dt-muted">SGD</td>
+                <td class="dt-muted">SGD 500.00</td>
+                <td><span class="card-badge card-badge-active">Active</span></td>
+                <td><div class="card-kebab-wrap"><button class="card-kebab-btn" onclick="toggleCardMenu(this)"><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span></button><div class="card-kebab-menu"><button class="card-kebab-item">View statement</button><button class="card-kebab-item">Load / Unload card</button><button class="card-kebab-item">Freeze card</button><button class="card-kebab-item danger">Delete card</button></div></div></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" class="dt-checkbox"></td>
+                <td style="color:#4B5EFF;font-size:13px;">Hx9FqD3N_cW7mPkR2VtA5Jb</td>
+                <td class="dt-muted">vccmultigps</td>
+                <td><span style="font-weight:700;font-style:italic;color:#1A1F71;letter-spacing:-0.5px;">VISA</span></td>
+                <td class="dt-muted">4916 3782 9274 5831</td>
+                <td class="dt-muted">30/11/2025</td>
+                <td class="dt-muted">MYR</td>
+                <td class="dt-muted">MYR 0.00</td>
+                <td><span class="card-badge card-badge-expired">Expired</span></td>
+                <td><div class="card-kebab-wrap"><button class="card-kebab-btn" onclick="toggleCardMenu(this)"><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span></button><div class="card-kebab-menu"><button class="card-kebab-item">View statement</button><button class="card-kebab-item">Load / Unload card</button><button class="card-kebab-item">Freeze card</button><button class="card-kebab-item danger">Delete card</button></div></div></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" class="dt-checkbox"></td>
+                <td style="color:#4B5EFF;font-size:13px;">Gm5TsL8P_aE2rNyW4UcB6Kf</td>
+                <td class="dt-muted">vcctravel</td>
+                <td><span style="font-weight:700;font-size:12px;color:var(--color-text-primary);letter-spacing:1px;">UATP</span></td>
+                <td class="dt-muted">1234 5678 9012 3456</td>
+                <td class="dt-muted">14/07/2029</td>
+                <td class="dt-muted">JPY</td>
+                <td class="dt-muted">JPY 12,000</td>
+                <td><span class="card-badge card-badge-active">Active</span></td>
+                <td><div class="card-kebab-wrap"><button class="card-kebab-btn" onclick="toggleCardMenu(this)"><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span></button><div class="card-kebab-menu"><button class="card-kebab-item">View statement</button><button class="card-kebab-item">Load / Unload card</button><button class="card-kebab-item">Freeze card</button><button class="card-kebab-item danger">Delete card</button></div></div></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" class="dt-checkbox"></td>
+                <td style="color:#4B5EFF;font-size:13px;">Zn3BvQ6H_jK9wMxT1SdC8Rp</td>
+                <td class="dt-muted">vccsingle</td>
+                <td><span style="font-weight:600;font-size:12px;color:#004A97;">Diners</span></td>
+                <td class="dt-muted">3056 9309 0259 04</td>
+                <td class="dt-muted">08/03/2028</td>
+                <td class="dt-muted">HKD</td>
+                <td class="dt-muted">HKD 750.00</td>
+                <td><span class="card-badge card-badge-frozen">Frozen</span></td>
+                <td><div class="card-kebab-wrap"><button class="card-kebab-btn" onclick="toggleCardMenu(this)"><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span></button><div class="card-kebab-menu"><button class="card-kebab-item">View statement</button><button class="card-kebab-item">Load / Unload card</button><button class="card-kebab-item">Freeze card</button><button class="card-kebab-item danger">Delete card</button></div></div></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" class="dt-checkbox"></td>
+                <td style="color:#4B5EFF;font-size:13px;">Vd7WkN2A_qR5hLbF9XmP4Gu</td>
+                <td class="dt-muted">vccmultigps</td>
+                <td><svg width="36" height="22" viewBox="0 0 38 24"><circle cx="15" cy="12" r="11" fill="#EB001B"/><circle cx="23" cy="12" r="11" fill="#F79E1B"/><path d="M19 4.5a11 11 0 010 15A11 11 0 0119 4.5z" fill="#FF5F00"/></svg></td>
+                <td class="dt-muted">5425 2334 3010 9903</td>
+                <td class="dt-muted">19/06/2027</td>
+                <td class="dt-muted">USD</td>
+                <td class="dt-muted">USD 1,200.00</td>
+                <td><span class="card-badge card-badge-active">Active</span></td>
+                <td><div class="card-kebab-wrap"><button class="card-kebab-btn" onclick="toggleCardMenu(this)"><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span></button><div class="card-kebab-menu"><button class="card-kebab-item">View statement</button><button class="card-kebab-item">Load / Unload card</button><button class="card-kebab-item">Freeze card</button><button class="card-kebab-item danger">Delete card</button></div></div></td>
               </tr>
             </tbody>
           </table>
-          <div class="dt-footer" style="justify-content:space-between;align-items:center;">
-            <span style="color:var(--color-text-secondary);font-size:13px;">Showing 1 to 5 of 50 cards</span>
-            <div style="display:flex;align-items:center;gap:6px;font-size:13px;">
-              <button class="dt-page-btn">«</button>
-              <button class="dt-page-btn">‹</button>
-              <button class="dt-page-btn active-page" style="background:#0C0E54;color:white;border-radius:6px;padding:4px 10px;border:none;">1</button>
-              <button class="dt-page-btn">2</button>
-              <button class="dt-page-btn">3</button>
-              <button class="dt-page-btn">4</button>
-              <button class="dt-page-btn">5</button>
-              <button class="dt-page-btn">›</button>
-              <button class="dt-page-btn">»</button>
-              <span style="color:var(--color-text-secondary);margin-left:12px;">Rows per page</span>
-              <select class="dt-show-select" style="padding:4px 8px;"><option>10</option><option>25</option><option>50</option></select>
+          <div class="pay-table-footer">
+            <span>Showing 1 to 10 of 50 cards</span>
+            <div class="pay-page-btns">
+              <button class="pay-page-btn">«</button>
+              <button class="pay-page-btn">‹</button>
+              <button class="pay-page-btn active">1</button>
+              <button class="pay-page-btn">2</button>
+              <button class="pay-page-btn">3</button>
+              <button class="pay-page-btn">4</button>
+              <button class="pay-page-btn">5</button>
+              <button class="pay-page-btn">›</button>
+              <button class="pay-page-btn">»</button>
             </div>
           </div>
         </div>
@@ -4025,21 +4345,36 @@
     }
   </script>
 
-  <!-- Pinned pagination -->
-  <div class="cards-pagination-bar">
-    <span style="color:var(--color-text-secondary);font-size:13px;">Showing 1 to 5 of 50 cards</span>
-    <div style="display:flex;align-items:center;gap:6px;font-size:13px;">
-      <button class="dt-page-btn">&#171;</button>
-      <button class="dt-page-btn">&#8249;</button>
-      <button class="dt-page-btn" style="background:#0C0E54;color:white;border-radius:6px;padding:4px 10px;border:none;cursor:pointer;">1</button>
-      <button class="dt-page-btn">2</button>
-      <button class="dt-page-btn">3</button>
-      <button class="dt-page-btn">4</button>
-      <button class="dt-page-btn">5</button>
-      <button class="dt-page-btn">&#8250;</button>
-      <button class="dt-page-btn">&#187;</button>
-      <span style="color:var(--color-text-secondary);margin-left:12px;">Rows per page</span>
-      <select style="padding:4px 8px;border:1px solid var(--color-border-primary);border-radius:6px;font-size:13px;"><option>10</option><option>25</option><option>50</option></select>
-    </div>
-  </div>
+
+  <script>
+    // Cards kebab menu
+    function toggleCardMenu(btn) {
+      var menu = btn.nextElementSibling;
+      var isOpen = menu.classList.contains('open');
+      document.querySelectorAll('.card-kebab-menu.open').forEach(function(m){ m.classList.remove('open'); });
+      if (!isOpen) menu.classList.add('open');
+    }
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.card-kebab-wrap')) {
+        document.querySelectorAll('.card-kebab-menu.open').forEach(function(m){ m.classList.remove('open'); });
+      }
+    });
+    // Cards column filter popovers
+    var cFilterBtns = document.querySelectorAll('#tab-management .col-filter-btn');
+    cFilterBtns.forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var pop = btn.nextElementSibling;
+        var isOpen = pop.classList.contains('open');
+        document.querySelectorAll('.col-filter-popover.open').forEach(function(p){ p.classList.remove('open'); });
+        document.querySelectorAll('.card-kebab-menu.open').forEach(function(m){ m.classList.remove('open'); });
+        if (!isOpen) { pop.classList.add('open'); pop.querySelector('input')?.focus(); }
+      });
+    });
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.col-filter-wrap')) {
+        document.querySelectorAll('.col-filter-popover.open').forEach(function(p){ p.classList.remove('open'); });
+      }
+    });
+  </script>
 </body></html>
