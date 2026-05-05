@@ -2534,6 +2534,16 @@
     }
     .text-pop-input:focus { border-color: var(--color-brand-accent-light,#a9b4ff); }
     .text-pop-input::placeholder { color: var(--color-text-tertiary); }
+
+    /* Card number mask + toggle */
+    .cn-wrap { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+    .cn-display { font-size: 12.5px; font-family: 'Courier New', monospace; letter-spacing: 0.03em; }
+    .cn-toggle {
+      background: none; border: none; cursor: pointer; padding: 2px 3px;
+      color: var(--color-text-tertiary); border-radius: 3px; display: flex; align-items: center;
+      transition: color 0.12s;
+    }
+    .cn-toggle:hover { color: var(--color-text-primary); background: var(--color-bg-secondary); }
     /* Kebab (vertical ellipsis) menu */
     .card-kebab-wrap { position: relative; display: inline-block; }
     .card-kebab-btn {
@@ -2847,7 +2857,7 @@
             <div class="filters-grid">
               <div class="filter-field">
                 <label class="filter-label">Card Type</label>
-                <select class="filter-select"><option>Any</option><option>vccmultigps</option><option>vccsingle</option><option>vcctravel</option></select>
+                <select class="filter-select"><option>Any</option><option>VCC Multi GPS</option><option>VCC Single</option><option>VCC Travel</option></select>
               </div>
               <div class="filter-field">
                 <label class="filter-label">Card Brand</label>
@@ -2919,9 +2929,9 @@
                     <div class="col-filter-popover" id="cTypeFilterPop" style="min-width:160px;">
                       <div class="drop-pop-list">
                         <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cTypeFilter" value="" checked /><span>All</span></label>
-                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cTypeFilter" value="vccmultigps" /><span>vccmultigps</span></label>
-                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cTypeFilter" value="vccsingle" /><span>vccsingle</span></label>
-                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cTypeFilter" value="vcctravel" /><span>vcctravel</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cTypeFilter" value="vccmultigps" /><span>VCC Multi GPS</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cTypeFilter" value="vccsingle" /><span>VCC Single</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="cTypeFilter" value="vcctravel" /><span>VCC Travel</span></label>
                       </div>
                     </div>
                   </div>
@@ -3029,9 +3039,9 @@
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
                 <td style="color:#4B5EFF;font-size:13px;">0Uww1PPO_dJQX8tnTsFxTU8Zb</td>
-                <td class="dt-muted">vccmultigps</td>
+                <td class="dt-muted">VCC Multi GPS</td>
                 <td><span style="font-weight:700;font-style:italic;color:#1A1F71;letter-spacing:-0.5px;">VISA</span></td>
-                <td class="dt-muted">4568 7201 2008 2705</td>
+                <td class="dt-muted"><div class="cn-wrap"><span class="cn-display" data-full="4568 7201 2008 2705" data-masked="•••• •••• •••• 2705">•••• •••• •••• 2705</span><button class="cn-toggle" onclick="toggleCardNum(this)" title="Show/hide number"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>
                 <td class="dt-muted">21/04/2028</td>
                 <td class="dt-muted">EUR</td>
                 <td class="dt-muted">EUR 80.00</td>
@@ -3044,7 +3054,7 @@
                   </button>
                   <div class="card-kebab-menu">
                     <button class="card-kebab-item">View statement</button>
-                    <button class="card-kebab-item" onclick="openLoadUnloadModal()">Load / Unload card</button>
+                    <button class="card-kebab-item" onclick="openLoadUnloadModal('0Uww1PPO_dJQX8tnTsFxTU8Zb','VCC Multi GPS','Visa','4568 7201 2008 2705')">Load / Unload funds</button>
                     <button class="card-kebab-item">Freeze card</button>
                     <button class="card-kebab-item danger">Delete card</button>
                   </div>
@@ -3053,9 +3063,9 @@
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
                 <td style="color:#4B5EFF;font-size:13px;">Yt9LmO9A_kPL2mXvR3GhJ2Qd</td>
-                <td class="dt-muted">vccsingle</td>
+                <td class="dt-muted">VCC Single</td>
                 <td><svg width="36" height="22" viewBox="0 0 38 24"><circle cx="15" cy="12" r="11" fill="#EB001B"/><circle cx="23" cy="12" r="11" fill="#F79E1B"/><path d="M19 4.5a11 11 0 010 15A11 11 0 0119 4.5z" fill="#FF5F00"/></svg></td>
-                <td class="dt-muted">5432 1098 7654 3210</td>
+                <td class="dt-muted"><div class="cn-wrap"><span class="cn-display" data-full="5432 1098 7654 3210" data-masked="•••• •••• •••• 3210">•••• •••• •••• 3210</span><button class="cn-toggle" onclick="toggleCardNum(this)" title="Show/hide number"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>
                 <td class="dt-muted">18/04/2028</td>
                 <td class="dt-muted">USD</td>
                 <td class="dt-muted">USD 250.00</td>
@@ -3068,7 +3078,7 @@
                   </button>
                   <div class="card-kebab-menu">
                     <button class="card-kebab-item">View statement</button>
-                    <button class="card-kebab-item" onclick="openLoadUnloadModal()">Load / Unload card</button>
+                    <button class="card-kebab-item" onclick="openLoadUnloadModal('Yt9LmO9A_kPL2mXvR3GhJ2Qd','VCC Single','Mastercard','5432 1098 7654 3210')">Load / Unload funds</button>
                     <button class="card-kebab-item">Freeze card</button>
                     <button class="card-kebab-item danger">Delete card</button>
                   </div>
@@ -3077,9 +3087,9 @@
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
                 <td style="color:#4B5EFF;font-size:13px;">Bn7GxR2L_mK8nVtYp5JsH9Lm</td>
-                <td class="dt-muted">vcctravel</td>
+                <td class="dt-muted">VCC Travel</td>
                 <td><span style="font-weight:700;font-size:12px;color:var(--color-text-primary);letter-spacing:1px;">UATP</span></td>
-                <td class="dt-muted">4000 1234 1234 1234</td>
+                <td class="dt-muted"><div class="cn-wrap"><span class="cn-display" data-full="4000 1234 1234 1234" data-masked="•••• •••• •••• 1234">•••• •••• •••• 1234</span><button class="cn-toggle" onclick="toggleCardNum(this)" title="Show/hide number"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>
                 <td class="dt-muted">15/04/2027</td>
                 <td class="dt-muted">GBP</td>
                 <td class="dt-muted">GBP 0.00</td>
@@ -3092,7 +3102,7 @@
                   </button>
                   <div class="card-kebab-menu">
                     <button class="card-kebab-item">View statement</button>
-                    <button class="card-kebab-item" onclick="openLoadUnloadModal()">Load / Unload card</button>
+                    <button class="card-kebab-item" onclick="openLoadUnloadModal('Bn7GxR2L_mK8nVtYp5JsH9Lm','VCC Travel','UATP','4000 1234 1234 1234')">Load / Unload funds</button>
                     <button class="card-kebab-item">Freeze card</button>
                     <button class="card-kebab-item danger">Delete card</button>
                   </div>
@@ -3101,9 +3111,9 @@
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
                 <td style="color:#4B5EFF;font-size:13px;">Pq4ZkM8N_tR6vGgB7WLp2Hs</td>
-                <td class="dt-muted">vccsingle</td>
+                <td class="dt-muted">VCC Single</td>
                 <td><span style="font-weight:600;font-size:12px;color:#004A97;">Diners</span></td>
-                <td class="dt-muted">5555 6666 7777 8888</td>
+                <td class="dt-muted"><div class="cn-wrap"><span class="cn-display" data-full="5555 6666 7777 8888" data-masked="•••• •••• •••• 8888">•••• •••• •••• 8888</span><button class="cn-toggle" onclick="toggleCardNum(this)" title="Show/hide number"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>
                 <td class="dt-muted">10/04/2028</td>
                 <td class="dt-muted">SAR</td>
                 <td class="dt-muted">SAR 0.00</td>
@@ -3116,7 +3126,7 @@
                   </button>
                   <div class="card-kebab-menu">
                     <button class="card-kebab-item">View statement</button>
-                    <button class="card-kebab-item" onclick="openLoadUnloadModal()">Load / Unload card</button>
+                    <button class="card-kebab-item" onclick="openLoadUnloadModal('Pq4ZkM8N_tR6vGgB7WLp2Hs','VCC Single','Diners','5555 6666 7777 8888')">Load / Unload funds</button>
                     <button class="card-kebab-item">Freeze card</button>
                     <button class="card-kebab-item danger">Delete card</button>
                   </div>
@@ -3125,9 +3135,9 @@
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
                 <td style="color:#4B5EFF;font-size:13px;">Lc6HpB3D_qV2xYzk8RmNp7Td</td>
-                <td class="dt-muted">vccmultigps</td>
+                <td class="dt-muted">VCC Multi GPS</td>
                 <td><span style="font-weight:700;font-style:italic;color:#1A1F71;letter-spacing:-0.5px;">VISA</span></td>
-                <td class="dt-muted">4111 1111 1111 1111</td>
+                <td class="dt-muted"><div class="cn-wrap"><span class="cn-display" data-full="4111 1111 1111 1111" data-masked="•••• •••• •••• 1111">•••• •••• •••• 1111</span><button class="cn-toggle" onclick="toggleCardNum(this)" title="Show/hide number"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>
                 <td class="dt-muted">05/04/2027</td>
                 <td class="dt-muted">AED</td>
                 <td class="dt-muted">AED 120.00</td>
@@ -3140,7 +3150,7 @@
                   </button>
                   <div class="card-kebab-menu">
                     <button class="card-kebab-item">View statement</button>
-                    <button class="card-kebab-item" onclick="openLoadUnloadModal()">Load / Unload card</button>
+                    <button class="card-kebab-item" onclick="openLoadUnloadModal('Lc6HpB3D_qV2xYzk8RmNp7Td','VCC Multi GPS','Visa','4111 1111 1111 1111')">Load / Unload funds</button>
                     <button class="card-kebab-item">Freeze card</button>
                     <button class="card-kebab-item danger">Delete card</button>
                   </div>
@@ -3149,62 +3159,62 @@
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
                 <td style="color:#4B5EFF;font-size:13px;">Rw2KpX7M_nB4vQzJ6TsL1Yd</td>
-                <td class="dt-muted">vccsingle</td>
+                <td class="dt-muted">VCC Single</td>
                 <td><svg width="36" height="22" viewBox="0 0 38 24"><circle cx="15" cy="12" r="11" fill="#EB001B"/><circle cx="23" cy="12" r="11" fill="#F79E1B"/><path d="M19 4.5a11 11 0 010 15A11 11 0 0119 4.5z" fill="#FF5F00"/></svg></td>
-                <td class="dt-muted">5105 1051 0510 5100</td>
+                <td class="dt-muted"><div class="cn-wrap"><span class="cn-display" data-full="5105 1051 0510 5100" data-masked="•••• •••• •••• 5100">•••• •••• •••• 5100</span><button class="cn-toggle" onclick="toggleCardNum(this)" title="Show/hide number"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>
                 <td class="dt-muted">22/09/2026</td>
                 <td class="dt-muted">SGD</td>
                 <td class="dt-muted">SGD 500.00</td>
                 <td><span class="card-badge card-badge-active">Active</span></td>
-                <td><div class="card-kebab-wrap"><button class="card-kebab-btn" onclick="toggleCardMenu(this)"><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span></button><div class="card-kebab-menu"><button class="card-kebab-item">View statement</button><button class="card-kebab-item">Load / Unload card</button><button class="card-kebab-item">Freeze card</button><button class="card-kebab-item danger">Delete card</button></div></div></td>
+                <td><div class="card-kebab-wrap"><button class="card-kebab-btn" onclick="toggleCardMenu(this)"><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span></button><div class="card-kebab-menu"><button class="card-kebab-item">View statement</button><button class="card-kebab-item" onclick="openLoadUnloadModal('Rw2KpX7M_nB4vQzJ6TsL1Yd','VCC Single','Mastercard','5105 1051 0510 5100')">Load / Unload funds</button><button class="card-kebab-item">Freeze card</button><button class="card-kebab-item danger">Delete card</button></div></div></td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
                 <td style="color:#4B5EFF;font-size:13px;">Hx9FqD3N_cW7mPkR2VtA5Jb</td>
-                <td class="dt-muted">vccmultigps</td>
+                <td class="dt-muted">VCC Multi GPS</td>
                 <td><span style="font-weight:700;font-style:italic;color:#1A1F71;letter-spacing:-0.5px;">VISA</span></td>
-                <td class="dt-muted">4916 3782 9274 5831</td>
+                <td class="dt-muted"><div class="cn-wrap"><span class="cn-display" data-full="4916 3782 9274 5831" data-masked="•••• •••• •••• 5831">•••• •••• •••• 5831</span><button class="cn-toggle" onclick="toggleCardNum(this)" title="Show/hide number"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>
                 <td class="dt-muted">30/11/2025</td>
                 <td class="dt-muted">MYR</td>
                 <td class="dt-muted">MYR 0.00</td>
                 <td><span class="card-badge card-badge-expired">Expired</span></td>
-                <td><div class="card-kebab-wrap"><button class="card-kebab-btn" onclick="toggleCardMenu(this)"><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span></button><div class="card-kebab-menu"><button class="card-kebab-item">View statement</button><button class="card-kebab-item">Load / Unload card</button><button class="card-kebab-item">Freeze card</button><button class="card-kebab-item danger">Delete card</button></div></div></td>
+                <td><div class="card-kebab-wrap"><button class="card-kebab-btn" onclick="toggleCardMenu(this)"><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span></button><div class="card-kebab-menu"><button class="card-kebab-item">View statement</button><button class="card-kebab-item" onclick="openLoadUnloadModal('Hx9FqD3N_cW7mPkR2VtA5Jb','VCC Multi GPS','Visa','4916 3782 9274 5831')">Load / Unload funds</button><button class="card-kebab-item">Freeze card</button><button class="card-kebab-item danger">Delete card</button></div></div></td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
                 <td style="color:#4B5EFF;font-size:13px;">Gm5TsL8P_aE2rNyW4UcB6Kf</td>
-                <td class="dt-muted">vcctravel</td>
+                <td class="dt-muted">VCC Travel</td>
                 <td><span style="font-weight:700;font-size:12px;color:var(--color-text-primary);letter-spacing:1px;">UATP</span></td>
-                <td class="dt-muted">1234 5678 9012 3456</td>
+                <td class="dt-muted"><div class="cn-wrap"><span class="cn-display" data-full="1234 5678 9012 3456" data-masked="•••• •••• •••• 3456">•••• •••• •••• 3456</span><button class="cn-toggle" onclick="toggleCardNum(this)" title="Show/hide number"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>
                 <td class="dt-muted">14/07/2029</td>
                 <td class="dt-muted">JPY</td>
                 <td class="dt-muted">JPY 12,000</td>
                 <td><span class="card-badge card-badge-active">Active</span></td>
-                <td><div class="card-kebab-wrap"><button class="card-kebab-btn" onclick="toggleCardMenu(this)"><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span></button><div class="card-kebab-menu"><button class="card-kebab-item">View statement</button><button class="card-kebab-item">Load / Unload card</button><button class="card-kebab-item">Freeze card</button><button class="card-kebab-item danger">Delete card</button></div></div></td>
+                <td><div class="card-kebab-wrap"><button class="card-kebab-btn" onclick="toggleCardMenu(this)"><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span></button><div class="card-kebab-menu"><button class="card-kebab-item">View statement</button><button class="card-kebab-item" onclick="openLoadUnloadModal('Gm5TsL8P_aE2rNyW4UcB6Kf','VCC Travel','UATP','1234 5678 9012 3456')">Load / Unload funds</button><button class="card-kebab-item">Freeze card</button><button class="card-kebab-item danger">Delete card</button></div></div></td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
                 <td style="color:#4B5EFF;font-size:13px;">Zn3BvQ6H_jK9wMxT1SdC8Rp</td>
-                <td class="dt-muted">vccsingle</td>
+                <td class="dt-muted">VCC Single</td>
                 <td><span style="font-weight:600;font-size:12px;color:#004A97;">Diners</span></td>
-                <td class="dt-muted">3056 9309 0259 04</td>
+                <td class="dt-muted"><div class="cn-wrap"><span class="cn-display" data-full="3056 9309 0259 04" data-masked="•••• •••• •••• 04">•••• •••• •••• 04</span><button class="cn-toggle" onclick="toggleCardNum(this)" title="Show/hide number"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>
                 <td class="dt-muted">08/03/2028</td>
                 <td class="dt-muted">HKD</td>
                 <td class="dt-muted">HKD 750.00</td>
                 <td><span class="card-badge card-badge-frozen">Frozen</span></td>
-                <td><div class="card-kebab-wrap"><button class="card-kebab-btn" onclick="toggleCardMenu(this)"><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span></button><div class="card-kebab-menu"><button class="card-kebab-item">View statement</button><button class="card-kebab-item">Load / Unload card</button><button class="card-kebab-item">Freeze card</button><button class="card-kebab-item danger">Delete card</button></div></div></td>
+                <td><div class="card-kebab-wrap"><button class="card-kebab-btn" onclick="toggleCardMenu(this)"><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span></button><div class="card-kebab-menu"><button class="card-kebab-item">View statement</button><button class="card-kebab-item" onclick="openLoadUnloadModal('Zn3BvQ6H_jK9wMxT1SdC8Rp','VCC Single','Diners','3056 9309 0259 04')">Load / Unload funds</button><button class="card-kebab-item">Freeze card</button><button class="card-kebab-item danger">Delete card</button></div></div></td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
                 <td style="color:#4B5EFF;font-size:13px;">Vd7WkN2A_qR5hLbF9XmP4Gu</td>
-                <td class="dt-muted">vccmultigps</td>
+                <td class="dt-muted">VCC Multi GPS</td>
                 <td><svg width="36" height="22" viewBox="0 0 38 24"><circle cx="15" cy="12" r="11" fill="#EB001B"/><circle cx="23" cy="12" r="11" fill="#F79E1B"/><path d="M19 4.5a11 11 0 010 15A11 11 0 0119 4.5z" fill="#FF5F00"/></svg></td>
-                <td class="dt-muted">5425 2334 3010 9903</td>
+                <td class="dt-muted"><div class="cn-wrap"><span class="cn-display" data-full="5425 2334 3010 9903" data-masked="•••• •••• •••• 9903">•••• •••• •••• 9903</span><button class="cn-toggle" onclick="toggleCardNum(this)" title="Show/hide number"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>
                 <td class="dt-muted">19/06/2027</td>
                 <td class="dt-muted">USD</td>
                 <td class="dt-muted">USD 1,200.00</td>
                 <td><span class="card-badge card-badge-active">Active</span></td>
-                <td><div class="card-kebab-wrap"><button class="card-kebab-btn" onclick="toggleCardMenu(this)"><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span></button><div class="card-kebab-menu"><button class="card-kebab-item">View statement</button><button class="card-kebab-item">Load / Unload card</button><button class="card-kebab-item">Freeze card</button><button class="card-kebab-item danger">Delete card</button></div></div></td>
+                <td><div class="card-kebab-wrap"><button class="card-kebab-btn" onclick="toggleCardMenu(this)"><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span></button><div class="card-kebab-menu"><button class="card-kebab-item">View statement</button><button class="card-kebab-item" onclick="openLoadUnloadModal('Vd7WkN2A_qR5hLbF9XmP4Gu','VCC Multi GPS','Mastercard','5425 2334 3010 9903')">Load / Unload funds</button><button class="card-kebab-item">Freeze card</button><button class="card-kebab-item danger">Delete card</button></div></div></td>
               </tr>
             </tbody>
           </table>
@@ -4386,17 +4396,28 @@
     }
     .lum-overlay.open { display: flex; }
     .lum-modal {
-      background: #fff; border-radius: 16px; padding: 28px 28px 0;
+      background: #fff; border-radius: 16px; padding: 24px 28px 0;
       width: 440px; max-width: calc(100vw - 32px);
       box-shadow: 0 16px 48px rgba(0,0,0,0.18);
       display: flex; flex-direction: column; gap: 0;
     }
     .lum-header {
       display: flex; align-items: flex-start; justify-content: space-between;
-      margin-bottom: 6px;
+      margin-bottom: 14px;
     }
     .lum-title { font-size: 17px; font-weight: 700; color: var(--color-text-primary); }
-    .lum-subtitle { font-size: 13px; color: var(--color-text-secondary); margin-top: 4px; margin-bottom: 20px; line-height: 1.45; }
+    .lum-card-detail {
+      display: flex; flex-direction: column; gap: 4px;
+      background: var(--color-bg-secondary); border-radius: 8px;
+      padding: 10px 14px; margin-bottom: 16px;
+    }
+    .lum-card-row { display: flex; align-items: baseline; gap: 6px; font-size: 12.5px; }
+    .lum-card-label { color: var(--color-text-tertiary); white-space: nowrap; flex-shrink: 0; }
+    .lum-card-ref {
+      font-weight: 600; color: var(--color-brand-navy);
+      font-family: 'Courier New', monospace; letter-spacing: 0.02em;
+    }
+    .lum-card-type { color: var(--color-text-secondary); }
     .lum-close {
       background: none; border: none; cursor: pointer; padding: 4px;
       color: var(--color-text-tertiary); border-radius: 6px; line-height: 1;
@@ -4472,22 +4493,20 @@
     /* Info bar */
     .lum-info {
       display: flex; align-items: flex-start; gap: 8px;
-      background: #EFF6FF; border-radius: 0 0 16px 16px;
+      background: #FEF9C3; border-radius: 0 0 16px 16px;
       padding: 12px 16px; margin: 0 -28px;
-      font-size: 12.5px; color: #1e40af; line-height: 1.45;
+      font-size: 12.5px; color: #854d0e; line-height: 1.45;
     }
-    .lum-info svg { flex-shrink: 0; margin-top: 1px; }
+    .lum-info svg { flex-shrink: 0; margin-top: 1px; color: #a16207; }
   </style>
 
   <div class="lum-overlay" id="lumOverlay">
     <div class="lum-modal">
       <div class="lum-header">
-        <div>
-          <div class="lum-title">Manage Card Balance</div>
-          <div class="lum-subtitle">Load funds to or unload funds from the selected card.</div>
-        </div>
+        <div class="lum-title">Manage Card Balance</div>
         <button class="lum-close" id="lumClose" aria-label="Close">✕</button>
       </div>
+      <div class="lum-card-detail" id="lumCardDetail"></div>
 
       <div class="lum-toggle">
         <button class="lum-tab active" id="lumTabLoad" onclick="lumSetTab('load')">
@@ -4552,10 +4571,25 @@
     var lumInfoText = document.getElementById('lumInfoText');
     var lumMode     = 'load';
 
-    function openLoadUnloadModal() {
+    function openLoadUnloadModal(ref, type, brand, num) {
       document.querySelectorAll('.card-kebab-menu.open').forEach(function(m){ m.classList.remove('open'); });
+      var detail = document.getElementById('lumCardDetail');
+      detail.innerHTML =
+        '<div class="lum-card-row"><span class="lum-card-label">Card reference:</span><span class="lum-card-ref">' + ref + '</span></div>'
+        + '<div class="lum-card-row"><span class="lum-card-label">Card type:</span><span class="lum-card-type">' + type + '</span></div>';
       lumSetTab('load');
       lumOverlay.classList.add('open');
+    }
+
+    function toggleCardNum(btn) {
+      var span = btn.previousElementSibling;
+      var isHidden = span.dataset.hidden !== 'true';
+      span.textContent = isHidden ? span.dataset.full : span.dataset.masked;
+      span.dataset.hidden = isHidden ? 'true' : 'false';
+      // swap icon
+      btn.innerHTML = isHidden
+        ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>'
+        : '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
     }
     function closeLoadUnloadModal() { lumOverlay.classList.remove('open'); }
 
