@@ -671,14 +671,14 @@
     .kpi-grid {
       padding: 0 0 24px;
       display: grid;
-      grid-template-columns: 1.3fr repeat(5, 1fr);
+      grid-template-columns: 1.8fr repeat(4, 1fr);
       gap: 14px;
     }
 
     .kpi-attention {
       background: var(--color-attention-bg);
       border-radius: var(--radius-md);
-      padding: 18px 20px 18px 24px;
+      padding: 14px 20px 14px 24px;
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -1424,6 +1424,7 @@
       padding: 9px 0;
       border-top: 0.5px solid rgba(153,60,29,0.15);
     }
+    .kpi-attention .pa-item:first-child { border-top: none; }
     .kpi-attention .pa-item-left {
       display: flex;
       flex-direction: column;
@@ -1606,17 +1607,16 @@
     <div class="content-inner">
       <div class="welcome">
         <h1>Hello, Prajit</h1>
-        <p>Wednesday, 8 April 2026</p>
+        <p>Thursday, 7 May 2026</p>
       </div>
 
     <div class="kpi-grid">
 
       <div class="kpi-attention">
-        <div class="drill-wrap" onclick="window.location='nium-portal-send.html'">
+        <div class="drill-wrap" style="display:none;" onclick="window.location='nium-portal-send.html'">
           <svg class="drill" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
         </div>
-        <div class="title">For your attention</div>
-        <div class="pa-list">
+        <div class="pa-list" style="margin-top:0;">
           <!-- Action 1 -->
           <div class="pa-item">
             <div class="pa-item-left">
@@ -1635,11 +1635,20 @@
             </div>
             <button class="pa-item-cta" onclick="window.location='nium-portal-beneficiaries.html'">Review →</button>
           </div>
+          <!-- Action 3 -->
+          <div class="pa-item">
+            <div class="pa-item-left">
+              <span class="pa-item-type">Onboarding</span>
+              <span class="pa-item-desc">Document RFI required</span>
+              <span class="pa-item-meta">Action required · upload supporting docs</span>
+            </div>
+            <button class="pa-item-cta">Upload →</button>
+          </div>
         </div>
         <button class="pa-see-all">see all that need your attention →</button>
       </div>
 
-      <div class="kpi-card" data-card="balance">
+      <div class="kpi-card" data-card="balance" style="display:none;">
         <svg class="drill" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
         <div class="label">Total Balance</div>
         <div class="value"><span class="major">$8,049</span><span class="cents">.39</span></div>
