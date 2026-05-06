@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NIUM Portal — Convert FX</title>
+  <title>NIUM Portal — Statements</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -1926,234 +1926,6 @@
       0%   { background-position: 200% 0; }
       100% { background-position: -200% 0; }
     }
-
-    /* =============================================================
-       Balances page
-       ============================================================= */
-    .balances-page { padding: 0 0 40px; }
-
-    .balances-toolbar {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      margin-bottom: 20px;
-      border-bottom: 1.5px solid var(--color-border-tertiary);
-    }
-    .wallet-tab {
-      padding: 9px 18px;
-      font-size: 13.5px;
-      font-weight: 500;
-      color: var(--color-text-tertiary);
-      cursor: pointer;
-      border: none;
-      background: none;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1.5px;
-      font-family: inherit;
-      transition: color 0.15s;
-      white-space: nowrap;
-    }
-    .wallet-tab:hover { color: var(--color-text-primary); }
-    .wallet-tab.active {
-      color: var(--color-brand-navy);
-      border-bottom-color: var(--color-brand-navy);
-      font-weight: 600;
-    }
-
-    /* Table */
-    .balances-table-wrap {
-      background: var(--color-bg-primary);
-      border: 0.5px solid var(--color-border-tertiary);
-      border-radius: var(--radius-md);
-      overflow: hidden;
-    }
-    .balances-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13.5px;
-    }
-    .balances-table thead th {
-      padding: 11px 16px;
-      text-align: left;
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--color-text-secondary);
-      border-bottom: 1px solid var(--color-border-tertiary);
-      background: var(--color-bg-tertiary);
-      white-space: nowrap;
-    }
-    .balances-table thead th:not(:first-child) { text-align: center; }
-    .balances-table thead th:last-child { text-align: left; }
-
-    /* Currency rows */
-    .bal-row-main td {
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--color-border-tertiary);
-      vertical-align: middle;
-    }
-    .bal-row-main:last-child td { border-bottom: none; }
-    .bal-row-main:hover td { background: var(--color-bg-tertiary); }
-
-    .bal-currency-cell {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .bal-expand-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 2px;
-      color: var(--color-text-tertiary);
-      display: flex;
-      align-items: center;
-      transition: transform 0.18s;
-    }
-    .bal-expand-btn.open { transform: rotate(90deg); }
-    .bal-flag {
-      width: 28px;
-      height: 20px;
-      border-radius: 3px;
-      object-fit: cover;
-      font-size: 20px;
-      line-height: 1;
-    }
-    .bal-currency-name {
-      font-weight: 500;
-      color: var(--color-text-primary);
-    }
-    .bal-currency-sub {
-      font-size: 12px;
-      color: var(--color-text-tertiary);
-      margin-left: 4px;
-    }
-    .bal-amount {
-      font-variant-numeric: tabular-nums;
-      font-weight: 500;
-    }
-    .bal-check-cell { text-align: center; }
-    .bal-check {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: #2ea44f;
-    }
-    .bal-check svg { color: #fff; }
-    .bal-action { color: var(--color-brand-navy); font-weight: 500; cursor: pointer; font-size: 13px; }
-    .bal-action:hover { text-decoration: underline; }
-
-    /* Virtual account sub-rows */
-    .bal-row-accounts td {
-      padding: 14px 16px 14px 56px;
-      border-bottom: 1px solid var(--color-border-tertiary);
-    }
-    .bal-row-accounts.hidden { display: none; }
-    .bal-accounts-grid {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .bal-va-card {
-      background: var(--color-bg-secondary);
-      border: 0.5px solid var(--color-border-tertiary);
-      border-radius: var(--radius-sm);
-      padding: 12px 14px;
-      min-width: 220px;
-      flex: 1;
-    }
-    .bal-va-bank {
-      font-size: 12px;
-      color: var(--color-text-secondary);
-      margin-bottom: 6px;
-    }
-    .bal-va-number {
-      font-size: 13px;
-      font-weight: 600;
-      font-variant-numeric: tabular-nums;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .bal-va-copy {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      color: var(--color-text-tertiary);
-      display: inline-flex;
-    }
-    .bal-va-copy:hover { color: var(--color-text-primary); }
-    .bal-va-view { font-size: 12px; color: var(--color-brand-navy); font-weight: 500; cursor: pointer; margin-top: 8px; display: block; }
-    .bal-va-view:hover { text-decoration: underline; }
-    .bal-no-accounts {
-      background: #fef9e7;
-      border-radius: 4px;
-      padding: 8px 12px;
-      font-size: 12.5px;
-      color: #7a5c00;
-      display: inline-block;
-    }
-
-    /* CTA row */
-    .balances-page-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-    .btn-more-actions {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--color-bg-primary);
-      border: 1px solid var(--color-border-secondary);
-      border-radius: var(--radius-sm);
-      padding: 8px 14px;
-      font-size: 13.5px;
-      font-weight: 500;
-      color: var(--color-text-primary);
-      cursor: pointer;
-    }
-    .btn-more-actions:hover { border-color: var(--color-text-tertiary); }
-    .btn-move-funds {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--color-brand-navy);
-      color: #fff;
-      border: none;
-      border-radius: var(--radius-sm);
-      padding: 8px 16px;
-      font-size: 13.5px;
-      font-weight: 500;
-      cursor: pointer;
-    }
-    .btn-move-funds:hover { background: #1a2070; }
-    .balances-customer-label {
-      font-size: 20px;
-      font-weight: 600;
-      color: var(--color-text-primary);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .balances-customer-label svg { color: var(--color-text-tertiary); }
-    .bal-customer-select {
-      background: none;
-      border: none;
-      font-size: 20px;
-      font-weight: 600;
-      color: var(--color-text-primary);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 0;
-    }
-
     /* -------------------------------------------------------------
        Search modal (command palette)
        ------------------------------------------------------------- */
@@ -2317,6 +2089,302 @@
       background: #f5ff57;
       color: #1a1a00;
     }
+
+
+    /* ── Customer dropdown (shared with Wallets/Payouts) ── */
+    .bal-customer-select {
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border-secondary);
+      border-radius: var(--radius-sm);
+      padding: 7px 11px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+    .bal-customer-select:hover { border-color: var(--color-text-tertiary); }
+    .bal-type-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .bal-dot-client   { background: var(--color-brand-navy); }
+    .bal-dot-customer { background: #b0b8c8; }
+    .bal-wallet-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      width: 248px;
+      background: var(--color-bg-primary);
+      border: 0.5px solid var(--color-border-secondary);
+      border-radius: var(--radius-md);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+      z-index: 100;
+      display: none;
+      overflow: hidden;
+    }
+    .bal-wallet-menu.open { display: block; }
+    .bal-search-row { padding: 8px 8px 6px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .bal-search-input {
+      width: 100%;
+      border: 1px solid var(--color-border-secondary);
+      border-radius: var(--radius-sm);
+      padding: 5px 9px;
+      font-size: 12px;
+      color: var(--color-text-primary);
+      background: var(--color-bg-secondary);
+      outline: none;
+      font-family: inherit;
+    }
+    .bal-search-input:focus { border-color: var(--color-brand-accent-light); background: var(--color-bg-primary); }
+    .bal-menu-section-label {
+      padding: 6px 10px 3px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+    }
+    .bal-client-row { display: flex; align-items: center; gap: 8px; padding: 7px 10px; cursor: pointer; }
+    .bal-client-row:hover { background: #f0f1fc; }
+    .bal-client-row-name { flex: 1; font-size: 13px; font-weight: 500; color: var(--color-brand-navy); }
+    .bal-client-badge {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.04em;
+      background: var(--color-brand-navy); color: #fff;
+      border-radius: 4px; padding: 2px 7px;
+    }
+    .bal-menu-divider { height: 1px; background: var(--color-border-tertiary); margin: 2px 0; }
+    .bal-customer-list { max-height: 208px; overflow-y: auto; }
+    .bal-customer-item { display: flex; align-items: center; gap: 8px; padding: 7px 10px; cursor: pointer; }
+    .bal-customer-item:hover { background: var(--color-bg-secondary); }
+    .bal-customer-item.active .bal-item-name { font-weight: 500; color: var(--color-brand-navy); }
+    .bal-item-name { font-size: 13px; color: var(--color-text-primary); }
+    .bal-highlight { background: #dce3ff; border-radius: 2px; padding: 0 1px; }
+    .bal-no-results { padding: 16px 10px; text-align: center; font-size: 12px; color: var(--color-text-tertiary); display: none; }
+
+
+    /* ── Statement tabs ── */
+    .stmt-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--color-border-tertiary);
+      padding: 0 16px;
+      gap: 0;
+    }
+    .stmt-tab {
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: color 0.12s;
+    }
+    .stmt-tab:hover { color: var(--color-text-primary); }
+    .stmt-tab.active { color: var(--color-brand-navy); border-bottom-color: var(--color-brand-navy); font-weight: 600; }
+
+    /* ── PDF status badges ── */
+    .pdf-badge {
+      display: inline-block;
+      font-size: 11.5px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .pdf-ready     { background: var(--color-success-tag-bg); color: var(--color-success-text); }
+    .pdf-generating { background: var(--color-info-tag-bg); color: var(--color-info-tag-text); }
+    .pdf-failed    { background: var(--color-danger-tag-bg); color: var(--color-danger-tag-text); }
+
+    /* ── PDF action buttons ── */
+    .pdf-action-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 12.5px; font-weight: 500;
+      color: var(--color-brand-navy);
+      background: none; border: none; cursor: pointer; font-family: inherit;
+      padding: 0;
+    }
+    .pdf-action-btn:hover { text-decoration: underline; }
+    .pdf-retry { color: var(--color-danger-text); }
+
+    /* ── Column filter popovers ── */
+    .col-filter-wrap { position: relative; display: inline-flex; align-items: center; }
+    .col-filter-btn {
+      display: inline-flex; align-items: center; gap: 5px; cursor: pointer;
+      border: none; background: none; font: inherit; font-size: 11px; font-weight: 600;
+      color: var(--color-text-secondary); letter-spacing: 0.04em; text-transform: uppercase;
+      padding: 0; white-space: nowrap;
+    }
+    .col-filter-btn svg { color: var(--color-text-tertiary); transition: color 0.12s; }
+    .col-filter-btn:hover svg { color: var(--color-text-primary); }
+    .col-filter-btn.active svg { color: var(--color-brand-navy); }
+    .col-filter-btn.active::after {
+      content: ''; width: 5px; height: 5px; border-radius: 50%;
+      background: var(--color-brand-navy); flex-shrink: 0;
+    }
+    .col-filter-popover {
+      position: absolute; top: calc(100% + 6px); left: 0;
+      background: var(--color-bg-primary); border: 0.5px solid var(--color-border-secondary);
+      border-radius: var(--radius-md); box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+      z-index: 30; display: none; min-width: 200px;
+    }
+    .col-filter-popover.open { display: block; }
+    .date-pop-presets { padding: 6px 4px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .date-pop-preset {
+      display: block; width: 100%; text-align: left; padding: 7px 14px; font-size: 13px;
+      border: none; background: none; font-family: inherit; color: var(--color-text-primary);
+      cursor: pointer; border-radius: var(--radius-sm);
+    }
+    .date-pop-preset:hover { background: var(--color-bg-secondary); }
+    .date-pop-preset.active { background: #f0f1fc; color: var(--color-brand-navy); font-weight: 500; }
+    .date-pop-custom { padding: 10px 14px 12px; }
+    .date-pop-custom-label { font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 8px; }
+    .date-pop-inputs { display: flex; flex-direction: column; gap: 6px; }
+    .date-pop-field { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--color-text-secondary); }
+    .date-pop-field label { width: 28px; flex-shrink: 0; }
+    .date-pop-input { flex: 1; border: 1px solid var(--color-border-secondary); border-radius: var(--radius-sm); padding: 5px 8px; font-size: 12px; font-family: inherit; color: var(--color-text-primary); background: var(--color-bg-primary); outline: none; }
+    .date-pop-input:focus { border-color: var(--color-brand-accent-light,#a9b4ff); }
+    .date-pop-apply { margin-top: 8px; width: 100%; padding: 6px; background: var(--color-brand-navy); color: #fff; border: none; border-radius: var(--radius-sm); font-size: 12.5px; font-weight: 500; cursor: pointer; font-family: inherit; }
+    .date-pop-apply:hover { background: #1a2070; }
+    .drop-pop-list { padding: 6px 4px; }
+    .drop-pop-item { display: flex; align-items: center; gap: 9px; padding: 6px 12px; cursor: pointer; user-select: none; font-size: 12.5px; color: var(--color-text-primary); border-radius: var(--radius-sm); }
+    .drop-pop-item:hover { background: var(--color-bg-secondary); }
+    .drop-pop-checkbox { width: 14px; height: 14px; flex-shrink: 0; accent-color: var(--color-brand-navy); cursor: pointer; }
+    .text-pop-inner { padding: 10px; }
+    .text-pop-input { width: 100%; box-sizing: border-box; border: 1px solid var(--color-border-secondary); border-radius: var(--radius-sm); padding: 6px 10px; font-size: 13px; font-family: inherit; color: var(--color-text-primary); background: var(--color-bg-primary); outline: none; }
+    .text-pop-input:focus { border-color: var(--color-brand-accent-light,#a9b4ff); }
+    .text-pop-input::placeholder { color: var(--color-text-tertiary); }
+
+    /* ── Statements page ── */
+    .stmt-card {
+      background: #fff;
+      border: 1px solid var(--color-border-tertiary);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .stmt-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--color-border-tertiary);
+      background: var(--color-bg-tertiary);
+    }
+    .stmt-select-all-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .stmt-select-label {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      font-weight: 500;
+    }
+    .stmt-toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .stmt-export-sel {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      background: none;
+      border: 1px solid var(--color-border-secondary);
+      border-radius: var(--radius-sm);
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .stmt-export-sel:not(:disabled):hover { color: var(--color-text-primary); border-color: var(--color-text-secondary); }
+    .stmt-export-sel:disabled { opacity: 0.45; cursor: default; }
+    .stmt-icon-btn {
+      width: 30px; height: 30px;
+      display: flex; align-items: center; justify-content: center;
+      background: none; border: none; border-radius: var(--radius-sm);
+      cursor: pointer; color: var(--color-text-secondary);
+    }
+    .stmt-icon-btn:hover { background: var(--color-bg-secondary); }
+    .stmt-checkbox {
+      width: 15px; height: 15px;
+      accent-color: var(--color-brand-navy);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .stmt-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .stmt-table thead tr { border-bottom: 1px solid var(--color-border-tertiary); }
+    .stmt-table th {
+      padding: 10px 16px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--color-text-tertiary);
+      white-space: nowrap;
+    }
+    .stmt-table tbody tr {
+      border-bottom: 1px solid var(--color-border-tertiary);
+      transition: background 0.1s;
+    }
+    .stmt-table tbody tr:last-child { border-bottom: none; }
+    .stmt-table tbody tr:hover { background: var(--color-bg-secondary); }
+    .stmt-table tbody tr.row-selected { background: #f0f3ff; }
+    .stmt-table td { padding: 13px 16px; color: var(--color-text-primary); vertical-align: top; }
+    .col-check { width: 36px; padding-left: 16px !important; padding-right: 0 !important; }
+    .col-date { white-space: nowrap; color: var(--color-text-secondary); width: 110px; }
+    .col-desc { color: var(--color-text-primary); line-height: 1.5; }
+    .col-num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--color-text-secondary); }
+    .col-in { color: #2a7d4f; font-weight: 500; }
+    .col-balance { color: var(--color-text-primary); font-weight: 500; }
+    .stmt-pagination {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-top: 1px solid var(--color-border-tertiary);
+      background: var(--color-bg-tertiary);
+      font-size: 13px;
+      color: var(--color-text-secondary);
+    }
+    .stmt-count { flex: 1; }
+    .stmt-pager { display: flex; gap: 2px; }
+    .pager-btn {
+      min-width: 30px; height: 30px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--color-border-tertiary);
+      border-radius: var(--radius-sm);
+      background: #fff;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      padding: 0 6px;
+    }
+    .pager-btn:not(:disabled):hover { background: var(--color-bg-secondary); color: var(--color-text-primary); }
+    .pager-btn:disabled { opacity: 0.4; cursor: default; }
+    .pager-btn.pager-active { background: var(--color-brand-navy); color: #fff; border-color: var(--color-brand-navy); }
+    .stmt-per-page { display: flex; align-items: center; gap: 6px; flex: 1; justify-content: flex-end; }
+    .per-page-select {
+      border: 1px solid var(--color-border-secondary);
+      border-radius: var(--radius-sm);
+      padding: 4px 8px;
+      font-size: 13px;
+      color: var(--color-text-primary);
+      background: #fff;
+      cursor: pointer;
+    }
   </style>
   <script>
     // Apply persisted sidebar state before render to avoid flicker
@@ -2391,14 +2459,14 @@
     </a>
     <hr style="border:none;border-top:1px solid rgba(255,255,255,0.12);margin:8px 16px;">
     <a href="nium-portal-statements.html" class="nav-item-link">
-      <div class="nav-item" data-label="Reports" data-expandable="true">
+      <div class="nav-item active expanded" data-label="Reports" data-expandable="true">
         <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
         <span class="nav-label">Reports</span>
         <span class="nav-chevron-wrap" data-chevron=""><svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
       </div>
     </a>
     <div class="nav-children">
-      <a href="nium-portal-statements.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Statements</div></a>
+      <a href="nium-portal-statements.html" style="text-decoration:none;color:inherit;"><div class="nav-child active">Statements</div></a>
       <a href="nium-portal-transactions.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Transactions</div></a>
       <a href="nium-portal-scheduled-reports.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Scheduled reports</div></a>
     </div>
@@ -2469,46 +2537,333 @@
 
       <div class="travel-page-header">
         <div class="travel-context">
-          <h1 class="travel-title" id="page-h1">Convert FX</h1>
+          <h1 class="travel-title" id="page-h1">Statements</h1>
         </div>
-
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button class="btn-secondary-outline" id="exportBtn" style="display:flex;align-items:center;gap:6px;padding:7px 14px;font-size:13px;font-weight:500;border:1px solid var(--color-border-secondary);border-radius:var(--radius-md);background:#fff;color:var(--color-text-primary);cursor:pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export
+          </button>
+        </div>
       </div>
 
-            <div class="skeleton-grid">
-        <div class="skel-card skel-stat"></div>
-        <div class="skel-card skel-stat"></div>
-        <div class="skel-card skel-stat"></div>
-        <div class="skel-card skel-stat"></div>
-      </div>
-
-      <div class="skeleton-grid skeleton-grid-2col">
-        <div class="skel-card skel-tall">
-          <div class="skel-bar skel-bar-title"></div>
-          <div class="skel-rows">
-            <div class="skel-row"></div>
-            <div class="skel-row"></div>
-            <div class="skel-row"></div>
-            <div class="skel-row"></div>
-            <div class="skel-row"></div>
+      <!-- Customer selector -->
+      <div style="margin-bottom:20px;position:relative;display:inline-block;">
+        <button class="bal-customer-select" id="balCustomerBtn">
+          <span class="bal-type-dot bal-dot-customer" id="balTypeDot"></span>
+          <span id="balCustomerName">Workera AI</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="bal-wallet-menu" id="balCustomerMenu">
+          <div class="bal-search-row">
+            <input class="bal-search-input" id="balSearchInput" type="text" placeholder="Search customers…" autocomplete="off" />
           </div>
-        </div>
-        <div class="skel-card skel-tall">
-          <div class="skel-bar skel-bar-title"></div>
-          <div class="skel-chart"></div>
+          <div class="bal-menu-section-label">Client</div>
+          <div class="bal-client-row" id="balClientRow" data-name="Gusto">
+            <span class="bal-type-dot bal-dot-client"></span>
+            <span class="bal-client-row-name">Gusto</span>
+            <span class="bal-client-badge">Client</span>
+          </div>
+          <div class="bal-menu-divider"></div>
+          <div class="bal-menu-section-label">Customers</div>
+          <div class="bal-customer-list" id="balCustomerList">
+            <div class="bal-customer-item" data-name="Goldbelly"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Goldbelly</span></div>
+            <div class="bal-customer-item" data-name="Cortex Health"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Cortex Health</span></div>
+            <div class="bal-customer-item" data-name="The Salty Donut"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">The Salty Donut</span></div>
+            <div class="bal-customer-item active" data-name="Workera AI"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Workera AI</span></div>
+            <div class="bal-customer-item" data-name="RocketPower"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">RocketPower</span></div>
+            <div class="bal-customer-item" data-name="Roller Rabbit"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Roller Rabbit</span></div>
+            <div class="bal-customer-item" data-name="Range Leather"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Range Leather</span></div>
+            <div class="bal-customer-item" data-name="Circle Creek Therapy"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Circle Creek Therapy</span></div>
+            <div class="bal-customer-item" data-name="Modern Law Firms"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Modern Law Firms</span></div>
+            <div class="bal-customer-item" data-name="Andela"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Andela</span></div>
+          </div>
+          <div class="bal-no-results" id="balNoResults">No customers found</div>
         </div>
       </div>
 
-      <div class="skeleton-grid">
-        <div class="skel-card skel-wide">
-          <div class="skel-bar skel-bar-title"></div>
-          <div class="skel-rows">
-            <div class="skel-row"></div>
-            <div class="skel-row"></div>
-            <div class="skel-row"></div>
-            <div class="skel-row"></div>
-          </div>
+      <!-- Tab nav + tables -->
+      <div class="stmt-card">
+
+        <!-- Tab bar -->
+        <div class="stmt-tabs">
+          <button class="stmt-tab active" id="tabStmtList" onclick="switchTab('list')">Statement List</button>
+          <button class="stmt-tab" id="tabPdfDl" onclick="switchTab('pdf')">PDF Downloads</button>
         </div>
-      </div>
+
+        <!-- ══ Statement List view ══ -->
+        <div id="viewList">
+          <!-- Toolbar -->
+          <div class="stmt-toolbar">
+            <label class="stmt-select-all-wrap">
+              <input type="checkbox" id="selectAll" class="stmt-checkbox" />
+              <span class="stmt-select-label" id="selectLabel">0 selected</span>
+            </label>
+            <div class="stmt-toolbar-right">
+              <button class="stmt-export-sel" id="exportSelBtn" disabled>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Export selected (<span id="exportCount">0</span>)
+              </button>
+              <button class="stmt-icon-btn" title="More options">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <table class="stmt-table">
+            <thead>
+              <tr>
+                <th class="col-check"></th>
+                <th>
+                  <div class="col-filter-wrap">
+                    <button class="col-filter-btn" id="sDateFilterBtn">Date <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
+                    <div class="col-filter-popover" id="sDatePop">
+                      <div class="date-pop-presets">
+                        <button class="date-pop-preset active" data-preset="all">All time</button>
+                        <button class="date-pop-preset" data-preset="30d">Last 30 days</button>
+                        <button class="date-pop-preset" data-preset="90d">Last 90 days</button>
+                      </div>
+                      <div class="date-pop-custom">
+                        <div class="date-pop-custom-label">Custom range</div>
+                        <div class="date-pop-inputs">
+                          <div class="date-pop-field"><label>From</label><input class="date-pop-input" type="date" /></div>
+                          <div class="date-pop-field"><label>To</label><input class="date-pop-input" type="date" /></div>
+                        </div>
+                        <button class="date-pop-apply">Apply</button>
+                      </div>
+                    </div>
+                  </div>
+                </th>
+                <th>Description</th>
+                <th class="col-num">
+                  <div class="col-filter-wrap" style="justify-content:flex-end;">
+                    <button class="col-filter-btn" id="sInFilterBtn">In (EUR) <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
+                    <div class="col-filter-popover" id="sInPop">
+                      <div class="text-pop-inner"><input class="text-pop-input" type="text" placeholder="Min amount" /></div>
+                    </div>
+                  </div>
+                </th>
+                <th class="col-num">
+                  <div class="col-filter-wrap" style="justify-content:flex-end;">
+                    <button class="col-filter-btn" id="sOutFilterBtn">Out (EUR) <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
+                    <div class="col-filter-popover" id="sOutPop">
+                      <div class="text-pop-inner"><input class="text-pop-input" type="text" placeholder="Min amount" /></div>
+                    </div>
+                  </div>
+                </th>
+                <th class="col-num">Balance (EUR)</th>
+              </tr>
+            </thead>
+            <tbody id="stmtTbody">
+              <tr>
+                <td class="col-check"><input type="checkbox" class="stmt-checkbox row-check" /></td>
+                <td class="col-date">04/05/2026</td>
+                <td class="col-desc">Closing Balance</td>
+                <td class="col-num">—</td>
+                <td class="col-num">—</td>
+                <td class="col-num col-balance">450.00</td>
+              </tr>
+              <tr>
+                <td class="col-check"><input type="checkbox" class="stmt-checkbox row-check" /></td>
+                <td class="col-date">04/05/2026</td>
+                <td class="col-desc">Instrument Creation, Transfer from Funding Account [fabapp_EUR] to Virtual Card [gpsvisacorp.VV9ZOQVDJPD], reference OUwLIYnDXodm4XWTgfniZnYFe]</td>
+                <td class="col-num col-in">450.00</td>
+                <td class="col-num">—</td>
+                <td class="col-num col-balance">450.00</td>
+              </tr>
+              <tr>
+                <td class="col-check"><input type="checkbox" class="stmt-checkbox row-check" /></td>
+                <td class="col-date">03/05/2026</td>
+                <td class="col-desc">Authorization Reversal, Retail, LC.EXPEDIA.COM 800-319-4834, US</td>
+                <td class="col-num">—</td>
+                <td class="col-num">120.00</td>
+                <td class="col-num col-balance">0.00</td>
+              </tr>
+              <tr>
+                <td class="col-check"><input type="checkbox" class="stmt-checkbox row-check" /></td>
+                <td class="col-date">03/05/2026</td>
+                <td class="col-desc">Authorization, Retail, LC.EXPEDIA.COM 800-319-4834, US</td>
+                <td class="col-num">—</td>
+                <td class="col-num">120.00</td>
+                <td class="col-num col-balance">120.00</td>
+              </tr>
+              <tr>
+                <td class="col-check"><input type="checkbox" class="stmt-checkbox row-check" /></td>
+                <td class="col-date">02/05/2026</td>
+                <td class="col-desc">Instrument Load, from Funding Account [fabapp_EUR] to Virtual Card [gpsvisacorp.VV9ZOQVDJPD]</td>
+                <td class="col-num col-in">500.00</td>
+                <td class="col-num">—</td>
+                <td class="col-num col-balance">500.00</td>
+              </tr>
+              <tr>
+                <td class="col-check"><input type="checkbox" class="stmt-checkbox row-check" /></td>
+                <td class="col-date">01/05/2026</td>
+                <td class="col-desc">Opening Balance</td>
+                <td class="col-num">—</td>
+                <td class="col-num">—</td>
+                <td class="col-num col-balance">0.00</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Pagination -->
+          <div class="stmt-pagination">
+            <span class="stmt-count">Showing 1 to 6 of 6 transactions</span>
+            <div class="stmt-pager">
+              <button class="pager-btn" disabled>«</button>
+              <button class="pager-btn" disabled>‹</button>
+              <button class="pager-btn pager-active">1</button>
+              <button class="pager-btn" disabled>›</button>
+              <button class="pager-btn" disabled>»</button>
+            </div>
+            <div class="stmt-per-page">
+              <select class="per-page-select"><option>10</option><option>25</option><option>50</option></select>
+              <span>per page</span>
+            </div>
+          </div>
+        </div><!-- /viewList -->
+
+        <!-- ══ PDF Downloads view ══ -->
+        <div id="viewPdf" style="display:none;">
+          <table class="stmt-table">
+            <thead>
+              <tr>
+                <th>
+                  <div class="col-filter-wrap">
+                    <button class="col-filter-btn" id="pPeriodFilterBtn">Statement period <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
+                    <div class="col-filter-popover" id="pPeriodPop">
+                      <div class="date-pop-presets">
+                        <button class="date-pop-preset active" data-preset="all">All time</button>
+                        <button class="date-pop-preset" data-preset="30d">Last 30 days</button>
+                        <button class="date-pop-preset" data-preset="90d">Last 90 days</button>
+                      </div>
+                      <div class="date-pop-custom">
+                        <div class="date-pop-custom-label">Custom range</div>
+                        <div class="date-pop-inputs">
+                          <div class="date-pop-field"><label>From</label><input class="date-pop-input" type="date" /></div>
+                          <div class="date-pop-field"><label>To</label><input class="date-pop-input" type="date" /></div>
+                        </div>
+                        <button class="date-pop-apply">Apply</button>
+                      </div>
+                    </div>
+                  </div>
+                </th>
+                <th>
+                  <div class="col-filter-wrap">
+                    <button class="col-filter-btn" id="pCardFilterBtn">Card <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
+                    <div class="col-filter-popover" id="pCardPop">
+                      <div class="text-pop-inner"><input class="text-pop-input" type="text" placeholder="Search card reference" /></div>
+                    </div>
+                  </div>
+                </th>
+                <th>
+                  <div class="col-filter-wrap">
+                    <button class="col-filter-btn" id="pCcyFilterBtn">Currency <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
+                    <div class="col-filter-popover" id="pCcyPop">
+                      <div class="drop-pop-list">
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="pCcyFilter" value="" checked /><span>All</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="pCcyFilter" value="EUR" /><span>EUR</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="pCcyFilter" value="USD" /><span>USD</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="pCcyFilter" value="GBP" /><span>GBP</span></label>
+                      </div>
+                    </div>
+                  </div>
+                </th>
+                <th>Generated on</th>
+                <th>
+                  <div class="col-filter-wrap">
+                    <button class="col-filter-btn" id="pStatusFilterBtn">Status <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
+                    <div class="col-filter-popover" id="pStatusPop">
+                      <div class="drop-pop-list">
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="pStatusFilter" value="" checked /><span>All</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="pStatusFilter" value="ready" /><span>Ready</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="pStatusFilter" value="generating" /><span>Generating</span></label>
+                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="pStatusFilter" value="failed" /><span>Failed</span></label>
+                      </div>
+                    </div>
+                  </div>
+                </th>
+                <th>File type</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="col-date">May 2026</td>
+                <td class="col-desc">Virtual Card •••• 2705</td>
+                <td>EUR</td>
+                <td class="col-date">01/06/2026 10:30</td>
+                <td><span class="pdf-badge pdf-ready">Ready</span></td>
+                <td>PDF</td>
+                <td><button class="pdf-action-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button></td>
+              </tr>
+              <tr>
+                <td class="col-date">April 2026</td>
+                <td class="col-desc">Virtual Card •••• 2705</td>
+                <td>EUR</td>
+                <td class="col-date">01/05/2026 10:25</td>
+                <td><span class="pdf-badge pdf-ready">Ready</span></td>
+                <td>PDF</td>
+                <td><button class="pdf-action-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button></td>
+              </tr>
+              <tr>
+                <td class="col-date">March 2026</td>
+                <td class="col-desc">Virtual Card •••• 2705</td>
+                <td>EUR</td>
+                <td class="col-date">01/04/2026 10:22</td>
+                <td><span class="pdf-badge pdf-ready">Ready</span></td>
+                <td>PDF</td>
+                <td><button class="pdf-action-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button></td>
+              </tr>
+              <tr>
+                <td class="col-date">February 2026</td>
+                <td class="col-desc">Virtual Card •••• 2705</td>
+                <td>EUR</td>
+                <td class="col-date">01/03/2026 10:18</td>
+                <td><span class="pdf-badge pdf-ready">Ready</span></td>
+                <td>PDF</td>
+                <td><button class="pdf-action-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button></td>
+              </tr>
+              <tr>
+                <td class="col-date">January 2026</td>
+                <td class="col-desc">Virtual Card •••• 2705</td>
+                <td>EUR</td>
+                <td class="col-date">01/02/2026 10:15</td>
+                <td><span class="pdf-badge pdf-generating">Generating</span></td>
+                <td>PDF</td>
+                <td><span style="color:var(--color-text-tertiary);">—</span></td>
+              </tr>
+              <tr>
+                <td class="col-date">December 2025</td>
+                <td class="col-desc">Virtual Card •••• 2705</td>
+                <td>EUR</td>
+                <td class="col-date">01/01/2026 10:12</td>
+                <td><span class="pdf-badge pdf-failed">Failed</span></td>
+                <td>PDF</td>
+                <td><button class="pdf-action-btn pdf-retry"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg> Retry</button></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Pagination -->
+          <div class="stmt-pagination">
+            <span class="stmt-count">Showing 1 to 6 of 6 statements</span>
+            <div class="stmt-pager">
+              <button class="pager-btn" disabled>«</button>
+              <button class="pager-btn" disabled>‹</button>
+              <button class="pager-btn pager-active">1</button>
+              <button class="pager-btn" disabled>›</button>
+              <button class="pager-btn" disabled>»</button>
+            </div>
+            <div class="stmt-per-page">
+              <select class="per-page-select"><option>10</option><option>25</option><option>50</option></select>
+              <span>per page</span>
+            </div>
+          </div>
+        </div><!-- /viewPdf -->
+
+      </div><!-- /stmt-card -->
 
     </div><!-- /content-inner -->
 
@@ -2547,61 +2902,6 @@
 
   setupDropdown('[data-period-btn]', '.period-menu');
   setupDropdown('[data-client-btn]', '.client-menu');
-
-  // Balances customer dropdown — opens on click, closes on outside click or selection
-  var balBtn  = document.getElementById('balCustomerBtn');
-  var balMenu = document.getElementById('balCustomerMenu');
-  var balName = document.getElementById('balCustomerName');
-  if (balBtn && balMenu) {
-    balBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      balMenu.classList.toggle('open');
-    });
-    balMenu.querySelectorAll('button').forEach(function(item) {
-      item.addEventListener('click', function(e) {
-        e.stopPropagation();
-        balMenu.querySelectorAll('button').forEach(function(b) { b.classList.remove('selected'); });
-        item.classList.add('selected');
-        balName.textContent = item.textContent.trim();
-        balMenu.classList.remove('open');
-      });
-    });
-    document.addEventListener('click', function() {
-      balMenu.classList.remove('open');
-    });
-  }
-
-  // Wallet tabs
-  document.querySelectorAll('.wallet-tab').forEach(function(tab) {
-    tab.addEventListener('click', function() {
-      document.querySelectorAll('.wallet-tab').forEach(function(t) { t.classList.remove('active'); });
-      tab.classList.add('active');
-    });
-  });
-  // Balances expand/collapse
-  document.querySelectorAll('.bal-expand-btn').forEach(function(btn) {
-    var targetId = btn.getAttribute('data-target');
-    var target = document.getElementById(targetId);
-    // Sync initial state
-    if (btn.classList.contains('open') && target) target.classList.remove('hidden');
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      btn.classList.toggle('open');
-      if (target) target.classList.toggle('hidden');
-    });
-  });
-
-  // Copy to clipboard
-  document.querySelectorAll('.bal-va-copy').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var num = btn.previousSibling.textContent.trim();
-      navigator.clipboard && navigator.clipboard.writeText(num);
-      btn.style.color = 'var(--color-success-dot)';
-      setTimeout(function() { btn.style.color = ''; }, 1200);
-    });
-  });
-
 
   // Click outside to close all
   document.addEventListener('click', function () {
@@ -2893,9 +3193,9 @@
   </div>
 
   <div class="search-filters" id="searchFilters">
-    <button class="search-filter" data-filter="all">All</button>
+    <button class="search-filter active" data-filter="all">All</button>
     <button class="search-filter" data-filter="pages">Pages</button>
-    <button class="search-filter active" data-filter="transactions">Transactions</button>
+    <button class="search-filter" data-filter="transactions">Transactions</button>
     <button class="search-filter" data-filter="cards">Cards</button>
   </div>
 
@@ -3074,7 +3374,7 @@
   }
 
   // Initial render — contextual default for this page
-  var DEFAULT_FILTER = 'transactions';
+  var DEFAULT_FILTER = 'all';
   renderResults(DEFAULT_FILTER);
 })();
 </script>
@@ -3355,5 +3655,143 @@
   }
 })();
 </script>
+
+  <script>
+    // Statements — checkbox selection
+    (function() {
+      var selectAll = document.getElementById('selectAll');
+      var exportSelBtn = document.getElementById('exportSelBtn');
+      var exportCount = document.getElementById('exportCount');
+      var selectLabel = document.getElementById('selectLabel');
+
+      function getChecked() {
+        return document.querySelectorAll('.row-check:checked');
+      }
+      function updateToolbar() {
+        var checked = getChecked();
+        var n = checked.length;
+        exportCount.textContent = n;
+        exportSelBtn.disabled = n === 0;
+        selectLabel.textContent = n + ' selected';
+        var total = document.querySelectorAll('.row-check').length;
+        selectAll.indeterminate = n > 0 && n < total;
+        selectAll.checked = n === total;
+        document.querySelectorAll('#stmtTbody tr').forEach(function(tr) {
+          var cb = tr.querySelector('.row-check');
+          tr.classList.toggle('row-selected', cb && cb.checked);
+        });
+      }
+      selectAll.addEventListener('change', function() {
+        document.querySelectorAll('.row-check').forEach(function(cb) {
+          cb.checked = selectAll.checked;
+        });
+        updateToolbar();
+      });
+      document.getElementById('stmtTbody').addEventListener('change', function(e) {
+        if (e.target.classList.contains('row-check')) updateToolbar();
+      });
+    })();
+  
+
+    // Tab switching
+    function switchTab(tab) {
+      document.getElementById('viewList').style.display = tab === 'list' ? '' : 'none';
+      document.getElementById('viewPdf').style.display  = tab === 'pdf'  ? '' : 'none';
+      document.getElementById('tabStmtList').classList.toggle('active', tab === 'list');
+      document.getElementById('tabPdfDl').classList.toggle('active', tab === 'pdf');
+      document.querySelectorAll('.col-filter-popover.open').forEach(function(p){ p.classList.remove('open'); });
+    }
+
+    // Column filter popovers
+    document.querySelectorAll('.col-filter-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var pop = btn.nextElementSibling;
+        var isOpen = pop.classList.contains('open');
+        document.querySelectorAll('.col-filter-popover.open').forEach(function(p){ p.classList.remove('open'); });
+        if (!isOpen) { pop.classList.add('open'); pop.querySelector('input')?.focus(); }
+      });
+    });
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.col-filter-wrap')) {
+        document.querySelectorAll('.col-filter-popover.open').forEach(function(p){ p.classList.remove('open'); });
+      }
+    });
+    // Date preset selection
+    document.querySelectorAll('.date-pop-preset').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        btn.closest('.date-pop-presets').querySelectorAll('.date-pop-preset').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+      });
+    });
+
+    // Customer dropdown
+    (function() {
+      var balBtn          = document.getElementById('balCustomerBtn');
+      var balMenu         = document.getElementById('balCustomerMenu');
+      var balName         = document.getElementById('balCustomerName');
+      var balTypeDot      = document.getElementById('balTypeDot');
+      var balSearchInput  = document.getElementById('balSearchInput');
+      var balClientRow    = document.getElementById('balClientRow');
+      var balCustomerList = document.getElementById('balCustomerList');
+      var balNoResults    = document.getElementById('balNoResults');
+
+      function balOpen() {
+        balMenu.classList.add('open');
+        balSearchInput.value = '';
+        balFilterCustomers('');
+        setTimeout(function() { balSearchInput.focus(); }, 10);
+      }
+      function balClose() { balMenu.classList.remove('open'); }
+      function balSetSelection(name, isClient) {
+        balName.textContent = name;
+        balTypeDot.className = 'bal-type-dot ' + (isClient ? 'bal-dot-client' : 'bal-dot-customer');
+      }
+      function escRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+      function balFilterCustomers(query) {
+        var q = query.trim().toLowerCase();
+        var visible = 0;
+        balCustomerList.querySelectorAll('.bal-customer-item').forEach(function(item) {
+          var name = item.getAttribute('data-name');
+          if (!q || name.toLowerCase().indexOf(q) !== -1) {
+            item.style.display = 'flex';
+            var nameEl = item.querySelector('.bal-item-name');
+            if (q) {
+              nameEl.innerHTML = name.replace(new RegExp('(' + escRe(q) + ')', 'gi'), '<span class="bal-highlight">$1</span>');
+            } else { nameEl.textContent = name; }
+            visible++;
+          } else { item.style.display = 'none'; }
+        });
+        balNoResults.style.display = visible === 0 ? 'block' : 'none';
+      }
+      if (balBtn && balMenu) {
+        balBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          balMenu.classList.contains('open') ? balClose() : balOpen();
+        });
+        balClientRow.addEventListener('click', function(e) {
+          e.stopPropagation();
+          balCustomerList.querySelectorAll('.bal-customer-item').forEach(function(i) { i.classList.remove('active'); });
+          balSetSelection('Gusto', true);
+          balClose();
+        });
+        balCustomerList.querySelectorAll('.bal-customer-item').forEach(function(item) {
+          item.addEventListener('click', function(e) {
+            e.stopPropagation();
+            balCustomerList.querySelectorAll('.bal-customer-item').forEach(function(i) { i.classList.remove('active'); });
+            item.classList.add('active');
+            balSetSelection(item.getAttribute('data-name'), false);
+            balClose();
+          });
+        });
+        balSearchInput.addEventListener('input', function() { balFilterCustomers(balSearchInput.value); });
+        balSearchInput.addEventListener('keydown', function(e) { if (e.key === 'Escape') balClose(); });
+        document.addEventListener('click', function(e) {
+          if (!balMenu.contains(e.target) && e.target !== balBtn) balClose();
+        });
+      }
+    })();
+
+  </script>
 </body>
 </html>

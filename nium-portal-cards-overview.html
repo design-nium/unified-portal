@@ -2322,9 +2322,10 @@
       display: flex;
       align-items: center;
       gap: 0;
-      margin-bottom: 24px;
-      margin-top: 4px;
-      border-bottom: 1.5px solid var(--color-border-tertiary);
+      margin-bottom: 0;
+      margin-top: 0;
+      border-bottom: 1px solid var(--color-border-tertiary);
+      padding: 0 16px;
     }
     .cards-tab {
       padding: 9px 18px;
@@ -2346,6 +2347,18 @@
       border-bottom-color: var(--color-brand-navy);
       font-weight: 600;
     }
+
+    .cards-tab-card {
+      background: #fff;
+      border: 1px solid var(--color-border-tertiary);
+      border-radius: var(--radius-lg);
+      overflow: visible;
+      margin-top: 0;
+    }
+    .cards-tab-card .cards-tab-panel { padding: 0; }
+    .cards-tab-card .data-table-wrap { border-radius: 0; box-shadow: none; border: none; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .cards-tab-card .data-table { min-width: 960px; }
+    .cards-tab-card #tab-management .data-table { border-radius: 0; }
 
     /* Export modal */
     .export-modal-overlay {
@@ -2744,17 +2757,8 @@
         </div>
       </div>
 
-      <!-- Tab nav -->
-      <div id="cards-tabs" class="cards-tab-nav">
-        <button class="cards-tab active" data-tab="management">Management</button>
-        <button class="cards-tab" data-tab="history">History</button>
-        <button class="cards-tab" data-tab="funding">Funding</button>
-      </div>
-
-      <!-- Management tab -->
-      <div id="tab-management" class="cards-tab-panel">
-
-        <!-- Stats header -->
+      <!-- Stats header (above tabs) -->
+      <div id="cards-stats-block">
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1.6fr;gap:16px;margin-bottom:20px;">
 
           <div style="background:var(--color-bg-primary);border:1px solid var(--color-border-primary);border-radius:10px;padding:18px 20px;">
@@ -2902,6 +2906,19 @@
             </div>
           </div>
         </div>
+
+      </div><!-- /cards-stats-block -->
+
+      <!-- Tab card -->
+      <div class="cards-tab-card" style="margin-top:20px;">
+        <div id="cards-tabs" class="cards-tab-nav">
+          <button class="cards-tab active" data-tab="management">Management</button>
+          <button class="cards-tab" data-tab="history">History</button>
+          <button class="cards-tab" data-tab="funding">Funding</button>
+        </div>
+
+        <!-- Management tab -->
+        <div id="tab-management" class="cards-tab-panel">
 
         <!-- Card table -->
         <div class="data-table-wrap">
@@ -3236,7 +3253,9 @@
       </div>
 
       <!-- History tab -->
-      <div id="tab-history" class="cards-tab-panel" style="display:none;">
+        </div><!-- /tab-management -->
+
+        <div id="tab-history" class="cards-tab-panel" style="display:none;">
         <div class="data-table-wrap">
           <table class="data-table">
             <thead><tr>
@@ -3258,7 +3277,7 @@
       </div>
 
       <!-- Funding tab -->
-      <div id="tab-funding" class="cards-tab-panel" style="display:none;">
+        <div id="tab-funding" class="cards-tab-panel" style="display:none;">
         <div class="data-table-wrap">
           <table class="data-table">
             <thead><tr>
@@ -3278,6 +3297,9 @@
           </table>
         </div>
       </div>
+
+        </div><!-- /tab-funding -->
+      </div><!-- /cards-tab-card -->
 
     </div><!-- /content-inner -->
 
