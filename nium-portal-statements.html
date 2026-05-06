@@ -2269,6 +2269,51 @@
     .stmt-type-item:hover { background: var(--color-bg-secondary); }
     .stmt-type-item.active { font-weight: 600; color: var(--color-brand-navy); }
 
+
+    /* ── Sortable column headers ── */
+    .sort-th { cursor: pointer; user-select: none; white-space: nowrap; }
+    .sort-th:hover .sort-icon { opacity: 1; color: var(--color-text-primary); }
+    .sort-th.asc .sort-icon, .sort-th.desc .sort-icon { opacity: 1; color: var(--color-brand-navy); }
+    .sort-th-inner { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-secondary); }
+    .sort-icon { opacity: 0.3; transition: opacity 0.12s, color 0.12s; flex-shrink: 0; }
+
+
+    .filter-pill-bar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .filter-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid var(--color-border-secondary); border-radius: 20px; background: #fff; font-size: 13px; font-weight: 500; color: var(--color-text-primary); cursor: pointer; font-family: inherit; position: relative; }
+    .filter-pill:hover { border-color: var(--color-text-secondary); }
+    .filter-pill.active { border-color: var(--color-brand-navy); background: #f0f3ff; color: var(--color-brand-navy); }
+    .filter-pill svg { color: var(--color-text-tertiary); }
+    .filter-pill.active svg { color: var(--color-brand-navy); }
+    .adv-filters-wrap { background: #fff; border: 1px solid var(--color-border-tertiary); border-radius: var(--radius-lg); margin-bottom: 16px; display: none; }
+    .adv-filters-wrap.open { display: block; }
+    .adv-filters-body { padding: 20px; }
+    .adv-filters-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px 24px; margin-bottom: 20px; }
+    .adv-filter-field { display: flex; flex-direction: column; gap: 6px; }
+    .adv-filter-label { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); }
+    .adv-filter-select, .adv-filter-input { border: 1px solid var(--color-border-secondary); border-radius: var(--radius-md); padding: 8px 12px; font-size: 13px; font-family: inherit; color: var(--color-text-primary); background: #fff; outline: none; width: 100%; box-sizing: border-box; }
+    .adv-filter-select:focus, .adv-filter-input:focus { border-color: var(--color-brand-accent-light); }
+    .adv-filter-input::placeholder { color: var(--color-text-tertiary); }
+    .adv-filters-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid var(--color-border-tertiary); }
+    .adv-saved-wrap { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-height: 28px; }
+    .adv-saved-label { font-size: 12px; color: var(--color-text-tertiary); }
+    .adv-saved-chip { display: inline-flex; align-items: center; gap: 4px; background: #eef0ff; color: var(--color-brand-navy); border: 1px solid #c5caff; border-radius: 20px; padding: 3px 10px; font-size: 12px; font-weight: 500; cursor: pointer; }
+    .adv-saved-chip:hover { background: #dce0ff; }
+    .chip-del { font-size: 15px; line-height: 1; opacity: 0.5; margin-left: 2px; }
+    .chip-del:hover { opacity: 1; }
+    .adv-footer-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .adv-btn-save { font-size: 13px; font-weight: 500; color: var(--color-brand-navy); background: none; border: 1px solid var(--color-border-secondary); border-radius: var(--radius-md); padding: 7px 14px; cursor: pointer; font-family: inherit; }
+    .adv-btn-save:hover { background: #f0f3ff; }
+    .adv-btn-clear { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); background: none; border: none; cursor: pointer; font-family: inherit; padding: 7px 10px; }
+    .adv-btn-clear:hover { color: var(--color-text-primary); }
+    .adv-btn-apply { font-size: 13px; font-weight: 600; background: var(--color-brand-navy); color: #fff; border: none; border-radius: var(--radius-md); padding: 7px 18px; cursor: pointer; font-family: inherit; }
+    .adv-btn-apply:hover { background: #1a2070; }
+    .adv-save-pop { display: none; position: absolute; bottom: calc(100% + 8px); right: 0; background: #fff; border: 1px solid var(--color-border-secondary); border-radius: var(--radius-md); box-shadow: 0 6px 20px rgba(0,0,0,0.12); padding: 12px; width: 240px; z-index: 40; }
+    .adv-save-pop.open { display: block; }
+    .adv-save-pop-label { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 6px; }
+    .adv-save-pop-input { width: 100%; box-sizing: border-box; border: 1px solid var(--color-border-secondary); border-radius: var(--radius-sm); padding: 6px 10px; font-size: 13px; font-family: inherit; outline: none; margin-bottom: 8px; }
+    .adv-save-pop-input:focus { border-color: var(--color-brand-accent-light); }
+    .adv-save-pop-btn { width: 100%; padding: 6px; background: var(--color-brand-navy); color: #fff; border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; }
+
     /* ── Statements page ── */
     .stmt-card {
       background: #fff;
@@ -2612,6 +2657,73 @@
 
       </div><!-- /selectors row -->
 
+      <!-- Filter pill bar -->
+      <div class="filter-pill-bar" style="margin-bottom:12px;">
+        <button class="filter-pill" id="stmtFiltersPill" onclick="toggleStmtFilters()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+          Filters
+          <svg id="stmtFiltersPillChevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+
+      <!-- Advanced filters panel -->
+      <div class="adv-filters-wrap" id="stmtAdvFiltersWrap">
+        <div class="adv-filters-body open" id="stmtAdvFiltersBody">
+          <div class="adv-filters-grid">
+
+            <div class="adv-filter-field">
+              <label class="adv-filter-label">Date Range</label>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <input type="date" class="adv-filter-input" id="sfDateFrom" style="flex:1;" />
+                <span style="font-size:12px;color:var(--color-text-tertiary);">–</span>
+                <input type="date" class="adv-filter-input" id="sfDateTo" style="flex:1;" />
+              </div>
+            </div>
+
+            <div class="adv-filter-field">
+              <label class="adv-filter-label">Description</label>
+              <input type="text" class="adv-filter-input" id="sfDesc" placeholder="Search description…" />
+            </div>
+
+            <div class="adv-filter-field">
+              <label class="adv-filter-label">In (EUR)</label>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <input type="text" class="adv-filter-input" id="sfInMin" placeholder="Min" style="flex:1;" />
+                <span style="font-size:12px;color:var(--color-text-tertiary);">–</span>
+                <input type="text" class="adv-filter-input" id="sfInMax" placeholder="Max" style="flex:1;" />
+              </div>
+            </div>
+
+            <div class="adv-filter-field">
+              <label class="adv-filter-label">Out (EUR)</label>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <input type="text" class="adv-filter-input" id="sfOutMin" placeholder="Min" style="flex:1;" />
+                <span style="font-size:12px;color:var(--color-text-tertiary);">–</span>
+                <input type="text" class="adv-filter-input" id="sfOutMax" placeholder="Max" style="flex:1;" />
+              </div>
+            </div>
+
+          </div>
+          <div class="adv-filters-footer">
+            <div class="adv-saved-wrap" id="stmtAdvSavedWrap">
+              <span class="adv-saved-label" style="opacity:0.5;">No saved filters</span>
+            </div>
+            <div class="adv-footer-actions">
+              <button class="adv-btn-clear" onclick="clearStmtFilters()">Clear Filters</button>
+              <div style="position:relative;">
+                <button class="adv-btn-save" id="stmtAdvSaveBtn" onclick="toggleStmtSavePop()">Save filter</button>
+                <div class="adv-save-pop" id="stmtAdvSavePop">
+                  <div class="adv-save-pop-label">Name this filter</div>
+                  <input class="adv-save-pop-input" id="stmtAdvSaveInput" type="text" placeholder="e.g. May transfers" />
+                  <button class="adv-save-pop-btn" onclick="saveStmtFilter()">Save</button>
+                </div>
+              </div>
+              <button class="adv-btn-apply" onclick="applyStmtFilters()">Apply Filters</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Tab nav + tables -->
       <div class="stmt-card">
 
@@ -2645,44 +2757,11 @@
             <thead>
               <tr>
                 <th class="col-check"></th>
-                <th>
-                  <div class="col-filter-wrap">
-                    <button class="col-filter-btn" id="sDateFilterBtn">Date <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
-                    <div class="col-filter-popover" id="sDatePop">
-                      <div class="date-pop-presets">
-                        <button class="date-pop-preset active" data-preset="all">All time</button>
-                        <button class="date-pop-preset" data-preset="30d">Last 30 days</button>
-                        <button class="date-pop-preset" data-preset="90d">Last 90 days</button>
-                      </div>
-                      <div class="date-pop-custom">
-                        <div class="date-pop-custom-label">Custom range</div>
-                        <div class="date-pop-inputs">
-                          <div class="date-pop-field"><label>From</label><input class="date-pop-input" type="date" /></div>
-                          <div class="date-pop-field"><label>To</label><input class="date-pop-input" type="date" /></div>
-                        </div>
-                        <button class="date-pop-apply">Apply</button>
-                      </div>
-                    </div>
-                  </div>
-                </th>
-                <th>Description</th>
-                <th class="col-num">
-                  <div class="col-filter-wrap" style="justify-content:flex-end;">
-                    <button class="col-filter-btn" id="sInFilterBtn">In (EUR) <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
-                    <div class="col-filter-popover" id="sInPop">
-                      <div class="text-pop-inner"><input class="text-pop-input" type="text" placeholder="Min amount" /></div>
-                    </div>
-                  </div>
-                </th>
-                <th class="col-num">
-                  <div class="col-filter-wrap" style="justify-content:flex-end;">
-                    <button class="col-filter-btn" id="sOutFilterBtn">Out (EUR) <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
-                    <div class="col-filter-popover" id="sOutPop">
-                      <div class="text-pop-inner"><input class="text-pop-input" type="text" placeholder="Min amount" /></div>
-                    </div>
-                  </div>
-                </th>
-                <th class="col-num">Balance (EUR)</th>
+                <th class="sort-th" onclick="sortStmtTable(this)"><span class="sort-th-inner">Date <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
+                <th><span class="sort-th-inner" style="cursor:default;">Description</span></th>
+                <th class="col-num sort-th" onclick="sortStmtTable(this)"><span class="sort-th-inner">In (EUR) <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
+                <th class="col-num sort-th" onclick="sortStmtTable(this)"><span class="sort-th-inner">Out (EUR) <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
+                <th class="col-num"><span class="sort-th-inner" style="cursor:default;">Balance (EUR)</span></th>
               </tr>
             </thead>
             <tbody id="stmtTbody">
@@ -2759,63 +2838,13 @@
           <table class="stmt-table">
             <thead>
               <tr>
-                <th>
-                  <div class="col-filter-wrap">
-                    <button class="col-filter-btn" id="pPeriodFilterBtn">Statement period <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
-                    <div class="col-filter-popover" id="pPeriodPop">
-                      <div class="date-pop-presets">
-                        <button class="date-pop-preset active" data-preset="all">All time</button>
-                        <button class="date-pop-preset" data-preset="30d">Last 30 days</button>
-                        <button class="date-pop-preset" data-preset="90d">Last 90 days</button>
-                      </div>
-                      <div class="date-pop-custom">
-                        <div class="date-pop-custom-label">Custom range</div>
-                        <div class="date-pop-inputs">
-                          <div class="date-pop-field"><label>From</label><input class="date-pop-input" type="date" /></div>
-                          <div class="date-pop-field"><label>To</label><input class="date-pop-input" type="date" /></div>
-                        </div>
-                        <button class="date-pop-apply">Apply</button>
-                      </div>
-                    </div>
-                  </div>
-                </th>
-                <th>
-                  <div class="col-filter-wrap">
-                    <button class="col-filter-btn" id="pCardFilterBtn">Card <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
-                    <div class="col-filter-popover" id="pCardPop">
-                      <div class="text-pop-inner"><input class="text-pop-input" type="text" placeholder="Search card reference" /></div>
-                    </div>
-                  </div>
-                </th>
-                <th>
-                  <div class="col-filter-wrap">
-                    <button class="col-filter-btn" id="pCcyFilterBtn">Currency <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
-                    <div class="col-filter-popover" id="pCcyPop">
-                      <div class="drop-pop-list">
-                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="pCcyFilter" value="" checked /><span>All</span></label>
-                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="pCcyFilter" value="EUR" /><span>EUR</span></label>
-                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="pCcyFilter" value="USD" /><span>USD</span></label>
-                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="pCcyFilter" value="GBP" /><span>GBP</span></label>
-                      </div>
-                    </div>
-                  </div>
-                </th>
-                <th>Generated on</th>
-                <th>
-                  <div class="col-filter-wrap">
-                    <button class="col-filter-btn" id="pStatusFilterBtn">Status <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg></button>
-                    <div class="col-filter-popover" id="pStatusPop">
-                      <div class="drop-pop-list">
-                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="pStatusFilter" value="" checked /><span>All</span></label>
-                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="pStatusFilter" value="ready" /><span>Ready</span></label>
-                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="pStatusFilter" value="generating" /><span>Generating</span></label>
-                        <label class="drop-pop-item"><input class="drop-pop-checkbox" type="radio" name="pStatusFilter" value="failed" /><span>Failed</span></label>
-                      </div>
-                    </div>
-                  </div>
-                </th>
-                <th>File type</th>
-                <th>Action</th>
+                <th class="sort-th" onclick="sortStmtTable(this)"><span class="sort-th-inner">Statement period <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
+                <th class="sort-th" onclick="sortStmtTable(this)"><span class="sort-th-inner">Card <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
+                <th class="sort-th" onclick="sortStmtTable(this)"><span class="sort-th-inner">Currency <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
+                <th class="sort-th" onclick="sortStmtTable(this)"><span class="sort-th-inner">Generated on <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
+                <th class="sort-th" onclick="sortStmtTable(this)"><span class="sort-th-inner">Status <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
+                <th><span class="sort-th-inner" style="cursor:default;">File type</span></th>
+                <th><span class="sort-th-inner" style="cursor:default;">Action</span></th>
               </tr>
             </thead>
             <tbody>
@@ -3848,5 +3877,72 @@
     })();
 
   </script>
+
+  <script>
+    function sortStmtTable(th) {
+      var table = th.closest('table');
+      var tbody = table.querySelector('tbody');
+      var ths = Array.from(th.closest('tr').querySelectorAll('.sort-th'));
+      var col = Array.from(th.closest('tr').children).indexOf(th);
+      var asc = !th.classList.contains('asc');
+      ths.forEach(function(t) { t.classList.remove('asc','desc'); });
+      th.classList.add(asc ? 'asc' : 'desc');
+      var rows = Array.from(tbody.querySelectorAll('tr'));
+      rows.sort(function(a, b) {
+        var at = (a.cells[col] ? a.cells[col].textContent : '').trim();
+        var bt = (b.cells[col] ? b.cells[col].textContent : '').trim();
+        var an = parseFloat(at.replace(/[^0-9.-]/g,'')), bn = parseFloat(bt.replace(/[^0-9.-]/g,''));
+        var cmp = (!isNaN(an) && !isNaN(bn)) ? an - bn : at.localeCompare(bt);
+        return asc ? cmp : -cmp;
+      });
+      rows.forEach(function(r) { tbody.appendChild(r); });
+    }
+  </script>
+
+
+  <script>
+    function toggleStmtFilters() {
+      var wrap = document.getElementById('stmtAdvFiltersWrap');
+      var pill = document.getElementById('stmtFiltersPill');
+      var chev = document.getElementById('stmtFiltersPillChevron');
+      var open = wrap.classList.toggle('open');
+      pill.classList.toggle('active', open);
+      chev.style.transform = open ? 'rotate(180deg)' : '';
+    }
+    function clearStmtFilters() {
+      ['sfDateFrom','sfDateTo','sfDesc','sfInMin','sfInMax','sfOutMin','sfOutMax']
+        .forEach(function(id){ var el=document.getElementById(id); if(el) el.value=''; });
+    }
+    function applyStmtFilters() { toggleStmtFilters(); }
+    var stmtSaved = {};
+    function toggleStmtSavePop() {
+      document.getElementById('stmtAdvSavePop').classList.toggle('open');
+      document.getElementById('stmtAdvSaveInput').focus();
+    }
+    function saveStmtFilter() {
+      var name = document.getElementById('stmtAdvSaveInput').value.trim();
+      if (!name) return;
+      stmtSaved[name] = {};
+      document.getElementById('stmtAdvSavePop').classList.remove('open');
+      document.getElementById('stmtAdvSaveInput').value = '';
+      renderStmtChips();
+    }
+    function renderStmtChips() {
+      var wrap = document.getElementById('stmtAdvSavedWrap');
+      var names = Object.keys(stmtSaved);
+      wrap.innerHTML = names.length
+        ? '<span class="adv-saved-label">Saved:</span>' + names.map(function(n){
+            return '<span class="adv-saved-chip">' + n + ' <span class="chip-del" onclick="event.stopPropagation();deleteStmtFilter(\'' + n + '\')">×</span></span>';
+          }).join('')
+        : '<span class="adv-saved-label" style="opacity:0.5;">No saved filters</span>';
+    }
+    function deleteStmtFilter(name) { delete stmtSaved[name]; renderStmtChips(); }
+    document.addEventListener('click', function(e) {
+      var pop = document.getElementById('stmtAdvSavePop');
+      var btn = document.getElementById('stmtAdvSaveBtn');
+      if (pop && !pop.contains(e.target) && e.target !== btn) pop.classList.remove('open');
+    });
+  </script>
+
 </body>
 </html>
