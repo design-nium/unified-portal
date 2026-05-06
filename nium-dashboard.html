@@ -3180,14 +3180,24 @@
       <div class="vf-field">
         <label class="vf-label">Destination country*</label>
         <div class="vf-select-wrap">
-          <span class="vf-flag" id="vfCountryFlag">&#x1F1FA;&#x1F1F8;</span>
-          <select class="vf-select vf-flagged" id="vfCountry" onchange="updateVerifyForm()">
-            <option value="US">United States</option>
-            <option value="GB">United Kingdom</option>
-            <option value="DE">Germany</option>
-            <option value="SG">Singapore</option>
-            <option value="IN">India</option>
-            <option value="AU">Australia</option>
+          <span class="vf-flag" id="vfCountryFlag" style="display:none;"></span>
+          <select class="vf-select" id="vfCountry" onchange="updateVerifyForm()">
+            <option value="">Select country…</option>
+            <option value="AU" data-flag="🇦🇺">Australia</option>
+            <option value="BR" data-flag="🇧🇷">Brazil</option>
+            <option value="CA" data-flag="🇨🇦">Canada</option>
+            <option value="CN" data-flag="🇨🇳">China</option>
+            <option value="DE" data-flag="🇩🇪">Germany</option>
+            <option value="HK" data-flag="🇭🇰">Hong Kong</option>
+            <option value="IN" data-flag="🇮🇳">India</option>
+            <option value="JP" data-flag="🇯🇵">Japan</option>
+            <option value="MX" data-flag="🇲🇽">Mexico</option>
+            <option value="MY" data-flag="🇲🇾">Malaysia</option>
+            <option value="PH" data-flag="🇵🇭">Philippines</option>
+            <option value="SG" data-flag="🇸🇬">Singapore</option>
+            <option value="GB" data-flag="🇬🇧">United Kingdom</option>
+            <option value="US" data-flag="🇺🇸">United States</option>
+            <option value="AE" data-flag="🇦🇪">United Arab Emirates</option>
           </select>
         </div>
       </div>
@@ -3195,14 +3205,24 @@
       <div class="vf-field">
         <label class="vf-label">Destination currency*</label>
         <div class="vf-select-wrap">
-          <span class="vf-flag" id="vfCurrencyFlag">&#x1F1FA;&#x1F1F8;</span>
-          <select class="vf-select vf-flagged" id="vfCurrency">
-            <option>US dollar</option>
-            <option>British pound</option>
-            <option>Euro</option>
-            <option>Singapore dollar</option>
-            <option>Indian rupee</option>
-            <option>Australian dollar</option>
+          <span class="vf-flag" id="vfCurrencyFlag" style="display:none;"></span>
+          <select class="vf-select" id="vfCurrency" onchange="updateCurrencyFlag()">
+            <option value="">Select currency…</option>
+            <option value="AUD" data-flag="🇦🇺" data-symbol="A$">Australian dollar (A$)</option>
+            <option value="BRL" data-flag="🇧🇷" data-symbol="R$">Brazilian real (R$)</option>
+            <option value="CAD" data-flag="🇨🇦" data-symbol="C$">Canadian dollar (C$)</option>
+            <option value="CNY" data-flag="🇨🇳" data-symbol="¥">Chinese yuan (¥)</option>
+            <option value="EUR" data-flag="🇩🇪" data-symbol="€">Euro (€)</option>
+            <option value="HKD" data-flag="🇭🇰" data-symbol="HK$">Hong Kong dollar (HK$)</option>
+            <option value="INR" data-flag="🇮🇳" data-symbol="₹">Indian rupee (₹)</option>
+            <option value="JPY" data-flag="🇯🇵" data-symbol="¥">Japanese yen (¥)</option>
+            <option value="MXN" data-flag="🇲🇽" data-symbol="$">Mexican peso ($)</option>
+            <option value="MYR" data-flag="🇲🇾" data-symbol="RM">Malaysian ringgit (RM)</option>
+            <option value="PHP" data-flag="🇵🇭" data-symbol="₱">Philippine peso (₱)</option>
+            <option value="SGD" data-flag="🇸🇬" data-symbol="S$">Singapore dollar (S$)</option>
+            <option value="GBP" data-flag="🇬🇧" data-symbol="£">British pound (£)</option>
+            <option value="USD" data-flag="🇺🇸" data-symbol="$">US dollar ($)</option>
+            <option value="AED" data-flag="🇦🇪" data-symbol="د.إ">UAE dirham (د.إ)</option>
           </select>
         </div>
       </div>
@@ -3283,11 +3303,18 @@
   </style>
 
   <script>
+    var COUNTRY_FLAGS = {AU:'🇦🇺',BR:'🇧🇷',CA:'🇨🇦',CN:'🇨🇳',DE:'🇩🇪',HK:'🇭🇰',IN:'🇮🇳',JP:'🇯🇵',MX:'🇲🇽',MY:'🇲🇾',PH:'🇵🇭',SG:'🇸🇬',GB:'🇬🇧',US:'🇺🇸',AE:'🇦🇪'};
+
     function openVerifyModal() {
       document.getElementById('verifyModalOverlay').style.display = 'flex';
       document.getElementById('verifyResult').style.display = 'none';
-      // Reset to initial state — only show first 3 fields
+      document.getElementById('vfCountry').value = '';
+      document.getElementById('vfCurrency').value = '';
       document.getElementById('vfMethod').value = '';
+      document.getElementById('vfCountryFlag').style.display = 'none';
+      document.getElementById('vfCurrencyFlag').style.display = 'none';
+      document.getElementById('vfCountry').classList.remove('vf-flagged');
+      document.getElementById('vfCurrency').classList.remove('vf-flagged');
       document.getElementById('vfAccountTypeWrap').style.display = 'none';
       document.getElementById('vfAccountNumberWrap').style.display = 'none';
       document.getElementById('vfRoutingWrap').style.display = 'none';
@@ -3297,6 +3324,17 @@
       document.getElementById('verifyModalOverlay').style.display = 'none';
     }
     function updateVerifyForm() {
+      var sel = document.getElementById('vfCountry');
+      var val = sel.value;
+      var flag = document.getElementById('vfCountryFlag');
+      if (val && COUNTRY_FLAGS[val]) {
+        flag.textContent = COUNTRY_FLAGS[val];
+        flag.style.display = 'block';
+        sel.classList.add('vf-flagged');
+      } else {
+        flag.style.display = 'none';
+        sel.classList.remove('vf-flagged');
+      }
       var method = document.getElementById('vfMethod').value;
       var isProxy = method === 'PROXY';
       var isLocal = method === 'LOCAL';
@@ -3304,9 +3342,20 @@
       document.getElementById('vfAccountNumberWrap').style.display = isLocal ? 'block' : 'none';
       document.getElementById('vfRoutingWrap').style.display = isLocal ? 'block' : 'none';
       document.getElementById('vfProxyWrap').style.display = isProxy ? 'block' : 'none';
-      // Float the payout method label up once selected
-      var lbl = document.getElementById('vfMethodLabel');
-      if (lbl) lbl.style.display = method ? 'block' : 'none';
+    }
+    function updateCurrencyFlag() {
+      var sel = document.getElementById('vfCurrency');
+      var opt = sel.options[sel.selectedIndex];
+      var flag = document.getElementById('vfCurrencyFlag');
+      var flagVal = opt ? opt.getAttribute('data-flag') : '';
+      if (flagVal) {
+        flag.textContent = flagVal;
+        flag.style.display = 'block';
+        sel.classList.add('vf-flagged');
+      } else {
+        flag.style.display = 'none';
+        sel.classList.remove('vf-flagged');
+      }
     }
     function runVerify() {
       var result = document.getElementById('verifyResult');
