@@ -2538,7 +2538,7 @@
       </div>
     </a>
     <div class="nav-children">
-      <a href="nium-portal-statements.html" style="text-decoration:none;color:inherit;"><div class="nav-child active">Statements</div></a>
+      <a href="nium-portal-statements.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Statements</div></a>
       <a href="nium-portal-transactions.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Transactions</div></a>
       <a href="nium-portal-scheduled-reports.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Scheduled reports</div></a>
     </div>
@@ -2609,336 +2609,34 @@
 
       <div class="travel-page-header">
         <div class="travel-context">
-          <h1 class="travel-title" id="page-h1">Statements</h1>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center;">
-          <button class="btn-secondary-outline" id="exportBtn" style="display:flex;align-items:center;gap:6px;padding:7px 14px;font-size:13px;font-weight:500;border:1px solid var(--color-border-secondary);border-radius:var(--radius-md);background:#fff;color:var(--color-text-primary);cursor:pointer;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Export
-          </button>
+          <h1 class="travel-title">Tasks</h1>
         </div>
       </div>
 
-      <!-- Selectors row -->
-      <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:20px;">
-      <!-- Customer selector -->
-      <div style="position:relative;display:inline-block;">
-        <button class="bal-customer-select" id="balCustomerBtn">
-          <span class="bal-type-dot bal-dot-customer" id="balTypeDot"></span>
-          <span id="balCustomerName">Workera AI</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="bal-wallet-menu" id="balCustomerMenu">
-          <div class="bal-search-row">
-            <input class="bal-search-input" id="balSearchInput" type="text" placeholder="Search customers…" autocomplete="off" />
-          </div>
-          <div class="bal-menu-section-label">Client</div>
-          <div class="bal-client-row" id="balClientRow" data-name="Gusto">
-            <span class="bal-type-dot bal-dot-client"></span>
-            <span class="bal-client-row-name">Gusto</span>
-            <span class="bal-client-badge">Client</span>
-          </div>
-          <div class="bal-menu-divider"></div>
-          <div class="bal-menu-section-label">Customers</div>
-          <div class="bal-customer-list" id="balCustomerList">
-            <div class="bal-customer-item" data-name="Goldbelly"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Goldbelly</span></div>
-            <div class="bal-customer-item" data-name="Cortex Health"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Cortex Health</span></div>
-            <div class="bal-customer-item" data-name="The Salty Donut"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">The Salty Donut</span></div>
-            <div class="bal-customer-item active" data-name="Workera AI"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Workera AI</span></div>
-            <div class="bal-customer-item" data-name="RocketPower"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">RocketPower</span></div>
-            <div class="bal-customer-item" data-name="Roller Rabbit"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Roller Rabbit</span></div>
-            <div class="bal-customer-item" data-name="Range Leather"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Range Leather</span></div>
-            <div class="bal-customer-item" data-name="Circle Creek Therapy"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Circle Creek Therapy</span></div>
-            <div class="bal-customer-item" data-name="Modern Law Firms"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Modern Law Firms</span></div>
-            <div class="bal-customer-item" data-name="Andela"><span class="bal-type-dot bal-dot-customer"></span><span class="bal-item-name">Andela</span></div>
-          </div>
-          <div class="bal-no-results" id="balNoResults">No customers found</div>
-        </div>
-      </div><!-- /customer selector -->
-
-      <!-- Statement type selector -->
-      <div style="position:relative;display:inline-block;" id="stmtTypeWrap">
-        <button class="bal-customer-select" id="stmtTypeBtn">
-          <span id="stmtTypeName">Cards statements</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="bal-wallet-menu" id="stmtTypeMenu" style="min-width:200px;">
-          <div style="padding:4px;">
-            <div class="stmt-type-item active" data-value="cards">Cards statements</div>
-            <div class="stmt-type-item" data-value="payouts">Payouts statements</div>
-            <div class="stmt-type-item" data-value="payins">Payins statements</div>
-          </div>
-        </div>
-      </div><!-- /stmtTypeWrap -->
-
-      </div><!-- /selectors row -->
-
-      <!-- Filter pill bar -->
-      <div class="filter-pill-bar" style="margin-bottom:12px;">
-        <button class="filter-pill" id="stmtFiltersPill" onclick="toggleStmtFilters()">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
-          Filters
-          <svg id="stmtFiltersPillChevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
+      <!-- Skeleton -->
+      <div class="skeleton-grid">
+        <div class="skel-card skel-stat"></div>
+        <div class="skel-card skel-stat"></div>
+        <div class="skel-card skel-stat"></div>
+        <div class="skel-card skel-stat"></div>
       </div>
 
-      <!-- Advanced filters panel -->
-      <div class="adv-filters-wrap" id="stmtAdvFiltersWrap">
-        <div class="adv-filters-body open" id="stmtAdvFiltersBody">
-          <div class="adv-filters-grid">
-
-            <div class="adv-filter-field">
-              <label class="adv-filter-label">Date Range</label>
-              <div style="display:flex;align-items:center;gap:6px;">
-                <input type="date" class="adv-filter-input" id="sfDateFrom" style="flex:1;" />
-                <span style="font-size:12px;color:var(--color-text-tertiary);">–</span>
-                <input type="date" class="adv-filter-input" id="sfDateTo" style="flex:1;" />
-              </div>
-            </div>
-
-            <div class="adv-filter-field">
-              <label class="adv-filter-label">Description</label>
-              <input type="text" class="adv-filter-input" id="sfDesc" placeholder="Search description…" />
-            </div>
-
-            <div class="adv-filter-field">
-              <label class="adv-filter-label">In (EUR)</label>
-              <div style="display:flex;align-items:center;gap:6px;">
-                <input type="text" class="adv-filter-input" id="sfInMin" placeholder="Min" style="flex:1;" />
-                <span style="font-size:12px;color:var(--color-text-tertiary);">–</span>
-                <input type="text" class="adv-filter-input" id="sfInMax" placeholder="Max" style="flex:1;" />
-              </div>
-            </div>
-
-            <div class="adv-filter-field">
-              <label class="adv-filter-label">Out (EUR)</label>
-              <div style="display:flex;align-items:center;gap:6px;">
-                <input type="text" class="adv-filter-input" id="sfOutMin" placeholder="Min" style="flex:1;" />
-                <span style="font-size:12px;color:var(--color-text-tertiary);">–</span>
-                <input type="text" class="adv-filter-input" id="sfOutMax" placeholder="Max" style="flex:1;" />
-              </div>
-            </div>
-
-          </div>
-          <div class="adv-filters-footer">
-            <div class="adv-saved-wrap" id="stmtAdvSavedWrap">
-              <span class="adv-saved-label" style="opacity:0.5;">No saved filters</span>
-            </div>
-            <div class="adv-footer-actions">
-              <button class="adv-btn-clear" onclick="clearStmtFilters()">Clear Filters</button>
-              <div style="position:relative;">
-                <button class="adv-btn-save" id="stmtAdvSaveBtn" onclick="toggleStmtSavePop()">Save filter</button>
-                <div class="adv-save-pop" id="stmtAdvSavePop">
-                  <div class="adv-save-pop-label">Name this filter</div>
-                  <input class="adv-save-pop-input" id="stmtAdvSaveInput" type="text" placeholder="e.g. May transfers" />
-                  <button class="adv-save-pop-btn" onclick="saveStmtFilter()">Save</button>
-                </div>
-              </div>
-              <button class="adv-btn-apply" onclick="applyStmtFilters()">Apply Filters</button>
-            </div>
+      <div class="skeleton-grid">
+        <div class="skel-card skel-wide">
+          <div class="skel-bar skel-bar-title"></div>
+          <div class="skel-rows">
+            <div class="skel-row"></div>
+            <div class="skel-row"></div>
+            <div class="skel-row"></div>
+            <div class="skel-row"></div>
+            <div class="skel-row"></div>
+            <div class="skel-row"></div>
+            <div class="skel-row"></div>
+            <div class="skel-row"></div>
+            <div class="skel-row"></div>
           </div>
         </div>
       </div>
-
-      <!-- Tab nav + tables -->
-      <div class="stmt-card">
-
-        <!-- Tab bar -->
-        <div class="stmt-tabs">
-          <button class="stmt-tab active" id="tabStmtList" onclick="switchTab('list')">Statement List</button>
-          <button class="stmt-tab" id="tabPdfDl" onclick="switchTab('pdf')">PDF Downloads</button>
-        </div>
-
-        <!-- ══ Statement List view ══ -->
-        <div id="viewList">
-          <!-- Toolbar -->
-          <div class="stmt-toolbar">
-            <label class="stmt-select-all-wrap">
-              <input type="checkbox" id="selectAll" class="stmt-checkbox" />
-              <span class="stmt-select-label" id="selectLabel">0 selected</span>
-            </label>
-            <div class="stmt-toolbar-right">
-              <button class="stmt-export-sel" id="exportSelBtn" disabled>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                Export selected (<span id="exportCount">0</span>)
-              </button>
-              <button class="stmt-icon-btn" title="More options">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
-              </button>
-            </div>
-          </div>
-
-          <!-- Table -->
-          <table class="stmt-table">
-            <thead>
-              <tr>
-                <th class="col-check"></th>
-                <th class="sort-th" onclick="sortStmtTable(this)"><span class="sort-th-inner">Date <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
-                <th><span class="sort-th-inner" style="cursor:default;">Description</span></th>
-                <th class="col-num sort-th" onclick="sortStmtTable(this)"><span class="sort-th-inner">In (EUR) <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
-                <th class="col-num sort-th" onclick="sortStmtTable(this)"><span class="sort-th-inner">Out (EUR) <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
-                <th class="col-num"><span class="sort-th-inner" style="cursor:default;">Balance (EUR)</span></th>
-              </tr>
-            </thead>
-            <tbody id="stmtTbody">
-              <tr>
-                <td class="col-check"><input type="checkbox" class="stmt-checkbox row-check" /></td>
-                <td class="col-date">04/05/2026</td>
-                <td class="col-desc">Closing Balance</td>
-                <td class="col-num">—</td>
-                <td class="col-num">—</td>
-                <td class="col-num col-balance">450.00</td>
-              </tr>
-              <tr>
-                <td class="col-check"><input type="checkbox" class="stmt-checkbox row-check" /></td>
-                <td class="col-date">04/05/2026</td>
-                <td class="col-desc">Instrument Creation, Transfer from Funding Account [fabapp_EUR] to Virtual Card [gpsvisacorp.VV9ZOQVDJPD], reference OUwLIYnDXodm4XWTgfniZnYFe]</td>
-                <td class="col-num col-in">450.00</td>
-                <td class="col-num">—</td>
-                <td class="col-num col-balance">450.00</td>
-              </tr>
-              <tr>
-                <td class="col-check"><input type="checkbox" class="stmt-checkbox row-check" /></td>
-                <td class="col-date">03/05/2026</td>
-                <td class="col-desc">Authorization Reversal, Retail, LC.EXPEDIA.COM 800-319-4834, US</td>
-                <td class="col-num">—</td>
-                <td class="col-num">120.00</td>
-                <td class="col-num col-balance">0.00</td>
-              </tr>
-              <tr>
-                <td class="col-check"><input type="checkbox" class="stmt-checkbox row-check" /></td>
-                <td class="col-date">03/05/2026</td>
-                <td class="col-desc">Authorization, Retail, LC.EXPEDIA.COM 800-319-4834, US</td>
-                <td class="col-num">—</td>
-                <td class="col-num">120.00</td>
-                <td class="col-num col-balance">120.00</td>
-              </tr>
-              <tr>
-                <td class="col-check"><input type="checkbox" class="stmt-checkbox row-check" /></td>
-                <td class="col-date">02/05/2026</td>
-                <td class="col-desc">Instrument Load, from Funding Account [fabapp_EUR] to Virtual Card [gpsvisacorp.VV9ZOQVDJPD]</td>
-                <td class="col-num col-in">500.00</td>
-                <td class="col-num">—</td>
-                <td class="col-num col-balance">500.00</td>
-              </tr>
-              <tr>
-                <td class="col-check"><input type="checkbox" class="stmt-checkbox row-check" /></td>
-                <td class="col-date">01/05/2026</td>
-                <td class="col-desc">Opening Balance</td>
-                <td class="col-num">—</td>
-                <td class="col-num">—</td>
-                <td class="col-num col-balance">0.00</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <!-- Pagination -->
-          <div class="stmt-pagination">
-            <span class="stmt-count">Showing 1 to 6 of 6 transactions</span>
-            <div class="stmt-pager">
-              <button class="pager-btn" disabled>«</button>
-              <button class="pager-btn" disabled>‹</button>
-              <button class="pager-btn pager-active">1</button>
-              <button class="pager-btn" disabled>›</button>
-              <button class="pager-btn" disabled>»</button>
-            </div>
-            <div class="stmt-per-page">
-              <select class="per-page-select"><option>10</option><option>25</option><option>50</option></select>
-              <span>per page</span>
-            </div>
-          </div>
-        </div><!-- /viewList -->
-
-        <!-- ══ PDF Downloads view ══ -->
-        <div id="viewPdf" style="display:none;">
-          <table class="stmt-table">
-            <thead>
-              <tr>
-                <th class="sort-th" onclick="sortStmtTable(this)"><span class="sort-th-inner">Statement period <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
-                <th class="sort-th" onclick="sortStmtTable(this)"><span class="sort-th-inner">Card <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
-                <th class="sort-th" onclick="sortStmtTable(this)"><span class="sort-th-inner">Currency <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
-                <th class="sort-th" onclick="sortStmtTable(this)"><span class="sort-th-inner">Generated on <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
-                <th class="sort-th" onclick="sortStmtTable(this)"><span class="sort-th-inner">Status <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
-                <th><span class="sort-th-inner" style="cursor:default;">File type</span></th>
-                <th><span class="sort-th-inner" style="cursor:default;">Action</span></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="col-date">May 2026</td>
-                <td class="col-desc">Virtual Card •••• 2705</td>
-                <td>EUR</td>
-                <td class="col-date">01/06/2026 10:30</td>
-                <td><span class="pdf-badge pdf-ready">Ready</span></td>
-                <td>PDF</td>
-                <td><button class="pdf-action-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button></td>
-              </tr>
-              <tr>
-                <td class="col-date">April 2026</td>
-                <td class="col-desc">Virtual Card •••• 2705</td>
-                <td>EUR</td>
-                <td class="col-date">01/05/2026 10:25</td>
-                <td><span class="pdf-badge pdf-ready">Ready</span></td>
-                <td>PDF</td>
-                <td><button class="pdf-action-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button></td>
-              </tr>
-              <tr>
-                <td class="col-date">March 2026</td>
-                <td class="col-desc">Virtual Card •••• 2705</td>
-                <td>EUR</td>
-                <td class="col-date">01/04/2026 10:22</td>
-                <td><span class="pdf-badge pdf-ready">Ready</span></td>
-                <td>PDF</td>
-                <td><button class="pdf-action-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button></td>
-              </tr>
-              <tr>
-                <td class="col-date">February 2026</td>
-                <td class="col-desc">Virtual Card •••• 2705</td>
-                <td>EUR</td>
-                <td class="col-date">01/03/2026 10:18</td>
-                <td><span class="pdf-badge pdf-ready">Ready</span></td>
-                <td>PDF</td>
-                <td><button class="pdf-action-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button></td>
-              </tr>
-              <tr>
-                <td class="col-date">January 2026</td>
-                <td class="col-desc">Virtual Card •••• 2705</td>
-                <td>EUR</td>
-                <td class="col-date">01/02/2026 10:15</td>
-                <td><span class="pdf-badge pdf-generating">Generating</span></td>
-                <td>PDF</td>
-                <td><span style="color:var(--color-text-tertiary);">—</span></td>
-              </tr>
-              <tr>
-                <td class="col-date">December 2025</td>
-                <td class="col-desc">Virtual Card •••• 2705</td>
-                <td>EUR</td>
-                <td class="col-date">01/01/2026 10:12</td>
-                <td><span class="pdf-badge pdf-failed">Failed</span></td>
-                <td>PDF</td>
-                <td><button class="pdf-action-btn pdf-retry"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg> Retry</button></td>
-              </tr>
-            </tbody>
-          </table>
-
-          <!-- Pagination -->
-          <div class="stmt-pagination">
-            <span class="stmt-count">Showing 1 to 6 of 6 statements</span>
-            <div class="stmt-pager">
-              <button class="pager-btn" disabled>«</button>
-              <button class="pager-btn" disabled>‹</button>
-              <button class="pager-btn pager-active">1</button>
-              <button class="pager-btn" disabled>›</button>
-              <button class="pager-btn" disabled>»</button>
-            </div>
-            <div class="stmt-per-page">
-              <select class="per-page-select"><option>10</option><option>25</option><option>50</option></select>
-              <span>per page</span>
-            </div>
-          </div>
-        </div><!-- /viewPdf -->
-
-      </div><!-- /stmt-card -->
 
     </div><!-- /content-inner -->
 
