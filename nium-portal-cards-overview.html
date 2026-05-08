@@ -2603,6 +2603,32 @@
 
     /* Table padding matching stats cards */
     .cards-tab-card .data-table-wrap { border-radius: 0; box-shadow: none; border: none; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0; }
+    /* Sticky Actions column */
+    #tab-management table th:last-child,
+    #tab-management table td:last-child {
+      position: sticky;
+      right: 0;
+      background: #fff;
+      z-index: 2;
+      box-shadow: -4px 0 8px -2px rgba(0,0,0,0.08);
+    }
+    #tab-management table thead th:last-child {
+      background: #f9fafb;
+      z-index: 3;
+    }
+    /* Sticky Actions column - History tab */
+    #tab-history table th:last-child,
+    #tab-history table td:last-child {
+      position: sticky;
+      right: 0;
+      background: #fff;
+      z-index: 2;
+      box-shadow: -4px 0 8px -2px rgba(0,0,0,0.08);
+    }
+    #tab-history table thead th:last-child {
+      background: #f9fafb;
+      z-index: 3;
+    }
     .cards-tab-card .stmt-pagination  { padding: 12px 0; border-bottom-left-radius: var(--radius-lg); border-bottom-right-radius: var(--radius-lg); }
 
 
@@ -2850,6 +2876,9 @@
     .card-badge-frozen   { background: #EFF6FF; color: #2563EB; }
     .card-badge-expired  { background: #FEF2F2; color: #DC2626; }
     .card-badge-cancelled{ background: #F1F5F9; color: #64748B; }
+    .card-badge-pending  { background: #FEF3C7; color: #92400E; }
+    .card-badge-scheduled{ background: #EFF6FF; color: #2563EB; }
+    .card-badge-completed{ background: #E6FAF0; color: #16A34A; }
   </style>
   <script>
     // Apply persisted sidebar state before render to avoid flicker
@@ -3146,7 +3175,7 @@
 
         <!-- Advanced filters panel -->
 
-      <div class="cards-action-bar" id="cardsActionBar" style="margin:0 32px;">
+      <div class="cards-action-bar" id="cardsActionBar" style="margin:0;">
         <div class="cards-action-bar-left">
           <button class="filter-pill" id="mgmtFiltersPill" onclick="toggleAdvFilters()">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
@@ -3167,7 +3196,7 @@
       </div>
 
       <!-- Tab card -->
-        <div class="adv-filters-wrap" id="advFiltersWrap" style="margin:0 32px 8px;">
+        <div class="adv-filters-wrap" id="advFiltersWrap" style="margin:0 0 8px;">
 
 
           <div class="adv-filters-body" id="advFiltersBody">
@@ -3281,6 +3310,53 @@
 
       <!-- Shared action bar — between stats and tab card, updates per tab -->
 
+      <div class="adv-filters-wrap" id="authFiltersWrap" style="margin:0 32px 8px;">
+        <div class="adv-filters-body" id="authFiltersBody">
+          <div style="display:flex;align-items:flex-start;gap:32px;padding:20px 24px 16px;">
+            <div style="display:flex;flex-direction:column;gap:10px;flex-shrink:0;">
+              <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="radio" name="authSearchBy" value="ref" checked style="accent-color:#4B5EFF;"> By Card Reference</label>
+              <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="radio" name="authSearchBy" value="name" style="accent-color:#4B5EFF;"> By Card Name</label>
+              <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="radio" name="authSearchBy" value="number" style="accent-color:#4B5EFF;"> By Card Number</label>
+              <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="radio" name="authSearchBy" value="external" style="accent-color:#4B5EFF;"> By Card External Id</label>
+            </div>
+            <div style="flex:1;display:flex;align-items:center;gap:8px;">
+              <input type="text" class="adv-filter-input" style="flex:1;max-width:420px;" placeholder="" />
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-tertiary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+          </div>
+          <div class="adv-filters-footer" style="justify-content:flex-end;">
+            <div class="adv-footer-actions">
+              <button class="adv-btn-clear">Reset</button>
+              <button class="adv-btn-apply" onclick="toggleTabFilters('auth')">Search</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="adv-filters-wrap" id="schedFiltersWrap" style="margin:0 32px 8px;">
+        <div class="adv-filters-body" id="schedFiltersBody">
+          <div class="adv-filters-grid">
+            <div class="adv-filter-field"><label class="adv-filter-label">Card reference</label><input type="text" class="adv-filter-input" placeholder="Search card reference…" /></div>
+            <div class="adv-filter-field"><label class="adv-filter-label">Funding account</label><input type="text" class="adv-filter-input" placeholder="Search funding account…" /></div>
+            <div class="adv-filter-field"><label class="adv-filter-label">State</label><select class="adv-filter-select"><option value="">Any</option><option>Pending load</option><option>Scheduled</option><option>Completed</option><option>Failed</option></select></div>
+            <div class="adv-filter-field"><label class="adv-filter-label">Schedule date range</label><div style="display:flex;align-items:center;gap:6px;"><input type="date" class="adv-filter-input" style="flex:1;" /><span style="font-size:12px;color:var(--color-text-tertiary);">–</span><input type="date" class="adv-filter-input" style="flex:1;" /></div></div>
+          </div>
+          <div class="adv-filters-footer"><div class="adv-saved-wrap"><span class="adv-saved-label" style="opacity:0.5;">No saved filters</span></div><div class="adv-footer-actions"><button class="adv-btn-clear">Clear Filters</button><button class="adv-btn-save">Save filter</button><button class="adv-btn-apply" onclick="toggleTabFilters('sched')">Apply Filters</button></div></div>
+        </div>
+      </div>
+
+      <div class="adv-filters-wrap" id="histFiltersWrap" style="margin:0 32px 8px;">
+        <div class="adv-filters-body" id="histFiltersBody">
+          <div class="adv-filters-grid">
+            <div class="adv-filter-field"><label class="adv-filter-label">Card reference</label><input type="text" class="adv-filter-input" placeholder="Search card reference…" /></div>
+            <div class="adv-filter-field"><label class="adv-filter-label">Card brand</label><select class="adv-filter-select"><option value="">Any</option><option>Visa</option><option>Mastercard</option><option>UATP</option><option>Diners</option></select></div>
+            <div class="adv-filter-field"><label class="adv-filter-label">Card currency</label><select class="adv-filter-select"><option value="">Any</option><option>EUR</option><option>USD</option><option>GBP</option><option>AED</option></select></div>
+            <div class="adv-filter-field"><label class="adv-filter-label">Transaction date</label><div style="display:flex;align-items:center;gap:6px;"><input type="date" class="adv-filter-input" style="flex:1;" /><span style="font-size:12px;color:var(--color-text-tertiary);">–</span><input type="date" class="adv-filter-input" style="flex:1;" /></div></div>
+          </div>
+          <div class="adv-filters-footer"><div class="adv-saved-wrap"><span class="adv-saved-label" style="opacity:0.5;">No saved filters</span></div><div class="adv-footer-actions"><button class="adv-btn-clear">Clear Filters</button><button class="adv-btn-save">Save filter</button><button class="adv-btn-apply" onclick="toggleTabFilters('hist')">Apply Filters</button></div></div>
+        </div>
+      </div>
+
       <div class="cards-tab-card" style="margin:0 32px 32px;">
         <div id="cards-tabs" class="cards-tab-nav">
           <button class="cards-tab active" data-tab="management">Card list</button>
@@ -3313,7 +3389,7 @@
             <tbody>
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
-                <td style="color:#4B5EFF;font-size:13px;">0Uww1PPO_dJQX8tnTsFxTU8Zb</td>
+                <td style="color:#4B5EFF;font-size:13px;text-decoration:none;">0Uww1PPO_dJQX8tnTsFxTU8Zb</td>
                 <td class="dt-muted">VCC Multi GPS</td>
                 <td><span style="font-weight:700;font-style:italic;color:#1A1F71;letter-spacing:-0.5px;">VISA</span></td>
                 <td class="dt-muted"><div class="cn-wrap"><span class="cn-display" data-full="4568 7201 2008 2705" data-masked="•••• •••• •••• 2705">•••• •••• •••• 2705</span><button class="cn-toggle" onclick="toggleCardNum(this)" title="Show/hide number"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>
@@ -3337,7 +3413,7 @@
               </tr>
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
-                <td style="color:#4B5EFF;font-size:13px;">Yt9LmO9A_kPL2mXvR3GhJ2Qd</td>
+                <td style="color:#4B5EFF;font-size:13px;text-decoration:none;">Yt9LmO9A_kPL2mXvR3GhJ2Qd</td>
                 <td class="dt-muted">VCC Single</td>
                 <td><svg width="36" height="22" viewBox="0 0 38 24"><circle cx="15" cy="12" r="11" fill="#EB001B"/><circle cx="23" cy="12" r="11" fill="#F79E1B"/><path d="M19 4.5a11 11 0 010 15A11 11 0 0119 4.5z" fill="#FF5F00"/></svg></td>
                 <td class="dt-muted"><div class="cn-wrap"><span class="cn-display" data-full="5432 1098 7654 3210" data-masked="•••• •••• •••• 3210">•••• •••• •••• 3210</span><button class="cn-toggle" onclick="toggleCardNum(this)" title="Show/hide number"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>
@@ -3361,7 +3437,7 @@
               </tr>
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
-                <td style="color:#4B5EFF;font-size:13px;">Bn7GxR2L_mK8nVtYp5JsH9Lm</td>
+                <td style="color:#4B5EFF;font-size:13px;text-decoration:none;">Bn7GxR2L_mK8nVtYp5JsH9Lm</td>
                 <td class="dt-muted">VCC Travel</td>
                 <td><span style="font-weight:700;font-size:12px;color:var(--color-text-primary);letter-spacing:1px;">UATP</span></td>
                 <td class="dt-muted"><div class="cn-wrap"><span class="cn-display" data-full="4000 1234 1234 1234" data-masked="•••• •••• •••• 1234">•••• •••• •••• 1234</span><button class="cn-toggle" onclick="toggleCardNum(this)" title="Show/hide number"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>
@@ -3385,7 +3461,7 @@
               </tr>
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
-                <td style="color:#4B5EFF;font-size:13px;">Pq4ZkM8N_tR6vGgB7WLp2Hs</td>
+                <td style="color:#4B5EFF;font-size:13px;text-decoration:none;">Pq4ZkM8N_tR6vGgB7WLp2Hs</td>
                 <td class="dt-muted">VCC Single</td>
                 <td><span style="font-weight:600;font-size:12px;color:#004A97;">Diners</span></td>
                 <td class="dt-muted"><div class="cn-wrap"><span class="cn-display" data-full="5555 6666 7777 8888" data-masked="•••• •••• •••• 8888">•••• •••• •••• 8888</span><button class="cn-toggle" onclick="toggleCardNum(this)" title="Show/hide number"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>
@@ -3409,7 +3485,7 @@
               </tr>
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
-                <td style="color:#4B5EFF;font-size:13px;">Lc6HpB3D_qV2xYzk8RmNp7Td</td>
+                <td style="color:#4B5EFF;font-size:13px;text-decoration:none;">Lc6HpB3D_qV2xYzk8RmNp7Td</td>
                 <td class="dt-muted">VCC Multi GPS</td>
                 <td><span style="font-weight:700;font-style:italic;color:#1A1F71;letter-spacing:-0.5px;">VISA</span></td>
                 <td class="dt-muted"><div class="cn-wrap"><span class="cn-display" data-full="4111 1111 1111 1111" data-masked="•••• •••• •••• 1111">•••• •••• •••• 1111</span><button class="cn-toggle" onclick="toggleCardNum(this)" title="Show/hide number"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>
@@ -3433,7 +3509,7 @@
               </tr>
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
-                <td style="color:#4B5EFF;font-size:13px;">Rw2KpX7M_nB4vQzJ6TsL1Yd</td>
+                <td style="color:#4B5EFF;font-size:13px;text-decoration:none;">Rw2KpX7M_nB4vQzJ6TsL1Yd</td>
                 <td class="dt-muted">VCC Single</td>
                 <td><svg width="36" height="22" viewBox="0 0 38 24"><circle cx="15" cy="12" r="11" fill="#EB001B"/><circle cx="23" cy="12" r="11" fill="#F79E1B"/><path d="M19 4.5a11 11 0 010 15A11 11 0 0119 4.5z" fill="#FF5F00"/></svg></td>
                 <td class="dt-muted"><div class="cn-wrap"><span class="cn-display" data-full="5105 1051 0510 5100" data-masked="•••• •••• •••• 5100">•••• •••• •••• 5100</span><button class="cn-toggle" onclick="toggleCardNum(this)" title="Show/hide number"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>
@@ -3445,7 +3521,7 @@
               </tr>
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
-                <td style="color:#4B5EFF;font-size:13px;">Hx9FqD3N_cW7mPkR2VtA5Jb</td>
+                <td style="color:#4B5EFF;font-size:13px;text-decoration:none;">Hx9FqD3N_cW7mPkR2VtA5Jb</td>
                 <td class="dt-muted">VCC Multi GPS</td>
                 <td><span style="font-weight:700;font-style:italic;color:#1A1F71;letter-spacing:-0.5px;">VISA</span></td>
                 <td class="dt-muted"><div class="cn-wrap"><span class="cn-display" data-full="4916 3782 9274 5831" data-masked="•••• •••• •••• 5831">•••• •••• •••• 5831</span><button class="cn-toggle" onclick="toggleCardNum(this)" title="Show/hide number"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>
@@ -3457,7 +3533,7 @@
               </tr>
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
-                <td style="color:#4B5EFF;font-size:13px;">Gm5TsL8P_aE2rNyW4UcB6Kf</td>
+                <td style="color:#4B5EFF;font-size:13px;text-decoration:none;">Gm5TsL8P_aE2rNyW4UcB6Kf</td>
                 <td class="dt-muted">VCC Travel</td>
                 <td><span style="font-weight:700;font-size:12px;color:var(--color-text-primary);letter-spacing:1px;">UATP</span></td>
                 <td class="dt-muted"><div class="cn-wrap"><span class="cn-display" data-full="1234 5678 9012 3456" data-masked="•••• •••• •••• 3456">•••• •••• •••• 3456</span><button class="cn-toggle" onclick="toggleCardNum(this)" title="Show/hide number"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>
@@ -3469,7 +3545,7 @@
               </tr>
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
-                <td style="color:#4B5EFF;font-size:13px;">Zn3BvQ6H_jK9wMxT1SdC8Rp</td>
+                <td style="color:#4B5EFF;font-size:13px;text-decoration:none;">Zn3BvQ6H_jK9wMxT1SdC8Rp</td>
                 <td class="dt-muted">VCC Single</td>
                 <td><span style="font-weight:600;font-size:12px;color:#004A97;">Diners</span></td>
                 <td class="dt-muted"><div class="cn-wrap"><span class="cn-display" data-full="3056 9309 0259 04" data-masked="•••• •••• •••• 04">•••• •••• •••• 04</span><button class="cn-toggle" onclick="toggleCardNum(this)" title="Show/hide number"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>
@@ -3481,7 +3557,7 @@
               </tr>
               <tr>
                 <td><input type="checkbox" class="dt-checkbox"></td>
-                <td style="color:#4B5EFF;font-size:13px;">Vd7WkN2A_qR5hLbF9XmP4Gu</td>
+                <td style="color:#4B5EFF;font-size:13px;text-decoration:none;">Vd7WkN2A_qR5hLbF9XmP4Gu</td>
                 <td class="dt-muted">VCC Multi GPS</td>
                 <td><svg width="36" height="22" viewBox="0 0 38 24"><circle cx="15" cy="12" r="11" fill="#EB001B"/><circle cx="23" cy="12" r="11" fill="#F79E1B"/><path d="M19 4.5a11 11 0 010 15A11 11 0 0119 4.5z" fill="#FF5F00"/></svg></td>
                 <td class="dt-muted"><div class="cn-wrap"><span class="cn-display" data-full="5425 2334 3010 9903" data-masked="•••• •••• •••• 9903">•••• •••• •••• 9903</span><button class="cn-toggle" onclick="toggleCardNum(this)" title="Show/hide number"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>
@@ -3512,17 +3588,6 @@
 
         <!-- Scheduled loads tab -->
         <div id="tab-scheduled" class="cards-tab-panel" style="display:none;">
-          <div class="adv-filters-wrap" id="schedFiltersWrap">
-            <div class="adv-filters-body" id="schedFiltersBody">
-              <div class="adv-filters-grid">
-                <div class="adv-filter-field"><label class="adv-filter-label">Card reference</label><input type="text" class="adv-filter-input" placeholder="Search card reference…" /></div>
-                <div class="adv-filter-field"><label class="adv-filter-label">Funding account</label><input type="text" class="adv-filter-input" placeholder="Search funding account…" /></div>
-                <div class="adv-filter-field"><label class="adv-filter-label">State</label><select class="adv-filter-select"><option value="">Any</option><option>Pending load</option><option>Scheduled</option><option>Completed</option><option>Failed</option></select></div>
-                <div class="adv-filter-field"><label class="adv-filter-label">Schedule date range</label><div style="display:flex;align-items:center;gap:6px;"><input type="date" class="adv-filter-input" style="flex:1;" /><span style="font-size:12px;color:var(--color-text-tertiary);">–</span><input type="date" class="adv-filter-input" style="flex:1;" /></div></div>
-              </div>
-              <div class="adv-filters-footer"><div class="adv-saved-wrap"><span class="adv-saved-label" style="opacity:0.5;">No saved filters</span></div><div class="adv-footer-actions"><button class="adv-btn-clear">Clear Filters</button><button class="adv-btn-apply" onclick="toggleTabFilters('sched')">Apply Filters</button></div></div>
-            </div>
-          </div>
           <div class="data-table-wrap">
             <table class="data-table">
               <thead><tr>
@@ -3535,11 +3600,11 @@
                 <th class="sort-th" onclick="sortTable(this)"><span class="sort-th-inner">State <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
               </tr></thead>
               <tbody>
-                <tr><td><a href="#" style="color:var(--color-brand-navy);font-size:12px;">OUwJPCiKaWy8c8or3hUkWBeFs</a></td><td>fabapp_DKK</td><td>EUR 50.00</td><td>07/05/2026</td><td>12/05/2026</td><td>31/07/2026</td><td><span class="pdf-badge" style="background:#faeeda;color:#633806;">Pending load</span></td></tr>
-                <tr><td><a href="#" style="color:var(--color-brand-navy);font-size:12px;">Lk9MpQ2nRtYh7vZd8sXfJwPa</a></td><td>fabapp_EUR</td><td>EUR 125.00</td><td>08/05/2026</td><td>15/05/2026</td><td>31/07/2026</td><td><span class="pdf-badge" style="background:#faeeda;color:#633806;">Pending load</span></td></tr>
-                <tr><td><a href="#" style="color:var(--color-brand-navy);font-size:12px;">aRt72BbNxQpL9kMz3vTyHqWe</a></td><td>fabapp_USD</td><td>USD 200.00</td><td>09/05/2026</td><td>16/05/2026</td><td>01/08/2026</td><td><span class="pdf-badge pdf-generating" style="background:#e6f1fb;color:#0c447c;">Scheduled</span></td></tr>
-                <tr><td><a href="#" style="color:var(--color-brand-navy);font-size:12px;">ZpQ8LmVzT7nHpK2sWxRyEdQa</a></td><td>fabapp_GBP</td><td>GBP 75.00</td><td>10/05/2026</td><td>17/05/2026</td><td>02/08/2026</td><td><span class="pdf-badge pdf-generating" style="background:#e6f1fb;color:#0c447c;">Scheduled</span></td></tr>
-                <tr><td><a href="#" style="color:var(--color-brand-navy);font-size:12px;">mNv4QjTyLpRv6wSf2KzBpUdE</a></td><td>fabapp_AED</td><td>AED 300.00</td><td>11/05/2026</td><td>18/05/2026</td><td>03/08/2026</td><td><span class="pdf-badge pdf-ready">Completed</span></td></tr>
+                <tr><td><a href="#" style="color:#4B5EFF;font-size:13px;text-decoration:none;">OUwJPCiKaWy8c8or3hUkWBeFs</a></td><td>fabapp_DKK</td><td>EUR 50.00</td><td>07/05/2026</td><td>12/05/2026</td><td>31/07/2026</td><td><span class="card-badge card-badge-pending">Pending load</span></td></tr>
+                <tr><td><a href="#" style="color:#4B5EFF;font-size:13px;text-decoration:none;">Lk9MpQ2nRtYh7vZd8sXfJwPa</a></td><td>fabapp_EUR</td><td>EUR 125.00</td><td>08/05/2026</td><td>15/05/2026</td><td>31/07/2026</td><td><span class="card-badge card-badge-pending">Pending load</span></td></tr>
+                <tr><td><a href="#" style="color:#4B5EFF;font-size:13px;text-decoration:none;">aRt72BbNxQpL9kMz3vTyHqWe</a></td><td>fabapp_USD</td><td>USD 200.00</td><td>09/05/2026</td><td>16/05/2026</td><td>01/08/2026</td><td><span class="card-badge card-badge-scheduled">Scheduled</span></td></tr>
+                <tr><td><a href="#" style="color:#4B5EFF;font-size:13px;text-decoration:none;">ZpQ8LmVzT7nHpK2sWxRyEdQa</a></td><td>fabapp_GBP</td><td>GBP 75.00</td><td>10/05/2026</td><td>17/05/2026</td><td>02/08/2026</td><td><span class="card-badge card-badge-scheduled">Scheduled</span></td></tr>
+                <tr><td><a href="#" style="color:#4B5EFF;font-size:13px;text-decoration:none;">mNv4QjTyLpRv6wSf2KzBpUdE</a></td><td>fabapp_AED</td><td>AED 300.00</td><td>11/05/2026</td><td>18/05/2026</td><td>03/08/2026</td><td><span class="card-badge card-badge-completed">Completed</span></td></tr>
               </tbody>
             </table>
           </div>
@@ -3557,20 +3622,10 @@
 
         <!-- History tab -->
         <div id="tab-history" class="cards-tab-panel" style="display:none;">
-          <div class="adv-filters-wrap" id="histFiltersWrap">
-            <div class="adv-filters-body" id="histFiltersBody">
-              <div class="adv-filters-grid">
-                <div class="adv-filter-field"><label class="adv-filter-label">Card reference</label><input type="text" class="adv-filter-input" placeholder="Search card reference…" /></div>
-                <div class="adv-filter-field"><label class="adv-filter-label">Card brand</label><select class="adv-filter-select"><option value="">Any</option><option>Visa</option><option>Mastercard</option><option>UATP</option><option>Diners</option></select></div>
-                <div class="adv-filter-field"><label class="adv-filter-label">Card currency</label><select class="adv-filter-select"><option value="">Any</option><option>EUR</option><option>USD</option><option>GBP</option><option>AED</option></select></div>
-                <div class="adv-filter-field"><label class="adv-filter-label">Transaction date</label><div style="display:flex;align-items:center;gap:6px;"><input type="date" class="adv-filter-input" style="flex:1;" /><span style="font-size:12px;color:var(--color-text-tertiary);">–</span><input type="date" class="adv-filter-input" style="flex:1;" /></div></div>
-              </div>
-              <div class="adv-filters-footer"><div class="adv-saved-wrap"><span class="adv-saved-label" style="opacity:0.5;">No saved filters</span></div><div class="adv-footer-actions"><button class="adv-btn-clear">Clear Filters</button><button class="adv-btn-apply" onclick="toggleTabFilters('hist')">Apply Filters</button></div></div>
-            </div>
-          </div>
           <div class="data-table-wrap">
             <table class="data-table">
               <thead><tr>
+                <th style="width:32px;"><input type="checkbox" class="dt-checkbox"></th>
                 <th class="sort-th" onclick="sortTable(this)"><span class="sort-th-inner">Date <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
                 <th class="sort-th" onclick="sortTable(this)"><span class="sort-th-inner">Card reference <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
                 <th class="sort-th" onclick="sortTable(this)"><span class="sort-th-inner">Transaction type / ref <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
@@ -3580,51 +3635,60 @@
                 <th class="sort-th" onclick="sortTable(this)"><span class="sort-th-inner">Reversal <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
                 <th class="sort-th" onclick="sortTable(this)"><span class="sort-th-inner">Status <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
                 <th class="sort-th" onclick="sortTable(this)"><span class="sort-th-inner">Transaction amount <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
+                <th><span class="sort-th-inner" style="cursor:default;">Actions</span></th>
               </tr></thead>
               <tbody>
                 <tr>
+                  <td><input type="checkbox" class="dt-checkbox"></td>
                   <td style="white-space:nowrap;font-size:12px;">25/11/2019<br><span style="color:var(--color-text-tertiary);">06:10 PM</span></td>
-                  <td><a href="#" style="color:var(--color-brand-navy);font-size:12px;">OJwJpPnRkBDu7jNnDVe8pYP</a></td>
+                  <td><a href="#" style="color:#4B5EFF;font-size:13px;text-decoration:none;">OJwJpPnRkBDu7jNnDVe8pYP</a></td>
                   <td><div style="font-size:13px;">Card Load</div><div style="font-size:11px;color:var(--color-text-tertiary);">TRX-191125-0001</div></td>
                   <td>EUR 12.45</td>
                   <td><div>EUR 30.87</div><div style="font-size:11px;color:var(--color-text-tertiary);">Base: EUR 30.87<br>Fees: EUR 0.00<br>FX: 1.0000</div></td>
                   <td>EUR 30.87</td>
                   <td>No</td>
-                  <td><span class="pdf-badge pdf-ready">Completed</span></td>
+                  <td><span class="card-badge card-badge-completed">Completed</span></td>
                   <td>EUR 30.87</td>
+                  <td><div class="card-kebab-wrap"><button class="card-kebab-btn" onclick="toggleCardMenu(this)"><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span></button><div class="card-kebab-menu"><button class="card-kebab-item">Action 1</button><button class="card-kebab-item">Action 2</button><button class="card-kebab-item">Action 3</button><button class="card-kebab-item danger">Action 4</button></div></div></td>
                 </tr>
                 <tr>
+                  <td><input type="checkbox" class="dt-checkbox"></td>
                   <td style="white-space:nowrap;font-size:12px;">24/11/2019<br><span style="color:var(--color-text-tertiary);">11:22 AM</span></td>
-                  <td><a href="#" style="color:var(--color-brand-navy);font-size:12px;">OJwJpPnRkBDu7jNnDVe8pYP</a></td>
+                  <td><a href="#" style="color:#4B5EFF;font-size:13px;text-decoration:none;">OJwJpPnRkBDu7jNnDVe8pYP</a></td>
                   <td><div style="font-size:13px;">Purchase</div><div style="font-size:11px;color:var(--color-text-tertiary);">TRX-191124-0002</div></td>
                   <td>EUR 15.90</td>
                   <td><div>EUR 12.45</div><div style="font-size:11px;color:var(--color-text-tertiary);">Base: EUR 12.45<br>Fees: EUR 0.00<br>FX: 1.0000</div></td>
                   <td>EUR 18.42</td>
                   <td>No</td>
-                  <td><span class="pdf-badge pdf-ready">Completed</span></td>
+                  <td><span class="card-badge card-badge-completed">Completed</span></td>
                   <td>EUR 12.45</td>
+                  <td><div class="card-kebab-wrap"><button class="card-kebab-btn" onclick="toggleCardMenu(this)"><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span></button><div class="card-kebab-menu"><button class="card-kebab-item">Action 1</button><button class="card-kebab-item">Action 2</button><button class="card-kebab-item">Action 3</button><button class="card-kebab-item danger">Action 4</button></div></div></td>
                 </tr>
                 <tr>
+                  <td><input type="checkbox" class="dt-checkbox"></td>
                   <td style="white-space:nowrap;font-size:12px;">23/11/2019<br><span style="color:var(--color-text-tertiary);">04:05 PM</span></td>
-                  <td><a href="#" style="color:var(--color-brand-navy);font-size:12px;">OJwJpPnRkBDu7jNnDVe8pYP</a></td>
+                  <td><a href="#" style="color:#4B5EFF;font-size:13px;text-decoration:none;">OJwJpPnRkBDu7jNnDVe8pYP</a></td>
                   <td><div style="font-size:13px;">Purchase</div><div style="font-size:11px;color:var(--color-text-tertiary);">TRX-191123-0004</div></td>
                   <td>EUR 50.00</td>
                   <td><div>EUR 58.00</div><div style="font-size:11px;color:var(--color-text-tertiary);">Base: EUR 19.00<br>Fees: EUR 0.00<br>FX: 1.0000</div></td>
                   <td>EUR 34.32</td>
                   <td>No</td>
-                  <td><span class="pdf-badge pdf-ready">Completed</span></td>
+                  <td><span class="card-badge card-badge-completed">Completed</span></td>
                   <td>EUR 15.90</td>
+                  <td><div class="card-kebab-wrap"><button class="card-kebab-btn" onclick="toggleCardMenu(this)"><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span></button><div class="card-kebab-menu"><button class="card-kebab-item">Action 1</button><button class="card-kebab-item">Action 2</button><button class="card-kebab-item">Action 3</button><button class="card-kebab-item danger">Action 4</button></div></div></td>
                 </tr>
                 <tr>
+                  <td><input type="checkbox" class="dt-checkbox"></td>
                   <td style="white-space:nowrap;font-size:12px;">22/11/2019<br><span style="color:var(--color-text-tertiary);">02:15 PM</span></td>
-                  <td><a href="#" style="color:var(--color-brand-navy);font-size:12px;">OJwJpPnRkBDu7jNnDVe8pYP</a></td>
+                  <td><a href="#" style="color:#4B5EFF;font-size:13px;text-decoration:none;">OJwJpPnRkBDu7jNnDVe8pYP</a></td>
                   <td><div style="font-size:13px;">Card Load</div><div style="font-size:11px;color:var(--color-text-tertiary);">TRX-191121-0006</div></td>
                   <td>EUR 8.20</td>
                   <td><div>EUR 8.00</div><div style="font-size:11px;color:var(--color-text-tertiary);">Base: EUR 8.20<br>Fees: EUR 0.00<br>FX: 1.0000</div></td>
                   <td>EUR -15.68</td>
                   <td>No</td>
-                  <td><span class="pdf-badge pdf-failed">Declined</span></td>
+                  <td><span class="card-badge card-badge-expired">Declined</span></td>
                   <td>EUR 8.20</td>
+                  <td><div class="card-kebab-wrap"><button class="card-kebab-btn" onclick="toggleCardMenu(this)"><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span><span class="card-kebab-dot"></span></button><div class="card-kebab-menu"><button class="card-kebab-item">Action 1</button><button class="card-kebab-item">Action 2</button><button class="card-kebab-item">Action 3</button><button class="card-kebab-item danger">Action 4</button></div></div></td>
                 </tr>
               </tbody>
             </table>
@@ -3645,75 +3709,102 @@
 
         <!-- Authorisations tab -->
         <div id="tab-authorisations" class="cards-tab-panel" style="display:none;">
-          <div class="adv-filters-wrap" id="authFiltersWrap">
-            <div class="adv-filters-body" id="authFiltersBody">
-              <div class="adv-filters-grid">
-                <div class="adv-filter-field"><label class="adv-filter-label">Card reference</label><input type="text" class="adv-filter-input" placeholder="Search card reference…" /></div>
-                <div class="adv-filter-field"><label class="adv-filter-label">Status</label><select class="adv-filter-select"><option value="">Any</option><option>Approved</option><option>Declined</option><option>Reversed</option></select></div>
-                <div class="adv-filter-field"><label class="adv-filter-label">Date range</label><div style="display:flex;align-items:center;gap:6px;"><input type="date" class="adv-filter-input" style="flex:1;" /><span style="font-size:12px;color:var(--color-text-tertiary);">–</span><input type="date" class="adv-filter-input" style="flex:1;" /></div></div>
-              </div>
-              <div class="adv-filters-footer"><div class="adv-saved-wrap"><span class="adv-saved-label" style="opacity:0.5;">No saved filters</span></div><div class="adv-footer-actions"><button class="adv-btn-clear">Clear Filters</button><button class="adv-btn-apply" onclick="toggleTabFilters('auth')">Apply Filters</button></div></div>
-            </div>
-          </div>
           <div class="data-table-wrap">
-            <table class="data-table" style="min-width:1000px;">
+            <table class="data-table" style="min-width:900px;">
               <thead><tr>
-                <th class="sort-th" onclick="sortTable(this)"><span class="sort-th-inner">Date <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
-                <th class="sort-th" onclick="sortTable(this)"><span class="sort-th-inner">Card reference <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
-                <th class="sort-th" onclick="sortTable(this)"><span class="sort-th-inner">Merchant <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
-                <th class="sort-th" onclick="sortTable(this)"><span class="sort-th-inner">Amount <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
-                <th class="sort-th" onclick="sortTable(this)"><span class="sort-th-inner">Currency <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
+                <th style="width:32px;"><input type="checkbox" class="dt-checkbox"></th>
                 <th class="sort-th" onclick="sortTable(this)"><span class="sort-th-inner">Auth code <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
-                <th class="sort-th" onclick="sortTable(this)"><span class="sort-th-inner">Status <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
-                <th><span class="sort-th-inner" style="cursor:default;">Actions</span></th>
+                <th class="sort-th" onclick="sortTable(this)"><span class="sort-th-inner">Date <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
+                <th class="sort-th" onclick="sortTable(this)"><span class="sort-th-inner">Transaction amount <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
+                <th class="sort-th" onclick="sortTable(this)"><span class="sort-th-inner">Billing amount <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
+                <th class="sort-th" onclick="sortTable(this)"><span class="sort-th-inner">Resultant available balance <svg class="sort-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 12 19 16 15"/><polyline points="8 9 12 5 16 9"/></svg></span></th>
               </tr></thead>
               <tbody>
                 <tr>
-                  <td style="white-space:nowrap;font-size:12px;">07/05/2026<br><span style="color:var(--color-text-tertiary);">09:14 AM</span></td>
-                  <td><a href="#" style="color:var(--color-brand-navy);font-size:12px;">0Uww1PPO_dJQX8tnTsFxTU8Zb</a></td>
-                  <td>LC.EXPEDIA.COM</td><td>EUR 120.00</td><td>EUR</td><td style="font-family:monospace;">AUT-884921</td>
-                  <td><span class="status-tag status-tag-success">Approved</span></td>
-                  <td><button class="pdf-action-btn">Details</button></td>
+                  <td><input type="checkbox" class="dt-checkbox"></td><td style="font-family:monospace;font-size:13px;">A12345B6C7</td>
+                  <td class="dt-muted" style="white-space:nowrap;">08/02/2023 10:39:54</td>
+                  <td class="dt-muted">EUR -5.00</td>
+                  <td class="dt-muted">EUR -5.00</td>
+                  <td class="dt-muted">EUR 43.00</td>
                 </tr>
                 <tr>
-                  <td style="white-space:nowrap;font-size:12px;">07/05/2026<br><span style="color:var(--color-text-tertiary);">08:47 AM</span></td>
-                  <td><a href="#" style="color:var(--color-brand-navy);font-size:12px;">Yt9LmO9A_kPL2mXvR3GhJ2Qd</a></td>
-                  <td>AMAZON.COM</td><td>USD 54.99</td><td>USD</td><td style="font-family:monospace;">AUT-773012</td>
-                  <td><span class="status-tag status-tag-success">Approved</span></td>
-                  <td><button class="pdf-action-btn">Details</button></td>
+                  <td><input type="checkbox" class="dt-checkbox"></td><td style="font-family:monospace;font-size:13px;">B23456C7D8</td>
+                  <td class="dt-muted" style="white-space:nowrap;">08/02/2023 11:15:21</td>
+                  <td class="dt-muted">EUR -12.50</td>
+                  <td class="dt-muted">EUR -12.50</td>
+                  <td class="dt-muted">EUR 30.50</td>
                 </tr>
                 <tr>
-                  <td style="white-space:nowrap;font-size:12px;">06/05/2026<br><span style="color:var(--color-text-tertiary);">04:22 PM</span></td>
-                  <td><a href="#" style="color:var(--color-brand-navy);font-size:12px;">Bn7GxR2L_mK8nVtYp5JsH9Lm</a></td>
-                  <td>UBER EATS</td><td>GBP 28.50</td><td>GBP</td><td style="font-family:monospace;">AUT-661458</td>
-                  <td><span class="status-tag status-tag-danger">Declined</span></td>
-                  <td><button class="pdf-action-btn">Details</button></td>
+                  <td><input type="checkbox" class="dt-checkbox"></td><td style="font-family:monospace;font-size:13px;">C34567D8E9</td>
+                  <td class="dt-muted" style="white-space:nowrap;">08/02/2023 12:22:10</td>
+                  <td class="dt-muted">EUR -20.00</td>
+                  <td class="dt-muted">EUR -20.00</td>
+                  <td class="dt-muted">EUR 10.50</td>
                 </tr>
                 <tr>
-                  <td style="white-space:nowrap;font-size:12px;">06/05/2026<br><span style="color:var(--color-text-tertiary);">02:05 PM</span></td>
-                  <td><a href="#" style="color:var(--color-brand-navy);font-size:12px;">Lc6HpB3D_qV2xYzk8RmNp7Td</a></td>
-                  <td>GOOGLE CLOUD</td><td>USD 312.00</td><td>USD</td><td style="font-family:monospace;">AUT-559207</td>
-                  <td><span class="status-tag status-tag-success">Approved</span></td>
-                  <td><button class="pdf-action-btn">Details</button></td>
+                  <td><input type="checkbox" class="dt-checkbox"></td><td style="font-family:monospace;font-size:13px;">D45678E9F0</td>
+                  <td class="dt-muted" style="white-space:nowrap;">08/02/2023 13:05:03</td>
+                  <td class="dt-muted">EUR -7.80</td>
+                  <td class="dt-muted">EUR -7.80</td>
+                  <td class="dt-muted">EUR 2.70</td>
                 </tr>
                 <tr>
-                  <td style="white-space:nowrap;font-size:12px;">05/05/2026<br><span style="color:var(--color-text-tertiary);">11:30 AM</span></td>
-                  <td><a href="#" style="color:var(--color-brand-navy);font-size:12px;">Rw2KpX7M_nB4vQzJ6TsL1Yd</a></td>
-                  <td>LC.EXPEDIA.COM</td><td>EUR 120.00</td><td>EUR</td><td style="font-family:monospace;">AUT-447893</td>
-                  <td><span class="status-tag" style="background:#eaf3de;color:#27500a;">Reversed</span></td>
-                  <td><button class="pdf-action-btn">Details</button></td>
+                  <td><input type="checkbox" class="dt-checkbox"></td><td style="font-family:monospace;font-size:13px;">E56789F0A1</td>
+                  <td class="dt-muted" style="white-space:nowrap;">08/02/2023 14:18:47</td>
+                  <td class="dt-muted">EUR -2.70</td>
+                  <td class="dt-muted">EUR -2.70</td>
+                  <td class="dt-muted">EUR 0.00</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="dt-checkbox"></td><td style="font-family:monospace;font-size:13px;">F67890A1B2</td>
+                  <td class="dt-muted" style="white-space:nowrap;">09/02/2023 09:01:33</td>
+                  <td class="dt-muted">EUR -15.40</td>
+                  <td class="dt-muted">EUR -15.40</td>
+                  <td class="dt-muted">EUR -15.40</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="dt-checkbox"></td><td style="font-family:monospace;font-size:13px;">G78901B2C3</td>
+                  <td class="dt-muted" style="white-space:nowrap;">09/02/2023 10:47:18</td>
+                  <td class="dt-muted">EUR -3.20</td>
+                  <td class="dt-muted">EUR -3.20</td>
+                  <td class="dt-muted">EUR -18.60</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="dt-checkbox"></td><td style="font-family:monospace;font-size:13px;">H89012C3D4</td>
+                  <td class="dt-muted" style="white-space:nowrap;">09/02/2023 11:25:56</td>
+                  <td class="dt-muted">EUR -8.00</td>
+                  <td class="dt-muted">EUR -8.00</td>
+                  <td class="dt-muted">EUR -26.60</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="dt-checkbox"></td><td style="font-family:monospace;font-size:13px;">I90123D4E5</td>
+                  <td class="dt-muted" style="white-space:nowrap;">09/02/2023 13:39:02</td>
+                  <td class="dt-muted">EUR -10.00</td>
+                  <td class="dt-muted">EUR -10.00</td>
+                  <td class="dt-muted">EUR -36.60</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="dt-checkbox"></td><td style="font-family:monospace;font-size:13px;">J01234E5F6</td>
+                  <td class="dt-muted" style="white-space:nowrap;">09/02/2023 15:02:11</td>
+                  <td class="dt-muted">EUR -6.40</td>
+                  <td class="dt-muted">EUR -6.40</td>
+                  <td class="dt-muted">EUR -43.00</td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="pay-table-footer">
-            <span>Showing 1 to 5 of 5 results</span>
+            <span>Showing 1 to 10 of 125 results</span>
             <div class="pay-page-btns">
               <button class="pay-page-btn" disabled>«</button>
               <button class="pay-page-btn" disabled>‹</button>
               <button class="pay-page-btn active">1</button>
-              <button class="pay-page-btn" disabled>›</button>
-              <button class="pay-page-btn" disabled>»</button>
+              <button class="pay-page-btn">2</button>
+              <button class="pay-page-btn">3</button>
+              <button class="pay-page-btn">4</button>
+              <button class="pay-page-btn">5</button>
+              <button class="pay-page-btn">›</button>
+              <button class="pay-page-btn">»</button>
             </div>
           </div>
         </div><!-- /tab-authorisations -->
@@ -4941,7 +5032,7 @@
 
         h += '</tbody></table>';
 
-        h += '<button style="background:none;border:none;cursor:pointer;color:#4B5EFF;font-size:13px;font-weight:500;padding:4px 0;font-family:inherit;">+ Add Another Load</button>';
+        h += '<button style="background:none;border:none;cursor:pointer;color:#4B5EFF;font-size:13px;text-decoration:none;font-weight:500;padding:4px 0;font-family:inherit;">+ Add Another Load</button>';
         h += '</div>';
 
         /* Footer note */
@@ -5760,7 +5851,27 @@
     });
 
     // Update header buttons based on active tab
+    function closeAllFilters() {
+      // Close Card list filter (advFiltersWrap)
+      var advWrap = document.getElementById('advFiltersWrap');
+      var advBody = document.getElementById('advFiltersBody');
+      var advPill = document.getElementById('mgmtFiltersPill');
+      var advChev = document.getElementById('filtersPillChevron');
+      if (advWrap) { advWrap.classList.remove('open'); }
+      if (advBody) { advBody.classList.remove('open'); }
+      if (advPill) { advPill.classList.remove('active'); }
+      if (advChev) { advChev.style.transform = ''; }
+      // Close tab filter panels
+      ['sched', 'hist', 'auth'].forEach(function(prefix) {
+        var wrap = document.getElementById(prefix + 'FiltersWrap');
+        var body = document.getElementById(prefix + 'FiltersBody');
+        if (wrap) { wrap.classList.remove('open'); }
+        if (body) { body.classList.remove('open'); }
+      });
+    }
+
     function updateHeaderButtons(tab) {
+      closeAllFilters();
       var issueBtn = document.getElementById('btnIssueCard');
       var loadBtn  = document.getElementById('btnAddLoad');
       if (issueBtn) issueBtn.style.display = (tab === 'management') ? '' : 'none';
@@ -5789,12 +5900,14 @@
     // Tab-level filter toggles
     function toggleTabFilters(prefix) {
       var wrap = document.getElementById(prefix + 'FiltersWrap');
+      var body = document.getElementById(prefix + 'FiltersBody');
       var pill = document.getElementById(prefix + 'FiltersPill');
       var chev = document.getElementById(prefix + 'FiltersPillChevron');
       if (!wrap) return;
       var open = wrap.classList.toggle('open');
-      pill.classList.toggle('active', open);
-      chev.style.transform = open ? 'rotate(180deg)' : '';
+      if (body) body.classList.toggle('open', open);
+      if (pill) pill.classList.toggle('active', open);
+      if (chev) chev.style.transform = open ? 'rotate(180deg)' : '';
     }
   </script>
 
