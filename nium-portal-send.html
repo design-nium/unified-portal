@@ -2528,13 +2528,13 @@
     .pay-toggle.on { background: var(--color-brand-navy); }
     .pay-toggle.on::after { transform: translateX(16px); }
 
-    /* "New payouts" split button */
+    /* "New payout" button */
     .pay-split-wrap { position: relative; display: inline-flex; margin-left: auto; }
     .pay-split-main {
       background: var(--color-brand-navy);
       color: #fff;
       border: none;
-      border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+      border-radius: var(--radius-sm);
       padding: 8px 16px;
       font-size: 13.5px;
       font-weight: 500;
@@ -2543,18 +2543,6 @@
       white-space: nowrap;
     }
     .pay-split-main:hover { background: #1a2070; }
-    .pay-split-caret {
-      background: var(--color-brand-navy);
-      color: #fff;
-      border: none;
-      border-left: 1px solid rgba(255,255,255,0.25);
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-      padding: 8px 10px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-    }
-    .pay-split-caret:hover { background: #1a2070; }
     .pay-split-menu {
       position: absolute;
       top: calc(100% + 4px);
@@ -3058,6 +3046,7 @@
       <a href="nium-portal-cards-overview.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Cards</div></a>
       <a href="nium-portal-send.html" style="text-decoration:none;color:inherit;"><div class="nav-child active">Payouts</div></a>
       <a href="nium-portal-receive.html" style="text-decoration:none;color:inherit;display:none;"><div class="nav-child">Payins</div></a>
+      <a href="nium-portal-verify.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Verify</div></a>
       <a href="nium-portal-money.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Wallets</div></a>
     </div>
     <a href="nium-portal-beneficiaries.html" class="nav-item-link">
@@ -3205,15 +3194,15 @@
             View actionable rows only
           </label>
 
-          <!-- New payouts split button (right-aligned) -->
+          <!-- New payout button (right-aligned) -->
           <div class="pay-split-wrap" style="margin-left:auto;">
-            <button class="pay-split-main">New payouts</button>
-            <button class="pay-split-caret" id="paySplitCaret" aria-label="More options">
+            <button class="pay-split-main" id="paySplitCaret" style="display:flex;align-items:center;gap:8px;padding-right:14px;">
+              New payout
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="pay-split-menu" id="paySplitMenu">
-              <div class="pay-split-item">Create payouts</div>
-              <div class="pay-split-item">Upload payouts</div>
+              <div class="pay-split-item">Create payout</div>
+              <div class="pay-split-item">Upload payout</div>
             </div>
           </div>
         </div>

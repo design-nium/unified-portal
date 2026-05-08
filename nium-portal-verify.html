@@ -3047,6 +3047,59 @@
         <button class="btn-primary" onclick="openVerifyModal()">Verify a bank account</button>
       </div>
 
+      <!-- Action bar -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;">
+        <button class="filter-pill" id="verifyFiltersPill" onclick="toggleVerifyFilters()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+          Filters
+          <svg id="verifyFiltersPillChevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.2s;"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+
+      <!-- Filter panel -->
+      <div class="adv-filters-wrap" id="verifyFiltersWrap" style="margin:0 0 8px;">
+        <div class="adv-filters-body" id="verifyFiltersBody">
+          <div class="adv-filters-grid">
+            <div class="adv-filter-field">
+              <label class="adv-filter-label">Verification ID</label>
+              <input type="text" class="adv-filter-input" placeholder="Search verification ID…" />
+            </div>
+            <div class="adv-filter-field">
+              <label class="adv-filter-label">Account name</label>
+              <input type="text" class="adv-filter-input" placeholder="Search account name…" />
+            </div>
+            <div class="adv-filter-field">
+              <label class="adv-filter-label">Country</label>
+              <input type="text" class="adv-filter-input" placeholder="Search country…" />
+            </div>
+            <div class="adv-filter-field">
+              <label class="adv-filter-label">Status</label>
+              <select class="adv-filter-select">
+                <option value="">Any</option>
+                <option>Verified</option>
+                <option>Unverified</option>
+              </select>
+            </div>
+            <div class="adv-filter-field">
+              <label class="adv-filter-label">Date range</label>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <input type="date" class="adv-filter-input" style="flex:1;" />
+                <span style="font-size:12px;color:var(--color-text-tertiary);">–</span>
+                <input type="date" class="adv-filter-input" style="flex:1;" />
+              </div>
+            </div>
+          </div>
+          <div class="adv-filters-footer">
+            <div class="adv-saved-wrap"><span class="adv-saved-label" style="opacity:0.5;">No saved filters</span></div>
+            <div class="adv-footer-actions">
+              <button class="adv-btn-clear">Clear Filters</button>
+              <button class="adv-btn-save">Save filter</button>
+              <button class="adv-btn-apply" onclick="toggleVerifyFilters()">Apply Filters</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Table card -->
       <div class="cards-tab-card" style="margin:0 0 32px;">
         <div class="data-table-wrap" style="overflow-x:auto;">
@@ -3445,5 +3498,17 @@
   </script>
 </script>
 
+<script>
+    function toggleVerifyFilters() {
+      var wrap = document.getElementById('verifyFiltersWrap');
+      var body = document.getElementById('verifyFiltersBody');
+      var pill = document.getElementById('verifyFiltersPill');
+      var chev = document.getElementById('verifyFiltersPillChevron');
+      var open = wrap.classList.toggle('open');
+      if (body) body.classList.toggle('open', open);
+      if (pill) pill.classList.toggle('active', open);
+      if (chev) chev.style.transform = open ? 'rotate(180deg)' : '';
+    }
+  </script>
 </body>
 </html>
