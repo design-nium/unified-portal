@@ -5815,65 +5815,139 @@
   <div class="sl-drawer-overlay" id="slDrawerOverlay" onclick="closeScheduledLoadDrawer()"></div>
   <div class="sl-drawer" id="slDrawer">
     <div class="sl-drawer-header">
-      <div class="sl-drawer-title">Add scheduled load</div>
+      <div class="sl-drawer-title">Add Scheduled Load</div>
       <button class="sl-drawer-close" onclick="closeScheduledLoadDrawer()">×</button>
     </div>
     <div class="sl-drawer-body">
 
+      <!-- Step 1 -->
       <div class="sl-step">
         <div class="sl-step-header">
           <div class="sl-step-num">1</div>
-          <div><div class="sl-step-title">Select card</div><div class="sl-step-sub">Search and select the card you want to schedule a load for.</div></div>
+          <div><div class="sl-step-title">Select Card</div><div class="sl-step-sub">Search and select the card you want to schedule a load for.</div></div>
         </div>
-        <div class="sl-field">
-          <label class="sl-label">Card reference or card number</label>
-          <div style="position:relative;">
-            <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-tertiary)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" class="sl-input" style="padding-left:32px;" placeholder="Search by card reference or number…" />
+        <div class="sl-field" style="margin-top:16px;">
+          <label class="sl-label" style="font-weight:600;color:var(--color-text-primary);margin-bottom:8px;">Card Reference or Card Number</label>
+          <div style="position:relative;display:flex;align-items:center;border:1px solid var(--color-border-secondary);border-radius:8px;padding:10px 12px;gap:8px;background:#fff;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-tertiary)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="slCardSearch" style="flex:1;border:none;outline:none;font-size:13px;font-family:inherit;color:var(--color-text-primary);background:transparent;" placeholder="" value="1234 5678 9012 3456" />
+            <button onclick="document.getElementById('slCardSearch').value=''" style="background:none;border:none;cursor:pointer;color:var(--color-text-tertiary);font-size:16px;padding:0;line-height:1;">×</button>
+          </div>
+        </div>
+
+        <!-- Selected card panel -->
+        <div style="margin-top:16px;">
+          <div class="sl-label" style="font-weight:600;color:var(--color-text-primary);margin-bottom:8px;">Selected Card</div>
+          <div style="border:1px solid var(--color-border-tertiary);border-radius:10px;overflow:hidden;">
+            <!-- Card visual header -->
+            <div style="background:#1e2d6b;padding:14px 16px;display:flex;align-items:center;gap:14px;">
+              <div style="background:#162054;border-radius:8px;padding:10px 14px;min-width:90px;">
+                <div style="font-size:10px;color:rgba(255,255,255,0.6);letter-spacing:1px;margin-bottom:4px;">•• ••</div>
+                <div style="font-size:11px;color:#fff;letter-spacing:1px;margin-bottom:6px;">1234 56•• •••• 3456</div>
+                <div style="font-size:11px;font-weight:700;color:#fff;font-style:italic;">VISA</div>
+              </div>
+              <div style="flex:1;">
+                <div style="font-size:14px;font-weight:600;color:#fff;margin-bottom:4px;">Corporate Travel Card</div>
+                <span style="background:#e6faf0;color:#16a34a;font-size:11px;font-weight:600;padding:2px 10px;border-radius:20px;">Active</span>
+              </div>
+            </div>
+            <!-- Card details grid -->
+            <div style="padding:12px 16px;background:#fff;display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;">
+              <div><div style="font-size:11px;color:var(--color-text-tertiary);margin-bottom:2px;">Card Number</div><div style="font-size:12px;font-weight:500;">1234 56•• •••• 3456</div></div>
+              <div><div style="font-size:11px;color:var(--color-text-tertiary);margin-bottom:2px;">Currency</div><div style="font-size:12px;font-weight:600;">EUR</div></div>
+              <div><div style="font-size:11px;color:var(--color-text-tertiary);margin-bottom:2px;">Card Reference</div><div style="font-size:12px;font-weight:500;">CRD-2026-000123</div></div>
+              <div><div style="font-size:11px;color:var(--color-text-tertiary);margin-bottom:2px;">Expiry Date</div><div style="font-size:12px;font-weight:600;">12/28</div></div>
+              <div><div style="font-size:11px;color:var(--color-text-tertiary);margin-bottom:2px;">Cardholder</div><div style="font-size:12px;font-weight:600;">John Smith</div></div>
+              <div><div style="font-size:11px;color:var(--color-text-tertiary);margin-bottom:2px;">Available Balance</div><div style="font-size:12px;font-weight:600;">EUR 2,450.00</div></div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="sl-step">
+      <!-- Step 2 -->
+      <div class="sl-step" style="margin-top:24px;">
         <div class="sl-step-header">
           <div class="sl-step-num">2</div>
-          <div><div class="sl-step-title">Scheduled loads</div><div class="sl-step-sub">Add up to 3 scheduled loads for this card.</div></div>
+          <div><div class="sl-step-title">Scheduled Loads</div><div class="sl-step-sub">Add up to 3 scheduled loads for this card.</div></div>
         </div>
 
-        <div class="sl-load-block">
-          <div class="sl-load-label">Load #1</div>
-          <div class="sl-amount-row">
-            <select class="sl-ccy-select"><option>EUR</option><option>USD</option><option>GBP</option><option>AED</option></select>
-            <input type="text" class="sl-input sl-amount-input" placeholder="Amount" />
+        <div id="slLoadsContainer" style="margin-top:16px;">
+
+          <!-- Load #1 -->
+          <div class="sl-load-block" style="padding-bottom:16px;border-bottom:1px solid var(--color-border-tertiary);margin-bottom:16px;">
+            <div class="sl-load-label" style="font-weight:700;margin-bottom:10px;">Load #1</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <label class="sl-label" style="width:80px;flex-shrink:0;">Amount</label>
+              <div style="display:flex;align-items:center;gap:6px;flex:1;">
+                <select class="sl-ccy-select" style="width:80px;"><option>EUR</option><option>USD</option><option>GBP</option><option>AED</option></select>
+                <input type="text" class="sl-input" style="width:70px;text-align:center;" value="50" />
+                <span style="color:var(--color-text-tertiary);">.</span>
+                <input type="text" class="sl-input" style="width:60px;text-align:center;" value="00" />
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <label class="sl-label" style="width:80px;flex-shrink:0;">Load Date</label>
+              <input type="text" class="sl-input" style="flex:1;" value="12/05/2026" />
+              <button style="background:none;border:none;cursor:pointer;padding:4px;color:var(--color-text-tertiary);" title="Calendar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></button>
+              <button style="background:none;border:none;cursor:pointer;padding:4px;color:var(--color-text-tertiary);" title="Copy"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button>
+              <button style="background:none;border:none;cursor:pointer;padding:4px;color:var(--color-text-tertiary);" title="Delete"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
+            </div>
           </div>
-          <div class="sl-date-row">
-            <label class="sl-label" style="margin:0;white-space:nowrap;">Load date</label>
-            <input type="date" class="sl-input sl-date-input" />
+
+          <!-- Load #2 -->
+          <div class="sl-load-block" style="padding-bottom:16px;border-bottom:1px solid var(--color-border-tertiary);margin-bottom:16px;">
+            <div class="sl-load-label" style="font-weight:700;margin-bottom:10px;">Load #2</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <label class="sl-label" style="width:80px;flex-shrink:0;">Amount</label>
+              <div style="display:flex;align-items:center;gap:6px;flex:1;">
+                <select class="sl-ccy-select" style="width:80px;"><option>EUR</option><option>USD</option><option>GBP</option><option>AED</option></select>
+                <input type="text" class="sl-input" style="width:70px;text-align:center;" placeholder="" />
+                <span style="color:var(--color-text-tertiary);">.</span>
+                <input type="text" class="sl-input" style="width:60px;text-align:center;" placeholder="" />
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <label class="sl-label" style="width:80px;flex-shrink:0;">Load Date</label>
+              <input type="text" class="sl-input" style="flex:1;" placeholder="DD/MM/YYYY" />
+              <button style="background:none;border:none;cursor:pointer;padding:4px;color:var(--color-text-tertiary);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></button>
+              <button style="background:none;border:none;cursor:pointer;padding:4px;color:var(--color-text-tertiary);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button>
+              <button style="background:none;border:none;cursor:pointer;padding:4px;color:var(--color-text-tertiary);font-size:18px;line-height:1;">×</button>
+            </div>
           </div>
+
+          <!-- Load #3 -->
+          <div class="sl-load-block" style="padding-bottom:16px;margin-bottom:8px;">
+            <div class="sl-load-label" style="font-weight:700;margin-bottom:10px;">Load #3</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <label class="sl-label" style="width:80px;flex-shrink:0;">Amount</label>
+              <div style="display:flex;align-items:center;gap:6px;flex:1;">
+                <select class="sl-ccy-select" style="width:80px;"><option>EUR</option><option>USD</option><option>GBP</option><option>AED</option></select>
+                <input type="text" class="sl-input" style="width:70px;text-align:center;" placeholder="" />
+                <span style="color:var(--color-text-tertiary);">.</span>
+                <input type="text" class="sl-input" style="width:60px;text-align:center;" placeholder="" />
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <label class="sl-label" style="width:80px;flex-shrink:0;">Load Date</label>
+              <input type="text" class="sl-input" style="flex:1;" placeholder="DD/MM/YYYY" />
+              <button style="background:none;border:none;cursor:pointer;padding:4px;color:var(--color-text-tertiary);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></button>
+              <button style="background:none;border:none;cursor:pointer;padding:4px;color:var(--color-text-tertiary);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button>
+              <button style="background:none;border:none;cursor:pointer;padding:4px;color:var(--color-text-tertiary);font-size:18px;line-height:1;">×</button>
+            </div>
+          </div>
+
         </div>
 
-        <div class="sl-load-block">
-          <div class="sl-load-label">Load #2</div>
-          <div class="sl-amount-row">
-            <select class="sl-ccy-select"><option>EUR</option><option>USD</option><option>GBP</option><option>AED</option></select>
-            <input type="text" class="sl-input sl-amount-input" placeholder="Amount" />
-          </div>
-          <div class="sl-date-row">
-            <label class="sl-label" style="margin:0;white-space:nowrap;">Load date</label>
-            <input type="date" class="sl-input sl-date-input" />
-          </div>
-        </div>
-
-        <button class="sl-add-load">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Add another load
+        <button style="background:none;border:none;cursor:pointer;color:#4B5EFF;font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px;padding:4px 0;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Another Load
         </button>
       </div>
 
     </div>
     <div class="sl-drawer-footer">
       <button class="sl-btn-cancel" onclick="closeScheduledLoadDrawer()">Cancel</button>
-      <button class="sl-btn-save" onclick="window.location.href='nium-portal-card-detail.html'">Save scheduled load</button>
+      <button class="sl-btn-save" onclick="window.location.href='nium-portal-card-detail.html'">Save Scheduled Load</button>
     </div>
   </div>
 
