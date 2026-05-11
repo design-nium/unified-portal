@@ -2330,31 +2330,37 @@
     .cards-tab-nav {
       display: flex;
       align-items: center;
-      gap: 0;
+      gap: 4px;
       margin-bottom: 0;
       margin-top: 0;
       border-bottom: 1px solid var(--color-border-tertiary);
-      padding: 0;
+      padding: 0 8px;
+      background: #fff;
     }
     .cards-tab {
-      padding: 12px 16px;
-      font-size: 13px;
+      padding: 14px 16px;
+      font-size: 14px;
       font-weight: 500;
-      color: var(--color-text-tertiary);
+      color: var(--color-text-secondary);
       cursor: pointer;
       border: none;
       background: none;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1.5px;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -1px;
       font-family: inherit;
-      transition: color 0.15s;
+      transition: color 0.15s, border-color 0.15s;
       white-space: nowrap;
+      border-radius: 6px 6px 0 0;
     }
-    .cards-tab:hover { color: var(--color-text-primary); }
+    .cards-tab:hover {
+      color: var(--color-text-primary);
+      background: rgba(0,0,0,0.03);
+    }
     .cards-tab.active {
       color: var(--color-brand-navy);
       border-bottom-color: var(--color-brand-navy);
       font-weight: 600;
+      background: #fff;
     }
 
     .cards-tab-card {
@@ -3053,7 +3059,7 @@
 
       <!-- Stats header (above tabs) -->
       <div id="cards-stats-block">
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1.6fr;gap:16px;margin-bottom:20px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1.6fr;gap:16px;margin-bottom:12px;">
 
           <div style="background:var(--color-bg-primary);border:1px solid var(--color-border-primary);border-radius:10px;padding:18px 20px;">
             <div style="display:flex;align-items:center;gap:12px;">
