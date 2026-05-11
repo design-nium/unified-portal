@@ -4856,6 +4856,10 @@
       }, 300);
     }
     function drawerNav(dir) {
+      if (dir === 1 && drawerStep === STEPS.length - 1) {
+        window.location.href = 'nium-portal-card-detail.html';
+        return;
+      }
       if (dir === 1 && drawerStep < STEPS.length - 1) drawerStep++;
       else if (dir === -1 && drawerStep > 0) drawerStep--;
       renderDrawer();
@@ -5836,7 +5840,7 @@
     </div>
     <div class="sl-drawer-footer">
       <button class="sl-btn-cancel" onclick="closeScheduledLoadDrawer()">Cancel</button>
-      <button class="sl-btn-save">Save scheduled load</button>
+      <button class="sl-btn-save" onclick="window.location.href='nium-portal-card-detail.html'">Save scheduled load</button>
     </div>
   </div>
 
