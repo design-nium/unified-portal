@@ -1147,6 +1147,20 @@
     .status-converted span { color: var(--color-info-tag-text); }
     .status-failed { background: var(--color-danger-tag-bg); }
     .status-failed span { color: var(--color-danger-tag-text); }
+    .activity-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .activity-icon.completed  { background: var(--color-success-tag-bg); color: var(--color-success-dot); }
+    .activity-icon.pending    { background: var(--color-warning-tag-bg); color: #b06c00; }
+    .activity-icon.converted  { background: var(--color-info-tag-bg);    color: #0c447c; }
+    .activity-icon.failed     { background: var(--color-danger-tag-bg);  color: var(--color-danger-dot); }
+    .activity-icon.received   { background: var(--color-success-tag-bg); color: var(--color-success-dot); }
     .activity-body {
       flex: 1;
       min-width: 0;
@@ -1851,27 +1865,8 @@
 
     </div>
 
-    <div class="fx-row">
-      <div class="fx-header">
-        <div class="fx-header-left">
-          <span class="live-dot"></span>
-          <span class="fx-title">Live FX rates</span>
-          <span class="fx-sub">Updated just now</span>
-        </div>
-        <button class="view-all">View all →</button>
-      </div>
-      <div class="fx-cells">
-        <div class="fx-cell"><div class="fx-pair">USD → SGD</div><div class="fx-rate">1.3541</div><div class="fx-delta up">↑ 0.12%</div></div>
-        <div class="fx-cell"><div class="fx-pair">USD → INR</div><div class="fx-rate">83.42</div><div class="fx-delta down">↓ 0.05%</div></div>
-        <div class="fx-cell"><div class="fx-pair">USD → EUR</div><div class="fx-rate">0.9182</div><div class="fx-delta up">↑ 0.08%</div></div>
-        <div class="fx-cell"><div class="fx-pair">SGD → AUD</div><div class="fx-rate">1.1123</div><div class="fx-delta up">↑ 0.21%</div></div>
-        <div class="fx-cell"><div class="fx-pair">GBP → USD</div><div class="fx-rate">1.2764</div><div class="fx-delta down">↓ 0.03%</div></div>
-        <div class="fx-cell"><div class="fx-pair">USD → NPR</div><div class="fx-rate">133.10</div><div class="fx-delta up">↑ 0.30%</div></div>
-      </div>
-    </div>
-
     <div class="actions-section">
-      <div class="section-heading">Quick actions</div>
+      <div class="section-heading" style="display:none;">Quick actions</div>
       <div class="actions-grid">
         <button class="action-btn" onclick="openVerifyModal()">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0b0e58" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
@@ -1895,12 +1890,12 @@
         </button>
         <button class="action-btn" onclick="location.href='nium-portal-statements.html'">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0b0e58" stroke-width="1.8"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-          <div><div class="action-title">Reports</div><div class="action-sub">Analytics</div></div>
+          <div><div class="action-title">Run reports</div><div class="action-sub">Export &amp; schedule analytics</div></div>
         </button>
       </div>
     </div>
 
-    <div class="overview">
+    <div class="overview" style="display:none;">
 
       <div class="card">
         <div class="card-header">
@@ -2001,12 +1996,210 @@
       </div>
     </div>
 
+    <div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:20px;padding:0 0 24px;">
+
+      <!-- Spend Over Time area chart -->
+      <div class="card" style="position:relative;">
+        <div class="card-header" style="margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div class="card-title">Spend Over Time</div>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-tertiary)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2.5"/></svg>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div class="period-wrap">
+              <button class="period-dropdown" data-period-btn="" style="font-size:12px;">USD<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+              <div class="period-menu">
+                <button data-value="usd" class="selected">USD</button>
+                <button data-value="sgd">SGD</button>
+                <button data-value="eur">EUR</button>
+              </div>
+            </div>
+            <div class="period-wrap">
+              <button class="period-dropdown" data-period-btn="" style="font-size:12px;">Daily<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+              <div class="period-menu">
+                <button data-value="daily" class="selected">Daily</button>
+                <button data-value="weekly">Weekly</button>
+                <button data-value="monthly">Monthly</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <svg viewBox="0 0 400 220" style="width:100%;height:220px;overflow:visible;" role="img" aria-label="Spend over time">
+          <defs>
+            <linearGradient id="sotGrad2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#5567f7" stop-opacity="0.2"/>
+              <stop offset="100%" stop-color="#5567f7" stop-opacity="0.01"/>
+            </linearGradient>
+          </defs>
+          <g style="font-size:9px;" fill="#5F5E5A">
+            <text x="28" y="16" text-anchor="end">4M</text><line x1="32" y1="12" x2="395" y2="12" stroke="rgba(145,158,171,0.24)" stroke-width="0.5" stroke-dasharray="2,3"/>
+            <text x="28" y="57" text-anchor="end">3M</text><line x1="32" y1="53" x2="395" y2="53" stroke="rgba(145,158,171,0.24)" stroke-width="0.5" stroke-dasharray="2,3"/>
+            <text x="28" y="98" text-anchor="end">2M</text><line x1="32" y1="94" x2="395" y2="94" stroke="rgba(145,158,171,0.24)" stroke-width="0.5" stroke-dasharray="2,3"/>
+            <text x="28" y="139" text-anchor="end">1M</text><line x1="32" y1="135" x2="395" y2="135" stroke="rgba(145,158,171,0.24)" stroke-width="0.5" stroke-dasharray="2,3"/>
+            <text x="28" y="178" text-anchor="end">0</text>
+          </g>
+          <line x1="32" y1="12" x2="32" y2="174" stroke="rgba(145,158,171,0.24)" stroke-width="0.5"/>
+          <line x1="32" y1="174" x2="395" y2="174" stroke="rgba(145,158,171,0.24)" stroke-width="0.5"/>
+          <path d="M32,160 C55,152 70,122 90,114 C110,106 125,84 145,76 C165,68 178,90 198,82 C218,74 230,44 250,38 C270,44 283,56 303,52 C323,48 337,36 357,40 C377,44 387,58 395,62 L395,174 L32,174 Z" fill="url(#sotGrad2)"/>
+          <path d="M32,160 C55,152 70,122 90,114 C110,106 125,84 145,76 C165,68 178,90 198,82 C218,74 230,44 250,38 C270,44 283,56 303,52 C323,48 337,36 357,40 C377,44 387,58 395,62" fill="none" stroke="#5567f7" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle cx="250" cy="38" r="4" fill="#5567f7" stroke="#fff" stroke-width="2"/>
+          <g transform="translate(258,10)">
+            <rect x="0" y="0" width="136" height="44" rx="5" fill="white" stroke="rgba(145,158,171,0.3)" stroke-width="0.8" filter="drop-shadow(0 2px 5px rgba(0,0,0,0.08))"/>
+            <text x="10" y="15" font-size="10" fill="#5F5E5A">16 May 2026</text>
+            <circle cx="10" cy="29" r="3.5" fill="#5567f7"/>
+            <text x="18" y="33" font-size="10" fill="#212b36" font-weight="500">Spend</text>
+            <text x="55" y="33" font-size="10" fill="#212b36">USD 2,987,450.00</text>
+          </g>
+          <g style="font-size:9px;" fill="#5F5E5A" text-anchor="middle">
+            <text x="32"  y="190">01 May</text>
+            <text x="90"  y="190">06 May</text>
+            <text x="148" y="190">11 May</text>
+            <text x="206" y="190">16 May</text>
+            <text x="264" y="190">21 May</text>
+            <text x="322" y="190">26 May</text>
+            <text x="380" y="190">31 May</text>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Recent Card Activity (lock icons) -->
+      <div class="card">
+        <div class="card-header" style="margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div class="card-title">Recent Activity</div>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-tertiary)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2.5"/></svg>
+          </div>
+          <button class="view-all" style="color:#5567f7;">View all →</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:32px;height:32px;border-radius:8px;background:#e8f4eb;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4d9c5e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 019.9-1"/></svg>
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;"><span style="font-size:12px;color:var(--color-text-primary);">Card issued successfully</span><span style="font-size:11px;color:var(--color-text-tertiary);flex-shrink:0;margin-left:8px;">2 mins ago</span></div>
+              <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:1px;">Virtual •••• 4242</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:32px;height:32px;border-radius:8px;background:#e8f4eb;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4d9c5e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;"><span style="font-size:12px;color:var(--color-text-primary);">Transaction approved</span><span style="font-size:11px;color:var(--color-text-tertiary);flex-shrink:0;margin-left:8px;">5 mins ago</span></div>
+              <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:1px;">USD 1,250.00 · Airline ABC</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:32px;height:32px;border-radius:8px;background:#fcebeb;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#e24b4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;"><span style="font-size:12px;color:var(--color-text-primary);">Card frozen</span><span style="font-size:11px;color:var(--color-text-tertiary);flex-shrink:0;margin-left:8px;">15 mins ago</span></div>
+              <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:1px;">Physical •••• 8876</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:32px;height:32px;border-radius:8px;background:#ece8ff;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5567f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;"><span style="font-size:12px;color:var(--color-text-primary);">Funds added</span><span style="font-size:11px;color:var(--color-text-tertiary);flex-shrink:0;margin-left:8px;">30 mins ago</span></div>
+              <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:1px;">USD 50,000.00</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:32px;height:32px;border-radius:8px;background:#fcebeb;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#e24b4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;"><span style="font-size:12px;color:var(--color-text-primary);">Transaction declined</span><span style="font-size:11px;color:var(--color-text-tertiary);flex-shrink:0;margin-left:8px;">45 mins ago</span></div>
+              <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:1px;">USD 320.00 · Hotel Grand</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Merchants -->
+      <div class="card">
+        <div class="card-header" style="margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div class="card-title">Top Merchants</div>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-tertiary)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2.5"/></svg>
+          </div>
+          <button class="view-all" style="color:#5567f7;">View all →</button>
+        </div>
+        <table style="font-size:12px;width:100%;border-collapse:collapse;">
+          <thead>
+            <tr style="border-bottom:1px solid var(--color-border-tertiary);">
+              <th style="text-align:left;font-weight:600;font-size:12px;color:var(--color-text-primary);padding:0 8px 8px 0;">Merchant</th>
+              <th style="text-align:left;font-weight:600;font-size:12px;color:var(--color-text-primary);padding:0 8px 8px 0;">Category</th>
+              <th style="text-align:right;font-weight:600;font-size:12px;color:var(--color-text-primary);padding:0 8px 8px 0;">Spend (USD)</th>
+              <th style="text-align:right;font-weight:600;font-size:12px;color:var(--color-text-primary);padding:0 0 8px;">% of Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--color-border-tertiary);">
+              <td style="padding:10px 8px 10px 0;font-weight:600;">Airline ABC</td>
+              <td style="padding:10px 8px 10px 0;color:var(--color-text-tertiary);">Airlines</td>
+              <td style="padding:10px 8px 10px 0;text-align:right;">5,432,650.00</td>
+              <td style="padding:10px 0;text-align:right;">18.76%</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--color-border-tertiary);">
+              <td style="padding:10px 8px 10px 0;font-weight:600;">Hotel Grand</td>
+              <td style="padding:10px 8px 10px 0;color:var(--color-text-tertiary);">Hotels</td>
+              <td style="padding:10px 8px 10px 0;text-align:right;">4,321,780.50</td>
+              <td style="padding:10px 0;text-align:right;">14.92%</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--color-border-tertiary);">
+              <td style="padding:10px 8px 10px 0;font-weight:600;">TravelHub</td>
+              <td style="padding:10px 8px 10px 0;color:var(--color-text-tertiary);">Travel Agency</td>
+              <td style="padding:10px 8px 10px 0;text-align:right;">3,210,450.00</td>
+              <td style="padding:10px 0;text-align:right;">11.08%</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--color-border-tertiary);">
+              <td style="padding:10px 8px 10px 0;font-weight:600;">Global Rentals</td>
+              <td style="padding:10px 8px 10px 0;color:var(--color-text-tertiary);">Car Rentals</td>
+              <td style="padding:10px 8px 10px 0;text-align:right;">2,450,300.75</td>
+              <td style="padding:10px 0;text-align:right;">8.46%</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 8px 10px 0;font-weight:600;">CloudServe</td>
+              <td style="padding:10px 8px 10px 0;color:var(--color-text-tertiary);">SaaS</td>
+              <td style="padding:10px 8px 10px 0;text-align:right;">1,987,220.30</td>
+              <td style="padding:10px 0;text-align:right;">6.86%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <div class="fx-row">
+      <div class="fx-header">
+        <div class="fx-header-left">
+          <span class="live-dot"></span>
+          <span class="fx-title">Live FX rates</span>
+          <span class="fx-sub">Updated just now</span>
+        </div>
+        <button class="view-all">View all →</button>
+      </div>
+      <div class="fx-cells">
+        <div class="fx-cell"><div class="fx-pair">USD → SGD</div><div class="fx-rate">1.3541</div><div class="fx-delta up">↑ 0.12%</div></div>
+        <div class="fx-cell"><div class="fx-pair">USD → INR</div><div class="fx-rate">83.42</div><div class="fx-delta down">↓ 0.05%</div></div>
+        <div class="fx-cell"><div class="fx-pair">USD → EUR</div><div class="fx-rate">0.9182</div><div class="fx-delta up">↑ 0.08%</div></div>
+        <div class="fx-cell"><div class="fx-pair">SGD → AUD</div><div class="fx-rate">1.1123</div><div class="fx-delta up">↑ 0.21%</div></div>
+        <div class="fx-cell"><div class="fx-pair">GBP → USD</div><div class="fx-rate">1.2764</div><div class="fx-delta down">↓ 0.03%</div></div>
+        <div class="fx-cell"><div class="fx-pair">USD → NPR</div><div class="fx-rate">133.10</div><div class="fx-delta up">↑ 0.30%</div></div>
+      </div>
+    </div>
+
     <div class="wallets-section">
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
         <div class="section-heading" style="margin-bottom: 0;">Your wallets</div>
         <button class="view-all">View all →</button>
       </div>
-      <div class="wallets-wrap">
+      <div class="card" style="padding:0;">
+      <div class="wallets-wrap" style="border:none;border-radius:0;">
         <table>
           <thead>
             <tr>
@@ -2058,6 +2251,7 @@
             </tr>
           </tbody>
         </table>
+      </div>
       </div>
     </div>
 
