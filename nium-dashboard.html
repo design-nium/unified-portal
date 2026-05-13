@@ -2024,7 +2024,7 @@
             </div>
           </div>
         </div>
-        <svg viewBox="0 0 400 220" style="width:100%;height:220px;overflow:visible;" role="img" aria-label="Spend over time">
+        <svg id="sotSvg" viewBox="0 0 400 220" style="width:100%;height:220px;overflow:visible;cursor:crosshair;" role="img" aria-label="Spend over time">
           <defs>
             <linearGradient id="sotGrad2" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stop-color="#5567f7" stop-opacity="0.2"/>
@@ -2042,14 +2042,20 @@
           <line x1="32" y1="174" x2="395" y2="174" stroke="rgba(145,158,171,0.24)" stroke-width="0.5"/>
           <path d="M32,160 C55,152 70,122 90,114 C110,106 125,84 145,76 C165,68 178,90 198,82 C218,74 230,44 250,38 C270,44 283,56 303,52 C323,48 337,36 357,40 C377,44 387,58 395,62 L395,174 L32,174 Z" fill="url(#sotGrad2)"/>
           <path d="M32,160 C55,152 70,122 90,114 C110,106 125,84 145,76 C165,68 178,90 198,82 C218,74 230,44 250,38 C270,44 283,56 303,52 C323,48 337,36 357,40 C377,44 387,58 395,62" fill="none" stroke="#5567f7" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
-          <circle cx="250" cy="38" r="4" fill="#5567f7" stroke="#fff" stroke-width="2"/>
-          <g transform="translate(258,10)">
-            <rect x="0" y="0" width="136" height="44" rx="5" fill="white" stroke="rgba(145,158,171,0.3)" stroke-width="0.8" filter="drop-shadow(0 2px 5px rgba(0,0,0,0.08))"/>
-            <text x="10" y="15" font-size="10" fill="#5F5E5A">16 May 2026</text>
+          <!-- vertical crosshair line -->
+          <line id="sotVline" x1="250" y1="38" x2="250" y2="174" stroke="rgba(85,103,247,0.25)" stroke-width="1" stroke-dasharray="3,2" display="none"/>
+          <!-- hover dot -->
+          <circle id="sotDot" cx="250" cy="38" r="4" fill="#5567f7" stroke="#fff" stroke-width="2" display="none"/>
+          <!-- tooltip group -->
+          <g id="sotTooltip" display="none">
+            <rect id="sotTipBg" x="0" y="0" width="148" height="44" rx="5" fill="white" stroke="rgba(145,158,171,0.3)" stroke-width="0.8" filter="drop-shadow(0 2px 5px rgba(0,0,0,0.08))"/>
+            <text id="sotTipDate" x="10" y="15" font-size="10" fill="#5F5E5A">16 May 2026</text>
             <circle cx="10" cy="29" r="3.5" fill="#5567f7"/>
             <text x="18" y="33" font-size="10" fill="#212b36" font-weight="500">Spend</text>
-            <text x="55" y="33" font-size="10" fill="#212b36">USD 2,987,450.00</text>
+            <text id="sotTipVal" x="55" y="33" font-size="10" fill="#212b36">USD 2,987,450.00</text>
           </g>
+          <!-- invisible hover target overlay -->
+          <rect id="sotOverlay" x="32" y="12" width="363" height="162" fill="transparent"/>
           <g style="font-size:9px;" fill="#5F5E5A" text-anchor="middle">
             <text x="32"  y="190">01 May</text>
             <text x="90"  y="190">06 May</text>
@@ -4071,6 +4077,86 @@
       });
       panel.addEventListener('click', function(e) { e.stopPropagation(); });
     });
+
+  // Spend Over Time interactive sparkline
+  (function() {
+    var data = [
+      { date: '01 May', value: 1.05 }, { date: '02 May', value: 1.42 }, { date: '03 May', value: 1.78 },
+      { date: '04 May', value: 2.10 }, { date: '05 May', value: 2.31 }, { date: '06 May', value: 2.20 },
+      { date: '07 May', value: 1.95 }, { date: '08 May', value: 2.40 }, { date: '09 May', value: 2.75 },
+      { date: '10 May', value: 3.05 }, { date: '11 May', value: 2.85 }, { date: '12 May', value: 2.60 },
+      { date: '13 May', value: 2.90 }, { date: '14 May', value: 3.10 }, { date: '15 May', value: 3.30 },
+      { date: '16 May', value: 3.55 }, { date: '17 May', value: 3.40 }, { date: '18 May', value: 3.20 },
+      { date: '19 May', value: 3.50 }, { date: '20 May', value: 3.75 }, { date: '21 May', value: 3.90 },
+      { date: '22 May', value: 3.60 }, { date: '23 May', value: 3.45 }, { date: '24 May', value: 3.55 },
+      { date: '25 May', value: 3.70 }, { date: '26 May', value: 3.50 }, { date: '27 May', value: 3.30 },
+      { date: '28 May', value: 3.10 }, { date: '29 May', value: 2.95 }, { date: '30 May', value: 2.80 },
+      { date: '31 May', value: 2.70 }
+    ];
+
+    var xMin = 32, xMax = 395, yMin = 12, yMax = 174, valMax = 4;
+    function xFor(i) { return xMin + (i / (data.length - 1)) * (xMax - xMin); }
+    function yFor(v) { return yMax - (v / valMax) * (yMax - yMin); }
+
+    function buildPath() {
+      var pts = data.map(function(d, i) { return [xFor(i), yFor(d.value)]; });
+      var d = 'M' + pts[0][0] + ',' + pts[0][1];
+      for (var i = 0; i < pts.length - 1; i++) {
+        var x0 = i > 0 ? pts[i-1][0] : pts[0][0], y0 = i > 0 ? pts[i-1][1] : pts[0][1];
+        var x1 = pts[i][0], y1 = pts[i][1];
+        var x2 = pts[i+1][0], y2 = pts[i+1][1];
+        var x3 = i < pts.length-2 ? pts[i+2][0] : x2, y3 = i < pts.length-2 ? pts[i+2][1] : y2;
+        var cp1x = x1 + (x2-x0)/6, cp1y = y1 + (y2-y0)/6;
+        var cp2x = x2 - (x3-x1)/6, cp2y = y2 - (y3-y1)/6;
+        d += ' C'+cp1x+','+cp1y+' '+cp2x+','+cp2y+' '+x2+','+y2;
+      }
+      return d;
+    }
+
+    var svg = document.getElementById('sotSvg');
+    if (!svg) return;
+    var linePath = buildPath();
+    var paths = svg.querySelectorAll('path');
+    paths[0].setAttribute('d', linePath + ' L'+xFor(data.length-1)+','+yMax+' L'+xMin+','+yMax+' Z');
+    paths[1].setAttribute('d', linePath);
+
+    var dot = document.getElementById('sotDot');
+    var tooltip = document.getElementById('sotTooltip');
+    var tipDate = document.getElementById('sotTipDate');
+    var tipVal = document.getElementById('sotTipVal');
+    var vline = document.getElementById('sotVline');
+    var overlay = document.getElementById('sotOverlay');
+
+    function getSVGX(evt) {
+      var rect = svg.getBoundingClientRect();
+      return (evt.clientX - rect.left) * (400 / rect.width);
+    }
+
+    overlay.addEventListener('mousemove', function(evt) {
+      var svgX = getSVGX(evt);
+      var idx = Math.max(0, Math.min(data.length-1, Math.round((svgX - xMin) / (xMax - xMin) * (data.length-1))));
+      var d = data[idx], px = xFor(idx), py = yFor(d.value);
+
+      dot.setAttribute('cx', px); dot.setAttribute('cy', py); dot.removeAttribute('display');
+      vline.setAttribute('x1', px); vline.setAttribute('x2', px);
+      vline.setAttribute('y1', py); vline.setAttribute('y2', yMax);
+      vline.removeAttribute('display');
+
+      tipDate.textContent = d.date + ' 2026';
+      tipVal.textContent = 'USD ' + (d.value * 1000000).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+
+      var tipW = 148, tx = px + 8;
+      if (tx + tipW > xMax) tx = px - tipW - 8;
+      tooltip.setAttribute('transform', 'translate('+tx+','+ Math.max(yMin, py - 22)+')');
+      tooltip.removeAttribute('display');
+    });
+
+    overlay.addEventListener('mouseleave', function() {
+      dot.setAttribute('display', 'none');
+      tooltip.setAttribute('display', 'none');
+      vline.setAttribute('display', 'none');
+    });
+  })();
 
   </script>
 
