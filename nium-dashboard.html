@@ -262,6 +262,20 @@
     }
 
     .nav-spacer { flex: 1; min-height: 16px; }
+    [data-no-active].nav-item.active,
+    [data-no-active].nav-item:focus {
+      background: transparent !important;
+      color: #000000 !important;
+    }
+    .nav-external-icon {
+      margin-left: auto;
+      opacity: 0;
+      color: var(--color-text-tertiary);
+      display: flex;
+      align-items: center;
+      transition: opacity 0.15s;
+    }
+    .nav-item:hover .nav-external-icon { opacity: 1; }
 
     .sidebar.collapsed .nav-item { justify-content: center; padding: 9px; gap: 0; }
     .sidebar.collapsed .nav-label,
@@ -395,22 +409,45 @@
     .env-current {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 0;
       background: #4a7c3f;
       border: none;
       border-radius: 6px;
-      padding: 4px 8px 4px 10px;
+      padding: 4px 10px;
       cursor: pointer;
       font-family: inherit;
       font-size: 11px;
       font-weight: 600;
       color: #ffffff;
       letter-spacing: 0.2px;
-      transition: background 0.15s;
+      transition: background 0.15s, transform 0.1s;
       min-width: 94px;
-      justify-content: flex-start;
+      justify-content: center;
     }
-    .env-current:hover { background: #3d6b2e; }
+    .env-current:hover { opacity: 0.9; }
+    .env-current:active { transform: scale(0.97); }
+    .env-current:active::after { opacity: 0 !important; }
+    .env-current.no-tooltip::after { opacity: 0 !important; pointer-events: none; }
+    .env-current::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      transform: none;
+      background: #f5f5f5;
+      color: #000000;
+      border: 1px solid #d0d0d0;
+      font-size: 11px;
+      font-weight: 400;
+      padding: 4px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.1s ease;
+      z-index: 9999;
+    }
+    .env-current:hover::after { opacity: 1; }
     .env-current svg { opacity: 0.7; flex-shrink: 0; }
     .env-menu {
       display: none;
@@ -503,8 +540,9 @@
       top: calc(100% + 6px);
       left: 50%;
       transform: translateX(-50%);
-      background: #1e293b;
-      color: #fff;
+      background: #f5f5f5;
+      color: #000000;
+      border: 1px solid #d0d0d0;
       font-size: 11.5px;
       font-weight: 500;
       padding: 4px 9px;
@@ -520,7 +558,7 @@
       left: 50%;
       transform: translateX(-50%);
       border: 4px solid transparent;
-      border-bottom-color: #1e293b;
+      border-bottom-color: #d0d0d0;
     }
     .topbar-icon-wrap:hover .topbar-tooltip { display: block; }
 
@@ -1531,19 +1569,9 @@
         
       </div>
       <div class="env-dropdown" id="envDropdown">
-        <button class="env-current" id="envCurrentBtn">
+        <button class="env-current env-production" id="envCurrentBtn" onclick="toggleEnv()" data-tooltip="Switch environment">
           <span id="envCurrentLabel">Production</span>
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
-        <div class="env-menu" id="envMenu">
-          <button class="env-menu-item" id="envOptSandbox" data-env="Sandbox">
-            Sandbox
-          </button>
-          <button class="env-menu-item active" id="envOptProd" data-env="Production">
-            Production
-            <svg class="env-check" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          </button>
-        </div>
       </div>
     </div>
 
@@ -1598,12 +1626,14 @@
       <a href="nium-portal-transactions.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Transactions</div></a>
       <a href="nium-portal-scheduled-reports.html" style="text-decoration:none;color:inherit;"><div class="nav-child">Scheduled reports</div></a>
     </div>
-
-    <div class="nav-spacer"></div>
-    <div class="nav-item" data-label="Nium docs">
+    <hr style="border:none;border-top:1px solid #d0d0cb;margin:8px 16px;">
+    <a href="https://docs.nium.com" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">
+    <div class="nav-item" data-label="Nium docs" data-no-active="true" style="position:relative;">
       <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
       <span class="nav-label">Nium docs</span>
+      <span class="nav-external-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
     </div>
+    </a>
 
   </aside>
 
@@ -2588,6 +2618,7 @@
   // Leaf nav-items (non-expandable, non-collapse-toggle): mark active on click
   sidebar.querySelectorAll('.nav-item:not([data-expandable="true"])').forEach(function (item) {
     item.addEventListener('click', function () {
+      if (item.dataset.noActive) return;
       sidebar.querySelectorAll('.nav-item:not([data-expandable="true"]).active, .nav-child.active').forEach(function (n) {
         n.classList.remove('active');
       });
@@ -3141,8 +3172,8 @@
   <style>
     .ai-fab-wrap {
       position: fixed;
-      bottom: 32px;
-      right: 32px;
+      bottom: 12px;
+      right: 12px;
       z-index: 1000;
       display: flex;
       flex-direction: column;
@@ -3328,14 +3359,11 @@
   <div class="ai-fab-wrap" id="aiFabWrap">
     <button class="ai-fab-btn" id="aiFabBtn" aria-label="Ask AI">
       <span class="ai-fab-tooltip">How can I help you today?</span>
-<svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="36" cy="36" r="36" fill="#0C0E54" opacity="0.15"/>
-<circle cx="36" cy="36" r="28" fill="#0C0E54"/>
+<svg width="61" height="61" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="36" cy="36" r="36" fill="#07ACFF" opacity="0.15"/>
+<circle cx="36" cy="36" r="28" fill="#07ACFF"/>
 <rect x="20" y="24" width="32" height="22" rx="7" fill="white"/>
 <path d="M28 46 L24 54 L36 46 Z" fill="white"/>
-<circle cx="29" cy="35" r="2.5" fill="#0C0E54"/>
-<circle cx="36" cy="35" r="2.5" fill="#0C0E54"/>
-<circle cx="43" cy="35" r="2.5" fill="#0C0E54"/>
 </svg>
     </button>
   </div>
@@ -3347,7 +3375,7 @@
         <div class="ai-modal-header-left">
           <svg width="28" height="28" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle opacity="0.2" cx="36" cy="36" r="36" fill="#A9B4FF"/>
-            <circle cx="36" cy="36" r="28" fill="#0C0E54"/>
+            <circle cx="36" cy="36" r="28" fill="#07ACFF"/>
             <path opacity="0.85" d="M36 51.6559C44.733 51.6559 51.8125 44.5764 51.8125 35.8434C51.8125 27.1104 44.733 20.0309 36 20.0309C27.267 20.0309 20.1875 27.1104 20.1875 35.8434C20.1875 44.5764 27.267 51.6559 36 51.6559Z" fill="url(#mh_paint0)"/>
             <path d="M36.6111 52.1906C36.0993 52.1906 35.5951 51.9996 35.1215 51.633C32.6771 49.7615 30.8819 43.3983 30.8819 35.8434C30.8819 28.2885 32.6771 21.9253 35.1215 20.0538C35.2437 19.9621 35.3583 19.8858 35.4806 19.8094" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M23.9764 46.8358C23.8771 46.5608 23.816 46.2552 23.7931 45.9191C23.6097 42.8024 26.8028 37.2184 31.9896 32.0316C38.3757 25.6455 45.3653 22.2844 47.6035 24.5226" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
@@ -4182,4 +4210,72 @@
     </button>
   </div>
 
+  <script>
+  function toggleEnv() {
+    var btn = document.getElementById('envCurrentBtn');
+    var label = document.getElementById('envCurrentLabel');
+    if (label.textContent === 'Production') {
+      label.textContent = 'Sandbox';
+      btn.classList.remove('env-production');
+      btn.classList.add('env-sandbox');
+    } else {
+      label.textContent = 'Production';
+      btn.classList.remove('env-sandbox');
+      btn.classList.add('env-production');
+    }
+  }
+  </script>
+
+  <script>
+  (function() {
+    var current = 'Production';
+    var btn = document.getElementById('envCurrentBtn');
+    var label = document.getElementById('envCurrentLabel');
+    if (!btn || !label) return;
+    btn.addEventListener('mouseleave', function() { btn.classList.remove('no-tooltip'); });
+
+    window.toggleEnv = function() {
+      if (current === 'Production') {
+        // Prod → Sandbox: switch immediately, no modal
+        current = 'Sandbox';
+        label.textContent = 'Sandbox';
+        btn.classList.remove('env-production');
+        btn.classList.add('env-sandbox');
+        btn.classList.add('no-tooltip');
+        btn.blur();
+      } else {
+        // Sandbox → Production: show confirmation modal
+        var confirmBackdrop = document.getElementById('prodConfirmBackdrop');
+        if (confirmBackdrop) {
+          confirmBackdrop.style.display = 'flex';
+          confirmBackdrop.classList.add('open');
+        }
+        btn.classList.add('no-tooltip');
+        btn.blur();
+      }
+    };
+
+    // Wire up the prod confirm modal
+    var backdrop = document.getElementById('prodConfirmBackdrop');
+    if (!backdrop) return;
+    backdrop.style.display = 'none';
+
+    function closeModal() {
+      backdrop.classList.remove('open');
+      setTimeout(function(){ backdrop.style.display='none'; }, 200);
+    }
+
+    var cancelBtn = document.getElementById('prodConfirmCancel');
+    var okBtn = document.getElementById('prodConfirmOk');
+    if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+    if (backdrop) backdrop.addEventListener('click', function(e){ if(e.target===backdrop) closeModal(); });
+    if (okBtn) okBtn.addEventListener('click', function() {
+      closeModal();
+      current = 'Production';
+      label.textContent = 'Production';
+      btn.classList.remove('env-sandbox');
+      btn.classList.add('env-production');
+    });
+  })();
+  </script>
 </body></html>
